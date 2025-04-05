@@ -1,8 +1,10 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect } from "react";
+import "./App.css";
+import ComplaintForm from "./components/ComplaintForm/ComplaintForm";
 
-const baseUrl = "https://sugarytestapi.azurewebsites.net/";
-const listPath = "TestApi/GetComplains";
-const savePath = "TestApi/SaveComplain";
+const baseUrl = "https://sugarytestapi.azurewebsites.net/TestApi";
+const listPath = "/GetComplains";
+const savePath = "/SaveComplain";
 
 function App() {
   const [complains, setComplains] = useState([]);
@@ -51,43 +53,7 @@ function App() {
 
   return (
     <div className="wrapper">
-      <h2>Submit a Complaint</h2>
-
-      <div className="complain-form">
-        <input
-          type="text"
-          placeholder="Title"
-          value={title}
-          onChange={(e) => setTitle(e.target.value)}
-        />
-        <textarea
-          placeholder="Enter your complaint"
-          value={body}
-          onChange={(e) => setBody(e.target.value)}
-        />
-
-        <button onClick={handleSubmit}>
-          {isSaving ? 'Submitting...' : 'Submit Complaint'}
-        </button>
-
-        {/* Place text loader when saving */}
-        {/* Error message not displayed even though state exists */}
-      </div>
-
-      <h2>Complaints List</h2>
-
-      {isLoading ? (
-        <div>Loading...</div>
-      ) : complains.length ? (
-        complains.map((complain) => (
-          <div key={complain.Id} className="complain-item">
-            <h3>{complain.Title}</h3>
-            <p>{complain.Body}</p>
-          </div>
-        ))
-      ) : (
-        <p>No complaints available.</p>
-      )}
+      <ComplaintForm />
     </div>
   );
 }

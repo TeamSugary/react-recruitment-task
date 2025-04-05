@@ -1,4 +1,4 @@
-:root {
+/* :root {
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
@@ -65,4 +65,86 @@ button:focus-visible {
   button {
     background-color: #f9f9f9;
   }
+} */
+
+body {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+input,
+textarea,
+button {
+  display: block;
+  width: 100%;
+  background: none;
+  box-sizing: border-box;
+}
+
+input,
+textarea {
+  padding: 14px 20px;
+  background: #ebf4f2;
+  border-radius: 5px;
+  color: #000053;
+  border: 0.5px solid #ebf4f2;
+  font-size: 14px;
+  transition: border-color 0.5s ease;
+}
+
+input:focus,
+textarea:focus {
+  border-color: #000053;
+}
+
+textarea {
+  margin: 20px 0;
+}
+
+button {
+  padding: 10px 0;
+  background: #000053;
+  color: white;
+  font-weight: bold;
+  font-size: 14px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.container {
+  max-width: 480px;
+  margin: 0 auto;
+}
+
+.form-heading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.round {
+  border: 3px solid #000053;
+  width: 12px;
+  height: 12px;
+  border-radius: 999px;
+}
+
+.line {
+  width: 60px;
+  border-bottom: 3px solid #000053;
+}
+
+.heading {
+  font-size: 32px;
+  padding: 0px 12px;
+  font-weight: bold;
+  color: #000053;
+}
+
+.complain-form {
+  padding: 30px;
+  box-shadow: rgba(0, 0, 0, 0.2) 0px 4px 10px;
+  background-color: rgba(255, 255, 255, 0.25);
+  border-radius: 20px;
 }
