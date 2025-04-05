@@ -185,11 +185,15 @@ body {
   margin-top: 12px;
 }
 
+.complain-list{
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 20px;
+}
 /* Complaints */
 .complain-card {
   background-color: #f3f4f6;
   padding: 16px 20px;
-  border-left: 4px solid #3b82f6;
   border-radius: 10px;
   margin-bottom: 16px;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
