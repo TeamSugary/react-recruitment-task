@@ -2,67 +2,205 @@
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
-
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
-
+  color: #151717;
+  background-color: #f0f2f5;
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-a {
-  font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
-}
-a:hover {
-  color: #535bf2;
-}
-
 body {
   margin: 0;
   display: flex;
-  place-items: center;
+  justify-content: center;
+  align-items: center;
   min-width: 320px;
   min-height: 100vh;
-}
-
-h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
-}
-
-button {
-  border-radius: 8px;
-  border: 1px solid transparent;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
-  font-weight: 500;
+  padding: 40px;
+  background-color: #f0f2f5;
   font-family: inherit;
-  background-color: #1a1a1a;
-  cursor: pointer;
-  transition: border-color 0.25s;
-}
-button:hover {
-  border-color: #646cff;
-}
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
 }
 
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
+/* 🌟 Wrapper to center form + list */
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 800px;
+  width: 100%;
+}
+
+/* Headings & paragraph text */
+h2 {
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+p {
+  margin: 8px 0;
+  font-size: 14px;
+  line-height: 1.6;
+  color: #151717;
+}
+
+/* 🌟 Complaint Form */
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  background-color: #ffffff;
+  padding: 30px;
+  width: 100%;
+  border-radius: 20px;
+  font-family: inherit;
+  animation: fadeIn 0.5s ease;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.form button {
+  align-self: flex-end;
+  margin-top: 20px;
+}
+
+/* Label styles for form inputs */
+.flex-column > label {
+  color: #151717;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+/* Input field container */
+.inputForm {
+  border: 1.5px solid #ecedec;
+  border-radius: 10px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  padding-left: 10px;
+  transition: 0.2s ease-in-out;
+  width: 100%;
+}
+
+/* Input fields */
+.input {
+  margin-left: 10px;
+  border-radius: 10px;
+  border: none;
+  width: 100%;
+  height: 100%;
+  font-family: inherit;
+  padding: 0 10px;
+}
+
+.input:focus {
+  outline: none;
+}
+
+.inputForm:focus-within {
+  border: 1.5px solid #2d79f3;
+}
+
+/* Submit button */
+.button-submit {
+  margin: 20px 0 10px 0;
+  background-color: #151717;
+  border: none;
+  color: white;
+  font-size: 15px;
+  font-weight: 500;
+  border-radius: 10px;
+  height: 50px;
+  width: 100%;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.button-submit:hover {
+  background-color: #252727;
+}
+
+/* 🌟 Complaint box styles */
+.complain-item,
+.enhanced-card {
+  background: #fff;
+  color: #151717;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  padding: 25px;
+  border-radius: 12px;
+  margin-bottom: 20px;
+  width: 100%;
+  max-width: 500px;  /* Increased max-width for a larger card size */
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  animation: fadeIn 0.5s ease;
+  text-align: left;
+}
+
+/* Hover effect for cards */
+.enhanced-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
+}
+
+/* Text inside complaint card */
+.complain-item h3,
+.enhanced-card h3 {
+  font-size: 18px;
+  margin-bottom: 8px;
+  font-weight: 600;
+}
+
+.complain-item p,
+.enhanced-card p {
+  font-size: 14px;
+  margin: 0;
+  line-height: 1.6;
+}
+
+.complain-item small,
+.enhanced-card small {
+  font-size: 12px;
+  color: #666;
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
   }
-  a:hover {
-    color: #747bff;
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
-  button {
-    background-color: #f9f9f9;
+}
+
+/* Ensure responsive card widths */
+.complain-item,
+.enhanced-card {
+  flex: 0 0 100%;
+  max-width: 800px;
+  box-sizing: border-box;
+}
+
+/* Responsive Design: for medium screens */
+@media (max-width: 768px) {
+  .complain-item,
+  .enhanced-card {
+    flex: 0 0 48%;  /* Allow 2 cards per row */
+    max-width: 100%;
+    margin: 10px;
+  }
+}
+
+/* Responsive Design: for small screens */
+@media (max-width: 480px) {
+
+  .form {
+    padding: 20px;
+  }
+
+  .button-submit {
+    width: auto;
   }
 }
