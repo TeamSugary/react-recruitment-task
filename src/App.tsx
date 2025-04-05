@@ -29,6 +29,7 @@ function App() {
 
   // Save a new complaint
   const handleSubmit = async () => {
+    // Error handling not being set correctly
     if (!/\S/.test(title) || !/\S/.test(body)) {
       setErrorMessage("Please fill in both fields.");
       return;
@@ -46,8 +47,11 @@ function App() {
         }),
       });
       const data = await response.json();
+
       if (!data.Success) throw new Error("Failed to save complaint.");
+
       // Missing: Update complaints list after successful submission
+      await fetchComplains(); // Fetch updated complaints list
     } catch (e) {
       // Error state not being set
       setErrorMessage((e as Error).message);
@@ -61,7 +65,7 @@ function App() {
 
   useEffect(() => {
     fetchComplains();
-  }, []); // Missing dependency array cleanup
+  }, []); // Fetch complaints on component mount
 
   return (
     <div className="wrapper">
