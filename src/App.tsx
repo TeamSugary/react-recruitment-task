@@ -4,8 +4,15 @@ const baseUrl = "https://sugarytestapi.azurewebsites.net/";
 const listPath = "TestApi/GetComplains";
 const savePath = "TestApi/SaveComplain";
 
+
+interface Complain {
+  Id: number;
+  Title: string;
+  Body: string;
+}
+
 function App() {
-  const [complains, setComplains] = useState([]);
+  const [complains, setComplains] = useState<Complain[]>([]);
   const [title, setTitle] = useState("");
   const [body, setBody] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -31,8 +38,8 @@ function App() {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          Title: "Test Title",
-          Body: "Test Body",
+          Title: title,
+          Body: body,
         }),
       });
       const data = await response.json();
