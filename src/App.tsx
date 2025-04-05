@@ -1,4 +1,5 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect } from "react";
+import Toast from "./components/shared/toast/Toast";
 
 const baseUrl = "https://sugarytestapi.azurewebsites.net/";
 const listPath = "TestApi/GetComplains";
@@ -9,45 +10,71 @@ function App() {
   const [title, setTitle] = useState("");
   const [body, setBody] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  const [isSaving, setIsSaving] = useState(false);
-  const [errorMessage, setErrorMessage] = useState("");
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
-  // Fetch complaints from the API
   const fetchComplains = async () => {
     setIsLoading(true);
-    const response = await fetch(`${baseUrl}${listPath}`);
-    const data = await response.json();
-    setComplains(data);
-    setIsLoading(false);
+    setErrorMessage(null);
+
+    try {
+      const response = await fetch(`${baseUrl}${listPath}`);
+      if (!response.ok) {
+        throw new Error(`API error: ${response.status} ${response.statusText}`);
+      }
+      const data = await response.json();
+      setComplains(data);
+      // console.log(data);
+
+    } catch (error) {
+      if (error instanceof Error) {
+        setErrorMessage(error.message);
+      } else {
+        setErrorMessage("Failed to fetch complaints");
+      }
+      Toast.show("Failed to fetch complaints", "error");
+    } finally {
+      setIsLoading(false);
+    }
   };
 
-  // Save a new complaint
-  const handleSubmit = async () => {
+  const handleSubmit = async (title: string, body: string) => {
     try {
-      setIsSaving(true);
-      const response = await fetch(savePath, {
+      const response = await fetch(`${baseUrl}${savePath}`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          Title: "Test Title",
-          Body: "Test Body",
+          Title: title,
+          Body: body,
         }),
       });
+      if (!response.ok) {
+        throw new Error(`API error: ${response.status} ${response.statusText}`);
+      }
       const data = await response.json();
-      if (!data.Success) throw new Error("Failed to save complaint.");
-      // Missing: Update complaints list after successful submission
-    } catch (e) {
-      // Error state not being set
-    } finally {
-      setIsSaving(false);
+      if (!data.Success) {
+        throw new Error(data.Message || "Failed to submit complaint");
+      }
+      Toast.show("Complaint submitted successfully!", "success");
+      fetchComplains(); // refresh after submission
+    } catch (error) {
+      if (error instanceof Error) {
+        Toast.show(error.message, "error");
+      } else {
+        Toast.show("Failed to submit complaint", "error");
+      }
     }
   };
 
   useEffect(() => {
+    const controller = new AbortController();
     fetchComplains();
-  }, []); // Missing dependency array cleanup
+
+    return () => {
+      controller.abort(); // Cleanup function to abort fetch request
+    }
+  }, []);
 
   return (
     <div className="wrapper">
@@ -66,12 +93,13 @@ function App() {
           onChange={(e) => setBody(e.target.value)}
         />
 
-        <button onClick={handleSubmit}>
-          {isSaving ? 'Submitting...' : 'Submit Complaint'}
+        <button onClick={() => handleSubmit(title, body)}>
+          Submit Complaint
         </button>
 
         {/* Place text loader when saving */}
         {/* Error message not displayed even though state exists */}
+        {errorMessage && <p>{errorMessage}</p>}
       </div>
 
       <h2>Complaints List</h2>
