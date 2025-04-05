@@ -29,7 +29,7 @@ function App() {
 
   // Fetch complaints from the API
   const fetchComplains = async () => {
-      setIsLoading(true);
+    setIsLoading(true);
     try{
       const response = await fetch(`${baseUrl}${listPath}`);
       const data = await response.json();
@@ -46,13 +46,16 @@ function App() {
 
   // Save a new complaint
   const handleSubmit = async () => {
+    // default error state
     setErrorMessage("");
-    if(title.length < 8) return setErrorMessage("Title must be at least 8 char")
-    if(body.length < 32) return setErrorMessage("Desciption must be at least 32 char");
-     setIsSaving(true);
+    //input validation
+    if(title.length < 4) return setErrorMessage("Title must be at least 4 characters.")
+    if(body.length < 20) return setErrorMessage("Description must be at least 20 characters.");
+    // start saving state
+    setIsSaving(true);
     // 
     try {
-      // 
+      // api req
       const response = await fetch(`${baseUrl}${savePath}`, {
         method: "POST",
         headers: {
@@ -72,7 +75,6 @@ function App() {
     } catch (e) {
       console.error(e);
       setErrorMessage("Failed to save complaint. Please try again.")
-      // Error state not being set
     } finally {
       setIsSaving(false);
     }
@@ -87,7 +89,7 @@ function App() {
   return (
     <div className="wrapper">
       <h2 className='head-title'>Submit a Complaint</h2>
-      {/*  */}
+      {/* complain form  */}
       <div className="complain-form">
         <input
           required
@@ -103,18 +105,19 @@ function App() {
           value={body}
           onChange={(e) => setBody(e.target.value)}
         />
-
+         {/* submit button */}
         <button onClick={handleSubmit}>
           {isSaving ? 'Submitting...' : 'Submit Complaint'}
         </button>
 
         {/* Place text loader when saving */}
+        {isSaving && <p style={{ color: '#000', textAlign:'left' }}>Saving...</p>}
         {/* Error message not displayed even though state exists */}
         {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}
       </div>
-
-      <h2 className='complain-header'>Complaints List</h2>
        
+       {/* all complains list */}
+      <h2 className='complain-header'>Complaints List</h2>
        {/*  */}
       {isLoading ? (
         <div style={{color:"#000", fontSize:"2.5rem", padding:"4rem 0rem"}}>Loading...</div>
