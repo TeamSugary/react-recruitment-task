@@ -35,7 +35,7 @@ function App() {
   const handleSubmit = async (event: FormEvent) => {
     // Prevent the default form submission behavior
     event.preventDefault();
-
+    setErrorMessage("")
     try {
       setIsSaving(true);
       const response = await fetch(`${baseUrl}${savePath}`, {
@@ -53,8 +53,11 @@ function App() {
       // Missing: Update complaints list after successful submission
       fetchComplains();
       emptyInputs()
-    } catch (e) {
+    } catch (error: any) {
       // Error state not being set
+      console.log(error.message)
+      setErrorMessage(error.message || "An unexpected error occurred.");
+
     } finally {
       setIsSaving(false);
     }
@@ -97,7 +100,7 @@ function App() {
             value={body}
             onChange={(e) => setBody(e.target.value)}
             minLength={6}
-            maxLength={100}
+            maxLength={200}
             required
           />
         </label>
@@ -107,6 +110,7 @@ function App() {
 
         {/* Place text loader when saving */}
         {/* Error message not displayed even though state exists */}
+        <p className='error-message'>{errorMessage && errorMessage}</p>
       </form>
 
       <h2>Complaints List</h2>
