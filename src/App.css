@@ -1,7 +1,7 @@
 #root {
   max-width: 1280px;
   margin: 0 auto;
-  padding: 2rem;
+  /* padding: 2rem; */
   text-align: center;
 }
 
@@ -48,6 +48,7 @@
   width: 100%;
   max-width: 600px;
   margin: 0 auto;
+  padding: 25px;
 }
 
 .wrapper h2 {
@@ -84,6 +85,7 @@
   font-family: Arial, Helvetica, sans-serif;
   color: #F1EFEC;
   font-size: 16px;
+  padding: 10px
 }
 
 .complain-form textarea {
@@ -103,6 +105,16 @@
 }
 
 .complain-item {
-  border-bottom: 1px solid #ccc;
+  /* border-bottom: 1px solid #ccc; */
+  width: 100%;
+  border-radius: 30px;
+  margin-bottom: 0.75rem;
+  background: #fff3;
+  box-shadow: 0 4px 10px rgba(39, 39, 39, 0.2);;
   padding: 10px 0;
+}
+
+.complain-item > * {
+  display: flex;
+  margin: 1rem;
 }
