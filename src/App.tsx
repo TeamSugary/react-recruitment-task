@@ -1,4 +1,4 @@
-import { ChangeEvent, memo, useEffect, useState } from 'react'
+import { ChangeEvent, memo, useEffect, useRef, useState } from 'react'
 import './App.css'
 
 const BASE_URL = 'https://sugarytestapi.azurewebsites.net/TestApi'
@@ -52,6 +52,8 @@ function App() {
   const [inputErrors, setInputErrors] = useState<string[]>([])
   const [search, setSearch] = useState('')
   const [showToast, setShowToast] = useState(false)
+  const [startDate, setStartDate] = useState<string>('')
+  const [endDate, setEndDate] = useState<string>('')
 
   const fetchComplains = async () => {
     setIsLoading(true)
@@ -115,17 +117,17 @@ function App() {
       timeoutId = setTimeout(() => {
         setShowToast(false)
       }, 1000)
-      const makeNewComplain = (prev: Complain[]) => {
-        const newComplain = new Complain(title, body)
-        newComplain.Id = (complains[0].Id || 10000) + 1
-        newComplain.CreatedAt = new Date().toISOString()
-        return [newComplain, ...prev]
-      }
-      setSearch('')
-      setComplains(makeNewComplain)
-      setSearchedComplains(() => makeNewComplain(complains))
+
+      // i was gonna update local state first to save api calls but then
+      //  i noticed the time was wrong in the backend and i pushed
+      // the current time in my local state which was making a mismatch in time,
+      //  so i called this function again, in this case I would fix the backend
+      // if it was possible
+      await fetchComplains()
+
       window.scroll({ top: 0, left: 0, behavior: 'smooth' })
 
+      setSearch('')
       setTitle('')
       setBody('')
       setInputErrors([])
@@ -138,7 +140,33 @@ function App() {
 
   const handleSearch = (e: ChangeEvent<HTMLInputElement>) => {
     const searchValue = e.target.value
-    setSearchedComplains(() => complains.filter((complain) => complain.Title.toLowerCase().includes(searchValue.toLowerCase()) || complain.Body.toLowerCase().includes(searchValue.toLowerCase())))
+    setSearch(searchValue)
+
+    filterComplains(searchValue, startDate, endDate)
+  }
+
+  const handleDateFilter = (startDate: string | null, endDate: string | null) => {
+    setStartDate(startDate || '')
+    setEndDate(endDate || '')
+
+    filterComplains(search, startDate, endDate)
+  }
+
+  const filterComplains = (searchValue: string, startDate: string | null, endDate: string | null) => {
+    let filteredComplains = complains
+
+    if (searchValue) {
+      filteredComplains = filteredComplains.filter((complain) => complain.Title.toLowerCase().includes(searchValue.toLowerCase()) || complain.Body.toLowerCase().includes(searchValue.toLowerCase()))
+    }
+
+    filteredComplains = filteredComplains.filter((complain) => {
+      const complainDate = new Date(complain.CreatedAt || '').toISOString().split('T')[0]
+      const matchesStartDate = startDate ? complainDate >= startDate : true
+      const matchesEndDate = endDate ? complainDate <= endDate : true
+      return matchesStartDate && matchesEndDate
+    })
+
+    setSearchedComplains(filteredComplains)
   }
 
   useEffect(() => {
@@ -159,7 +187,7 @@ function App() {
             </svg>
           }
         >
-          ds
+          <DateRangePicker startDate={startDate} setStartDate={setStartDate} endDate={endDate} setEndDate={setEndDate} onChange={handleDateFilter} />
         </Dropdown>
       </div>
       <ComplainList search={search} complains={searchedComplains} isLoading={isLoading} />
@@ -294,18 +322,84 @@ interface DropdownProps {
 
 const Dropdown = ({ children, icon }: DropdownProps) => {
   const [isOpen, setIsOpen] = useState(false)
+  const dropdownRef = useRef<HTMLDivElement>(null)
+
+  const handleOutsideClick = (event: MouseEvent) => {
+    if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+      setIsOpen(false)
+    }
+  }
+
+  const handleDropdownClick = (event: React.MouseEvent) => {
+    event.stopPropagation()
+  }
+
+  useEffect(() => {
+    document.addEventListener('mousedown', handleOutsideClick)
+
+    return () => {
+      document.removeEventListener('mousedown', handleOutsideClick)
+    }
+  }, [])
 
   return (
-    <div className="dropdown-container">
+    <div className="dropdown-container" ref={dropdownRef}>
       <button onClick={() => setIsOpen(!isOpen)} className="dropdown-toggle">
         {icon}
       </button>
 
       {isOpen && (
-        <div className="dropdown-menu" onClick={() => setIsOpen(false)}>
+        <div className="dropdown-menu" onClick={handleDropdownClick}>
           {children}
         </div>
       )}
+    </div>
+  )
+}
+
+interface DateRangePickerProps {
+  onChange: (startDate: string | null, endDate: string | null) => void
+  startDate: string
+  setStartDate: React.Dispatch<React.SetStateAction<string>>
+  endDate: string
+  setEndDate: React.Dispatch<React.SetStateAction<string>>
+}
+
+const DateRangePicker = ({ onChange, startDate, setStartDate, endDate, setEndDate }: DateRangePickerProps) => {
+  const handleStartDateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const newStartDate = e.target.value
+    setStartDate(newStartDate)
+    onChange(newStartDate, endDate)
+  }
+
+  const handleEndDateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const newEndDate = e.target.value
+    setEndDate(newEndDate)
+    onChange(startDate, newEndDate)
+  }
+  const handleReset = () => {
+    setStartDate('')
+    setEndDate('')
+    onChange('', '')
+  }
+
+  return (
+    <div className="date-range-picker">
+      <em className='date-header'>
+        <strong>Date Filter</strong>
+        <button className="reset-btn" onClick={handleReset}>
+          &times;
+        </button>
+      </em>
+      <div className="date-input">
+        <label htmlFor="start-date">Start Date</label>
+        <input type="date" id="start-date" value={startDate} onChange={handleStartDateChange} placeholder="Start Date" />
+      </div>
+
+      <div className="date-input">
+        <label htmlFor="end-date">End Date</label>
+        <input type="date" id="end-date" value={endDate} onChange={handleEndDateChange} placeholder="End Date" />
+      </div>
     </div>
   )
 }
