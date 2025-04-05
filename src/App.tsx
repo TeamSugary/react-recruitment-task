@@ -1,18 +1,18 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState, useEffect } from "react";
 import "./App.css";
 import ComplaintForm from "./components/ComplaintForm/ComplaintForm";
+import toast from "react-hot-toast";
+import ComplaintViewer from "./components/ComplaintViewer/ComplaintViewer";
+import Loader from "./components/Loader/Loader";
 
-const baseUrl = "https://sugarytestapi.azurewebsites.net/TestApi";
-const listPath = "/GetComplains";
-const savePath = "/SaveComplain";
+export const baseUrl = "https://sugarytestapi.azurewebsites.net/TestApi";
+export const listPath = "/GetComplains";
+export const savePath = "/SaveComplain";
 
 function App() {
   const [complains, setComplains] = useState([]);
-  const [title, setTitle] = useState("");
-  const [body, setBody] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  const [isSaving, setIsSaving] = useState(false);
-  const [errorMessage, setErrorMessage] = useState("");
 
   // Fetch complaints from the API
   const fetchComplains = async () => {
@@ -23,37 +23,34 @@ function App() {
     setIsLoading(false);
   };
 
-  // Save a new complaint
-  const handleSubmit = async () => {
-    try {
-      setIsSaving(true);
-      const response = await fetch(savePath, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          Title: "Test Title",
-          Body: "Test Body",
-        }),
-      });
-      const data = await response.json();
-      if (!data.Success) throw new Error("Failed to save complaint.");
-      // Missing: Update complaints list after successful submission
-    } catch (e) {
-      // Error state not being set
-    } finally {
-      setIsSaving(false);
-    }
-  };
-
   useEffect(() => {
-    fetchComplains();
-  }, []); // Missing dependency array cleanup
+    let isMounted = true;
+
+    const fetchData = async () => {
+      try {
+        await fetchComplains();
+      } catch (error: any) {
+        if (isMounted) {
+          toast.error(error);
+        }
+      }
+    };
+
+    fetchData();
+
+    return () => {
+      isMounted = false;
+    };
+  }, []);
+
+  if (isLoading) {
+    return <Loader />;
+  }
 
   return (
     <div className="wrapper">
-      <ComplaintForm />
+      <ComplaintForm fetchComplains={fetchComplains} />
+      <ComplaintViewer complains={complains} />
     </div>
   );
 }

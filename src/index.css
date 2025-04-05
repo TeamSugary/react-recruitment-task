@@ -112,12 +112,12 @@ button {
   cursor: pointer;
 }
 
-.container {
+.form-container {
   max-width: 480px;
   margin: 0 auto;
 }
 
-.form-heading {
+.title-heading {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -147,4 +147,115 @@ button {
   box-shadow: rgba(0, 0, 0, 0.2) 0px 4px 10px;
   background-color: rgba(255, 255, 255, 0.25);
   border-radius: 20px;
+}
+
+.error-message {
+  text-align: center;
+  color: red;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.viewer-container {
+  padding: 40px;
+}
+
+.complain-grid {
+  display: grid;
+  gap: 16px;
+  grid-template-columns: repeat(4, 1fr);
+}
+
+.complain-card {
+  background-color: rgba(255, 255, 255, 0.25);
+  padding: 16px;
+  border-radius: 12px;
+  box-shadow: rgba(0, 0, 0, 0.2) 0px 4px 10px;
+  transition: transform 0.3s ease;
+  height: 200px;
+  overflow-y: auto;
+}
+
+.complain-card:hover {
+  transform: translateY(-4px);
+}
+
+.complain-title {
+  font-size: 20px;
+  font-weight: 600;
+  color: #000053;
+  margin-bottom: 8px;
+}
+
+.complain-body {
+  font-size: 16px;
+  color: #333;
+}
+
+.load-more-wrapper {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.load-more-btn {
+  padding: 10px 20px;
+  background: #000053;
+  border: none;
+  color: white;
+  font-weight: 600;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: 0.3s ease;
+  width: fit-content;
+  margin: 0 auto;
+}
+
+.load-more-btn:hover {
+  opacity: 0.9;
+}
+
+/* Mini Desktop: 3 items per row */
+@media (max-width: 1180px) {
+  .complain-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/* Tablet: 2 items per row */
+@media (max-width: 900px) {
+  .complain-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* Mobile: 1 item per row */
+@media (max-width: 600px) {
+  .complain-grid {
+    grid-template-columns: repeat(1, 1fr);
+  }
+
+  .round {
+    width: 8px;
+    height: 8px;
+  }
+
+  .line {
+    width: 32px;
+  }
+
+  .heading {
+    font-size: 24px;
+    padding: 0px 12px;
+    font-weight: bold;
+    color: #000053;
+  }
+
+  .viewer-container {
+    padding: 20px;
+  }
+
+  .form-container {
+    padding: 0 20px;
+  }
 }
