@@ -50,23 +50,23 @@ function App() {
   }, []); // Missing dependency array cleanup
 
   return (
-    <div className="wrapper">
-      <h2>Submit a Complaint</h2>
+    <div className="wrapper flex-column text-center min-h-screen py-10">
+      <h2 className='heading-1'>Submit a Complaint</h2>
 
-      <div className="complain-form">
-        <input
+      <div className="complain-form flex-column items-center gap-5 box">
+        <input className='inner-box'
           type="text"
           placeholder="Title"
           value={title}
           onChange={(e) => setTitle(e.target.value)}
         />
-        <textarea
+        <textarea className='inner-box pb-7'
           placeholder="Enter your complaint"
           value={body}
           onChange={(e) => setBody(e.target.value)}
         />
 
-        <button onClick={handleSubmit}>
+        <button className='btn' onClick={handleSubmit}>
           {isSaving ? 'Submitting...' : 'Submit Complaint'}
         </button>
 
@@ -74,14 +74,14 @@ function App() {
         {/* Error message not displayed even though state exists */}
       </div>
 
-      <h2>Complaints List</h2>
+      <h2 className='heading-1 pt-5'>Complaints List</h2>
 
       {isLoading ? (
         <div>Loading...</div>
       ) : complains.length ? (
         complains.map((complain) => (
-          <div key={complain.Id} className="complain-item">
-            <h3>{complain.Title}</h3>
+          <div  key={complain.Id} className="complain-item box-1 text-left my-1.5 p-7 border-[rgba(255,255,255,.2)] border-[0.5px]">
+            <h3 className='font-bold mb-3'>{complain.Title}</h3>
             <p>{complain.Body}</p>
           </div>
         ))
