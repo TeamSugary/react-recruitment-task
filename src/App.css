@@ -1,74 +1,76 @@
-#root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
+/* Global Body Styling */
+body {
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-width: 320px;
+  min-height: 100vh;
+  background: linear-gradient(135deg, rgb(166, 110, 239), rgba(0, 183, 255, 0.72));
+  color: #fff;
+  font-family: 'Arial', sans-serif;
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
-}
-
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
-}
-
-.card {
-  padding: 2em;
-}
-
-.read-the-docs {
-  color: #888;
-}
-
-.wrapper {
+/* Global Button styling */
+button {
   width: 100%;
-  max-width: 600px;
-  margin: 0 auto;
+  padding: 15px;
+  border-radius: 50px;
+  background: linear-gradient(to right, #ff5858, #ffcc70);
+  border: none;
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
 }
 
-.complain-form {
-  margin-bottom: 20px;
+button:hover {
+  opacity: 0.9;
 }
 
-.complain-form input,
-.complain-form textarea {
+button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+/* Global Input/textarea styling */
+input,
+textarea {
   width: 100%;
-  margin-bottom: 10px;
-  padding: 8px;
-  box-sizing: border-box;
+  margin-bottom: 15px;
+  padding: 15px;
+  border-radius: 25px;
+  border: none;
+  outline: none;
+  font-size: 14px;
+  background: rgba(255, 255, 255, 0.3);
+  color: #fff;
 }
 
-.complain-form button {
-  padding: 8px;
+/* Responsive Styles */
+
+/* Small devices (phones, less than 600px) */
+@media (max-width: 600px) {
+  input,
+  textarea {
+    font-size: 14px;
+    padding: 10px;
+  }
+
+  button {
+    padding: 12px;
+  }
 }
 
-.error-message {
-  color: red;
-  margin-top: 10px;
-}
+/* Medium devices (tablets, 600px - 768px) */
+@media (max-width: 768px) {
+  input,
+  textarea {
+    font-size: 16px;
+    padding: 12px;
+  }
 
-.complain-item {
-  border-bottom: 1px solid #ccc;
-  padding: 10px 0;
+  button {
+    padding: 14px;
+  }
 }
