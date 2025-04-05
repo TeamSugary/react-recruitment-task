@@ -1,0 +1,30 @@
+.empty-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: var(--spacing-xl);
+    text-align: center;
+    background-color: var(--bg-tertiary);
+    border-radius: var(--border-radius-md);
+    margin: var(--spacing-lg) 0;
+  }
+  
+  .empty-icon {
+    width: 60px;
+    height: 60px;
+    color: var(--text-muted);
+    margin-bottom: var(--spacing-md);
+    opacity: 0.7;
+  }
+  
+  .animated-icon {
+    animation: float 3s ease-in-out infinite;
+  }
+  
+  .empty-message {
+    color: var(--text-secondary);
+    font-size: var(--font-size-md);
+  }
+  
+  

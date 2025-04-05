@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
-import Toast from "./components/shared/Toast/Toast";
 import ComplaintForm from "./components/ComplaintForm/ComplaintForm";
+import Toast from "./components/shared/Toast/Toast";
+import ComplaintList from "./components/ComplaintList/ComplaintList";
 
 const baseUrl = "https://sugarytestapi.azurewebsites.net/";
 const listPath = "TestApi/GetComplains";
@@ -8,8 +9,6 @@ const savePath = "TestApi/SaveComplain";
 
 function App() {
   const [complains, setComplains] = useState([]);
-  const [title, setTitle] = useState("");
-  const [body, setBody] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
@@ -86,6 +85,15 @@ function App() {
         <main className="app-content">
           <section className="form-section">
             <ComplaintForm onSubmit={handleSubmit} />
+          </section>
+
+          <section className="list-section">
+            <ComplaintList
+              complaints={complains}
+              isLoading={isLoading}
+              error={errorMessage}
+              onRefresh={fetchComplains}
+            />
           </section>
         </main>
 
