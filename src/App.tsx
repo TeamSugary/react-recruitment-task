@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from "react";
 
 const baseUrl = "https://sugarytestapi.azurewebsites.net/";
 const listPath = "TestApi/GetComplains";
@@ -25,20 +25,29 @@ function App() {
   const handleSubmit = async () => {
     try {
       setIsSaving(true);
-      const response = await fetch(savePath, {
+      const response = await fetch(`${baseUrl}${savePath}`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          Title: "Test Title",
-          Body: "Test Body",
+          Title: title,
+          Body: body,
         }),
       });
       const data = await response.json();
       if (!data.Success) throw new Error("Failed to save complaint.");
       // Missing: Update complaints list after successful submission
+      alert("Complaint saved successfully!");
+      setTitle("");
+      setBody("");
+      fetchComplains();
     } catch (e) {
+      setErrorMessage(
+        `Error saving complaint: ${
+          e instanceof Error ? e.message : "Unknown error"
+        }`
+      );
       // Error state not being set
     } finally {
       setIsSaving(false);
@@ -67,7 +76,7 @@ function App() {
         />
 
         <button onClick={handleSubmit}>
-          {isSaving ? 'Submitting...' : 'Submit Complaint'}
+          {isSaving ? "Submitting..." : "Submit Complaint"}
         </button>
 
         {/* Place text loader when saving */}
