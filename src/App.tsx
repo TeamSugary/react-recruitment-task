@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import "./App.css"
+import { TComplain } from './types/complain';
 const baseUrl = "https://sugarytestapi.azurewebsites.net/";
 const listPath = "TestApi/GetComplains";
 const savePath = "TestApi/SaveComplain";
@@ -20,7 +21,7 @@ function App() {
       const data = await response.json();
       setComplains(data);
       setIsLoading(false);
-    } catch (error) {
+    } catch (error: any) {
       setErrorMessage(error)
     }
   };
@@ -29,20 +30,22 @@ function App() {
   const handleSubmit = async () => {
     try {
       setIsSaving(true);
-      const response = await fetch(savePath, {
+      const response = await fetch(`${baseUrl}${savePath}`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          Title: "Test Title",
-          Body: "Test Body",
+          Title: title,
+          Body: body,
         }),
       });
       const data = await response.json();
       if (!data.Success) throw new Error("Failed to save complaint.");
-      setComplains(data);
-    } catch (e) {
+      setIsSaving(false);
+      setBody("");
+      setTitle("")
+    } catch (error: any) {
       setErrorMessage(error)
     } finally {
       setIsSaving(false);
@@ -51,7 +54,7 @@ function App() {
 
   useEffect(() => {
     fetchComplains();
-  }, []);
+  }, [isSaving]);
 
   return (
     <div className="wrapper">
@@ -87,7 +90,7 @@ function App() {
             <p>Loading...</p>
           </div>
           ) : complains.length ? (
-            complains.map((complain) => (
+            complains.map((complain: TComplain) => (
               <div key={complain.Id} className="complain-item">
                 <h3>{complain.Title}</h3>
                 <p>{complain.Body}</p>
