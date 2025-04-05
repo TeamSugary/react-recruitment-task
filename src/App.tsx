@@ -1,93 +1,86 @@
 import { useState, useEffect } from 'react';
-
-const baseUrl = "https://sugarytestapi.azurewebsites.net/";
-const listPath = "TestApi/GetComplains";
-const savePath = "TestApi/SaveComplain";
+import "./App.css"
+import { TComplain } from './types/complain';
+import PuffLoader from "react-spinners/PuffLoader";
+import ComplaintForm from './components/ComplaintForm';
+import { baseUrl, listPath } from './consts/api';
 
 function App() {
-  const [complains, setComplains] = useState([]);
-  const [title, setTitle] = useState("");
-  const [body, setBody] = useState("");
+  const [complains, setComplains] = useState<TComplain[]>([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [fetchError, setFetchError] = useState("");
+
+  // issaving state is lifted to fetch after submitting new complain.
   const [isSaving, setIsSaving] = useState(false);
-  const [errorMessage, setErrorMessage] = useState("");
+
 
   // Fetch complaints from the API
   const fetchComplains = async () => {
     setIsLoading(true);
-    const response = await fetch(`${baseUrl}${listPath}`);
-    const data = await response.json();
-    setComplains(data);
-    setIsLoading(false);
-  };
-
-  // Save a new complaint
-  const handleSubmit = async () => {
     try {
-      setIsSaving(true);
-      const response = await fetch(savePath, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          Title: "Test Title",
-          Body: "Test Body",
-        }),
-      });
+      const response = await fetch(`${baseUrl}${listPath}`);
       const data = await response.json();
-      if (!data.Success) throw new Error("Failed to save complaint.");
-      // Missing: Update complaints list after successful submission
-    } catch (e) {
-      // Error state not being set
-    } finally {
-      setIsSaving(false);
+      setComplains(data);
+      setIsLoading(false);
+    } catch (error: any) {
+      setFetchError("Something Went Wrong. PLease try again.")
     }
   };
 
+
   useEffect(() => {
-    fetchComplains();
-  }, []); // Missing dependency array cleanup
+    if (!isSaving) {
+      fetchComplains();
+    }
+
+  }, [isSaving]);
 
   return (
     <div className="wrapper">
-      <h2>Submit a Complaint</h2>
+      <div className="container">
+        <h2>Submit a Complaint</h2>
 
-      <div className="complain-form">
-        <input
-          type="text"
-          placeholder="Title"
-          value={title}
-          onChange={(e) => setTitle(e.target.value)}
-        />
-        <textarea
-          placeholder="Enter your complaint"
-          value={body}
-          onChange={(e) => setBody(e.target.value)}
-        />
+        {/* complain form */}
+        <ComplaintForm setIsSaving={setIsSaving} isSaving={isSaving}/>
 
-        <button onClick={handleSubmit}>
-          {isSaving ? 'Submitting...' : 'Submit Complaint'}
-        </button>
+        <h2>Complaints List</h2>
+        <div className="complaints" style={{ position: "relative" }}>
+          {/* fetch complain error */}
+          {fetchError && <p style={{ color: "#ff5858" }}>{fetchError}</p>}
 
-        {/* Place text loader when saving */}
-        {/* Error message not displayed even though state exists */}
+          {/* loading component */}
+          {isLoading && (
+
+            <div style={{ position: "absolute", left: 0, top: 0, width: "100%", height: "100%" }}>
+              <div style={{ display: 'flex', justifyContent: 'center', textAlign: 'center' }} className="complain-item">
+                <PuffLoader
+                  color='white'
+                  size={100}
+                  aria-label="Loading Spinner"
+                  data-testid="loader"
+                />
+                <h3></h3>
+                <h3></h3>
+              </div>
+
+            </div>
+          )}
+
+          {/* complaints */}
+          {complains.length ? (
+            complains.map((complain: TComplain) => (
+              <div key={complain.Id} className="complain-item">
+                <h3>{complain.Title}</h3>
+                <p>{complain.Body}</p>
+              </div>
+            ))
+          ) : (
+            <p>No complaints available.</p>
+          )}
+        </div>
+
       </div>
 
-      <h2>Complaints List</h2>
-
-      {isLoading ? (
-        <div>Loading...</div>
-      ) : complains.length ? (
-        complains.map((complain) => (
-          <div key={complain.Id} className="complain-item">
-            <h3>{complain.Title}</h3>
-            <p>{complain.Body}</p>
-          </div>
-        ))
-      ) : (
-        <p>No complaints available.</p>
-      )}
     </div>
   );
 }
