@@ -120,8 +120,9 @@ h2 {
 .error-message {
   color: #ff6f6f;
   margin-top: 10px;
-  min-width: 200px;
+  width: 200px;
   display: block;
+  font-weight: 700;
 }
 
 .complain-item {
@@ -182,5 +183,12 @@ h2 {
   100% {
     background-size: 8px 100%, 8px 4px, 8px 4px, 8px 100%, 8px 4px, 8px 4px, 8px 100%, 8px 4px, 8px 4px;
     background-position: 0 50%, 0 calc(0% - 2px), 0 calc(100% + 2px), 50% 50%, 50% calc(0% - 2px), 50% calc(100% + 2px), 100% 50%, 100% calc(0% - 2px), 100% calc(100% + 2px);
+  }
+}
+
+
+@media (min-width: 600px) {
+  .error-message {
+    width: 600px;
   }
 }

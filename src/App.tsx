@@ -100,12 +100,13 @@ function App() {
       }, 1000)
       const makeNewComplain = (prev: Complain[]) => {
         const newComplain = new Complain(title, body)
-        newComplain.Id = (prev[0].Id || 10000) + 1
+        newComplain.Id = (complains[0].Id || 10000) + 1
         newComplain.CreatedAt = new Date().toISOString()
         return [newComplain, ...prev]
       }
+      setSearch('')
       setComplains(makeNewComplain)
-      setSearchedComplains(makeNewComplain)
+      setSearchedComplains(() => makeNewComplain(complains))
       window.scroll({ top: 0, left: 0, behavior: 'smooth' })
 
       setTitle('')
