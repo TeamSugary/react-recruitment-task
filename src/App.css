@@ -86,6 +86,7 @@ h2 {
   height: 100px;
 }
 
+.complain-list-header input:focus,
 .complain-form input:focus,
 .complain-form textarea:focus {
   border-color: #fff;
