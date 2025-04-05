@@ -3,8 +3,19 @@
   margin: 0 auto;
   padding: 2rem;
   text-align: center;
+
 }
 
+body{
+  background-image: linear-gradient(to right top, #051937, #004d7a, #008793, #00bf72, #a8eb12);
+  color: #f0f0f0;
+  display: flex
+;
+  font-family: Arial, sans-serif;
+  justify-content: center;
+  margin: 0;
+  min-height: 100vh;
+}
 .logo {
   height: 6em;
   padding: 1.5em;
@@ -45,22 +56,49 @@
   width: 100%;
   max-width: 600px;
   margin: 0 auto;
+
 }
 
 .complain-form {
   margin-bottom: 20px;
+  backdrop-filter: blur(10px);
+  background: #fff3;
+  border-radius: 25px;
+  box-shadow: 0 4px 10px #0003;
+  margin-bottom: 20px;
+  padding: 20px;
 }
 
 .complain-form input,
 .complain-form textarea {
-  width: 100%;
+  /* width: 100%;
   margin-bottom: 10px;
   padding: 8px;
+  box-sizing: border-box; */
+  background: #fff3;
+  border: 1px solid hsla(0, 0%, 100%, .3);
+  border-radius: 25px;
   box-sizing: border-box;
+  color: #fff;
+  font-family: Arial, sans-serif;
+  font-size: 16px;
+  margin-bottom: 10px;
+  padding: 15px;
+  width: 100%;
 }
 
 .complain-form button {
-  padding: 8px;
+  /* padding: 8px; */
+  background: linear-gradient(135deg, #ff5f6d, #ffc371);
+  border: none;
+  border-radius: 100px;
+  color: #fff;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 700;
+  padding: 16px;
+  transition: all .3s ease;
+  width: 100%;
 }
 
 .error-message {
@@ -69,6 +107,13 @@
 }
 
 .complain-item {
-  border-bottom: 1px solid #ccc;
-  padding: 10px 0;
+  /* border-bottom: 1px solid #ccc;
+  padding: 10px 0; */
+  background: #fff3;
+  border: 1px solid hsla(0, 0%, 100%, .3);
+  border-radius: 30px;
+  box-shadow: 0 4px 10px #0003;
+  margin-bottom: 10px;
+  padding: 20px 25px;
+  transition: all .3s ease;
 }
