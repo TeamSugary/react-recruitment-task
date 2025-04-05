@@ -76,6 +76,8 @@ function App() {
             id="title" name="title"
             value={title}
             onChange={(e) => setTitle(e.target.value)}
+            minlength="3"
+            maxlength="20"
             required
           />
         </label>
@@ -85,6 +87,8 @@ function App() {
             id="body" name="body"
             value={body}
             onChange={(e) => setBody(e.target.value)}
+            minlength="6"
+            maxlength="100"
             required
           />
         </label>
