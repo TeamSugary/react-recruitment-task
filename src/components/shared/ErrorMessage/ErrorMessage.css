@@ -1,0 +1,30 @@
+.error-message-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: var(--spacing-lg);
+    text-align: center;
+    background-color: rgba(255, 107, 107, 0.1);
+    border-radius: var(--border-radius-md);
+    margin: var(--spacing-md) 0;
+  }
+  
+  .error-icon {
+    width: 24px;
+    height: 24px;
+    color: var(--primary-color);
+    margin-bottom: var(--spacing-sm);
+  }
+  
+  .animated-icon {
+    animation: pulse 1.5s ease-in-out infinite;
+  }
+  
+  .error-text {
+    color: var(--primary-color);
+    font-size: var(--font-size-sm);
+    margin: 0;
+  }
+  
+  

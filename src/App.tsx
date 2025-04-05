@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
-import Toast from "./components/shared/toast/Toast";
+import Toast from "./components/shared/Toast/Toast";
+import ComplaintForm from "./components/ComplaintForm/ComplaintForm";
 
 const baseUrl = "https://sugarytestapi.azurewebsites.net/";
 const listPath = "TestApi/GetComplains";
@@ -77,46 +78,19 @@ function App() {
   }, []);
 
   return (
-    <div className="wrapper">
-      <h2>Submit a Complaint</h2>
+      <div className="app">
+        <header className="app-header">
+          <h1>Complaint Management System</h1>
+        </header>
 
-      <div className="complain-form">
-        <input
-          type="text"
-          placeholder="Title"
-          value={title}
-          onChange={(e) => setTitle(e.target.value)}
-        />
-        <textarea
-          placeholder="Enter your complaint"
-          value={body}
-          onChange={(e) => setBody(e.target.value)}
-        />
+        <main className="app-content">
+          <section className="form-section">
+            <ComplaintForm onSubmit={handleSubmit} />
+          </section>
+        </main>
 
-        <button onClick={() => handleSubmit(title, body)}>
-          Submit Complaint
-        </button>
-
-        {/* Place text loader when saving */}
-        {/* Error message not displayed even though state exists */}
-        {errorMessage && <p>{errorMessage}</p>}
+        <div id="toast-container"></div>
       </div>
-
-      <h2>Complaints List</h2>
-
-      {isLoading ? (
-        <div>Loading...</div>
-      ) : complains.length ? (
-        complains.map((complain) => (
-          <div key={complain.Id} className="complain-item">
-            <h3>{complain.Title}</h3>
-            <p>{complain.Body}</p>
-          </div>
-        ))
-      ) : (
-        <p>No complaints available.</p>
-      )}
-    </div>
   );
 }
 
