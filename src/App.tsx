@@ -1,9 +1,18 @@
 import { useState, useEffect, FormEvent } from 'react';
+import Complaint from "../src/components/Complaint"
 import './App.css'
 
 const baseUrl = "https://sugarytestapi.azurewebsites.net/";
 const listPath = "TestApi/GetComplains";
 const savePath = "TestApi/SaveComplain";
+
+
+interface Complain {
+  Title: string;
+  Body: string;
+  Id: number;
+}
+
 
 function App() {
   const [complains, setComplains] = useState([]);
@@ -76,8 +85,8 @@ function App() {
             id="title" name="title"
             value={title}
             onChange={(e) => setTitle(e.target.value)}
-            minlength="3"
-            maxlength="20"
+            minLength={3}
+            maxLength={20}
             required
           />
         </label>
@@ -87,8 +96,8 @@ function App() {
             id="body" name="body"
             value={body}
             onChange={(e) => setBody(e.target.value)}
-            minlength="6"
-            maxlength="100"
+            minLength={6}
+            maxLength={100}
             required
           />
         </label>
@@ -105,11 +114,8 @@ function App() {
       {isLoading ? (
         <div>Loading...</div>
       ) : complains.length ? (
-        complains.map((complain) => (
-          <div key={complain.Id} className="complain-item">
-            <h3>{complain.Title}</h3>
-            <p>{complain.Body}</p>
-          </div>
+        complains.map((complain: Complain) => (
+          <Complaint key={complain.Id} complaintData={complain} />
         ))
       ) : (
         <p>No complaints available.</p>
