@@ -9,3 +9,13 @@ export interface ApiResponse {
   Success: boolean;
   Message?: string;
 }
+
+export interface ComplaintFormProps {
+  onComplaintSubmitted: () => void;
+}
+
+export interface ComplaintListProps {
+  complaints: Complaint[] | null;
+  isLoading: boolean;
+  error: string | null;
+}

@@ -1,11 +1,5 @@
 import React from "react";
-import { Complaint } from "../../types/types";
-
-interface ComplaintListProps {
-  complaints: Complaint[] | null;
-  isLoading: boolean;
-  error: string | null;
-}
+import { ComplaintListProps } from "../../types/types";
 
 const formatDate = (dateString?: string): string => {
   if (!dateString) return "";

@@ -1,10 +1,6 @@
 import React, { useState } from "react";
 import useApiFetch from "../../hooks/UseFetch";
-import { ApiResponse } from "../../types/types";
-
-interface ComplaintFormProps {
-  onComplaintSubmitted: () => void;
-}
+import { ApiResponse, ComplaintFormProps } from "../../types/types";
 
 const ComplaintForm: React.FC<ComplaintFormProps> = ({
   onComplaintSubmitted,
@@ -101,10 +97,11 @@ const ComplaintForm: React.FC<ComplaintFormProps> = ({
             value={body}
             onChange={(e) => setBody(e.target.value)}
             disabled={isLoading}
-            rows={4}
+            rows={5}
             className="form-textarea"
             aria-required="true"
             aria-invalid={validationError.includes("description")}
+            style={{ resize: "none" }}
           />
         </div>
 

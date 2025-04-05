@@ -33,18 +33,13 @@ const App = () => {
       </header>
 
       <div className="content-wrapper">
-        <div className="form-section">
-          <ComplaintForm onComplaintSubmitted={handleComplaintSubmitted} />
-        </div>
-
-        <div className="list-section">
-          <ComplaintList
-            complaints={complaints}
-            isLoading={complaintsLoading}
-            error={complaintsError}
-          />
-        </div>
+        <ComplaintForm onComplaintSubmitted={handleComplaintSubmitted} />
       </div>
+      <ComplaintList
+        complaints={complaints}
+        isLoading={complaintsLoading}
+        error={complaintsError}
+      />
     </div>
   );
 };
