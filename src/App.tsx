@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, FormEvent } from 'react';
 import './App.css'
 
 const baseUrl = "https://sugarytestapi.azurewebsites.net/";
@@ -23,7 +23,10 @@ function App() {
   };
 
   // Save a new complaint
-  const handleSubmit = async () => {
+  const handleSubmit = async (event: FormEvent) => {
+    // Prevent the default form submission behavior
+    event.preventDefault();
+
     try {
       setIsSaving(true);
       const response = await fetch(`${baseUrl}${savePath}`, {
@@ -65,26 +68,33 @@ function App() {
     <div className="wrapper">
       <h2>Submit a Complaint</h2>
 
-      <div className="complain-form">
-        <input
-          type="text"
-          placeholder="Title"
-          value={title}
-          onChange={(e) => setTitle(e.target.value)}
-        />
-        <textarea
-          placeholder="Enter your complaint"
-          value={body}
-          onChange={(e) => setBody(e.target.value)}
-        />
-
-        <button onClick={handleSubmit}>
+      <form className="complain-form" onSubmit={(event) => handleSubmit(event)}>
+        <label htmlFor="title">
+          <input
+            type="text"
+            placeholder="Title"
+            id="title" name="title"
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
+            required
+          />
+        </label>
+        <label htmlFor="body">
+          <textarea
+            placeholder="Enter your complaint"
+            id="body" name="body"
+            value={body}
+            onChange={(e) => setBody(e.target.value)}
+            required
+          />
+        </label>
+        <button type='submit'>
           {isSaving ? 'Submitting...' : 'Submit Complaint'}
         </button>
 
         {/* Place text loader when saving */}
         {/* Error message not displayed even though state exists */}
-      </div>
+      </form>
 
       <h2>Complaints List</h2>
 
