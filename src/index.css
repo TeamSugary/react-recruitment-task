@@ -6,7 +6,7 @@ body {
   align-items: center;
   min-width: 320px;
   min-height: 100vh;
-  background: linear-gradient(135deg,rgb(166, 110, 239),rgba(0, 183, 255, 0.72))!important; /* Unified Gradient */
+  background: linear-gradient(135deg, rgb(166, 110, 239), rgba(0, 183, 255, 0.72)) !important; /* Unified Gradient */
   color: #fff;
   font-family: 'Arial', sans-serif;
 }
@@ -21,9 +21,8 @@ body {
   border-radius: 15px;
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
   width: 100%;
-  max-width: 400px;
-  
-  background: linear-gradient(135deg,rgb(166, 110, 239),rgb(0, 183, 255)); /* Unified Gradient */
+  max-width: 500px; /* Increased max-width for wider layout */
+  background: linear-gradient(135deg, rgb(166, 110, 239), rgb(0, 183, 255)); /* Unified Gradient */
   overflow: hidden; /* Prevent overflow */
 }
 
@@ -63,8 +62,34 @@ body {
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
   transition: 0.3s ease, transform 0.3s ease;
   word-wrap: break-word; /* To handle text overflow */
+  
+  width: 100%;          /* Ensure boxes take full width */
+  min-height: 150px;    /* Set a base height */
+  height: auto;         /* Allow height to adjust based on content */
+  box-sizing: border-box;
+  overflow: hidden;     /* Prevent overflow */
+  display: flex;        /* Flex to control content inside */
+  flex-direction: column; /* Stack title and message vertically */
+  align-items: flex-start; /* Align to the left */
+  margin-bottom: 15px;  /* Add some space between boxes */
 }
 
+/* Title Styling */
+.complaint-title {
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 10px;
+  color: #fff;
+}
+
+/* Message Styling */
+.complaint-message {
+  font-size: 16px;
+  color: #fff;
+  margin-bottom: 10px;
+}
+
+/* Hover effect for complaint boxes */
 .complaint-box:hover {
   background: rgba(255, 255, 255, 0.2);
   transform: translateY(-5px);
@@ -133,6 +158,8 @@ button:disabled {
   .complaint-box {
     font-size: 14px; /* Make text size smaller for small devices */
     padding: 10px;
+    min-height: 120px;  /* Adjust height for small screens */
+    height: 120px;
   }
 
   .complaints-list-heading {
@@ -163,6 +190,8 @@ button:disabled {
 
   .complaint-box {
     font-size: 16px; /* Slightly bigger font for medium devices */
+    min-height: 130px;
+    height: 130px;
   }
 
   .complaints-list-heading {
