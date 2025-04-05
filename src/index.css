@@ -4,114 +4,43 @@
 :root {
   --background: #f8f9fa;
   --body-text: #1b263b;
-  --color-primary: #646cff;
-  --color-primary-dark: #535bf2;
+  --primary: #646cff;
+  --primary-dark: #535bf2;
+  --muted: #797f86;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
     --background: #1b263b;
     --body-text: #f8f9fa;
+    --muted: #a1a6aa;
   }
 }
 
 @theme {
   --color-background: var(--background);
   --color-body-text: var(--body-text);
-  --color-primary: var(--color-primary);
-  --color-primary-dark: var(--color-primary-dark);
+  --color-primary: var(--primary);
+  --color-primary-dark: var(--primary-dark);
+  --color-muted: var(--muted);
   --font-primary: "Open Sans", sans-serif;
 }
 
+@layer utilities {
+  body {
+    @apply bg-background text-body-text font-primary;
+  }
 
+  input,
+  textarea {
+    @apply p-2 rounded-md border-1 border-muted/30 outline-none transition-all duration-300 hover:border-1 hover:border-primary active:scale-95 focus:border-1 focus:border-primary;
+  }
 
-/* @theme {
-  --color-background: #f8f9fa;
-  --color-body-text: #1b263b;
-  --color- --color-primary: #646cff;
-  --color-primary-dark: #535bf2;
-  --font-primary: "Open Sans", sans-serif;
+  .btn {
+    @apply bg-primary py-2 rounded-md cursor-pointer not-disabled:hover:bg-primary-dark disabled:opacity-85 disabled:cursor-not-allowed text-white font-semibold active:scale-95 transition-all;
+  }
+
+  .card {
+    @apply flex flex-col gap-2 max-w-md border border-muted/20 rounded-md p-2 md:p-5 min-h-32;
+  }
 }
-
-@theme (prefers-color-scheme: dark) {
-  --color-background: #1b263b;
-  --color-body-text: #f8f9fa;
-  --color-primary: #646cff;
-  --color-primary-dark: #535bf2;
-  --font-primary: "Open Sans", sans-serif;
-} */
-
-body {
-  @apply bg-background text-body-text font-primary;
-}
-
-input,
-textarea {
-  @apply p-2 rounded-md border-1 border-gray-400 outline-none transition-all duration-300 hover:border-1 hover:border-primary active:scale-95 focus:border-1 focus:border-primary;
-}
-
-.btn {
-  @apply bg-primary py-2 rounded-md cursor-pointer not-disabled:hover:bg-primary-dark disabled:opacity-85 disabled:cursor-not-allowed text-white font-semibold active:scale-95 transition-all;
-}
-
-.card {
-  @apply flex flex-col gap-2 max-w-md border border-gray-500 rounded-md p-2 md:p-5;
-}
-
-/* :root {
-  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
-
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-a {
-  font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
-}
-
-a:hover {
-  color: #535bf2;
-}
-
-body {
-  margin: 0;
-  display: flex;
-  place-items: center;
-  min-width: 320px;
-  min-height: 100vh;
-}
-
-h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
-}
-
-button {
-  border-radius: 8px;
-  border: 1px solid transparent;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
-  font-weight: 500;
-  font-family: inherit;
-  background-color: #1a1a1a;
-  cursor: pointer;
-  transition: border-color 0.25s;
-}
-
-button:hover {
-  border-color: #646cff;
-}
-
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
-} */

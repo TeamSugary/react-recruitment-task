@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-export default function ComplaintsForm() {
+export default function ComplaintsForm({ refetchComplaint }) {
    const [title, setTitle] = useState("");
    const [body, setBody] = useState("");
    const [isSaving, setIsSaving] = useState(false);
@@ -33,6 +33,8 @@ export default function ComplaintsForm() {
                Body: body,
             }),
          });
+         // refetch complaints after saving
+         refetchComplaint();
          const data = await response.json();
          if (!data.Success) throw new Error("Failed to save complaint.");
          setTitle("");
@@ -51,7 +53,7 @@ export default function ComplaintsForm() {
 
    return (
       <div className='card !border-2 border-dashed hover:!border-primary'>
-         <h2 className="text-lg text-gray-300 font-bold">Submit a Complaint</h2>
+         <h2 className="text-lg text-muted font-bold">Submit a Complaint</h2>
          <input
             type="text"
             placeholder="Title"
@@ -61,14 +63,13 @@ export default function ComplaintsForm() {
          <textarea
             placeholder="Enter your complaint"
             value={body}
+            rows={5}
             onChange={(e) => setBody(e.target.value)}
          />
          <button onClick={handleSubmit} className='btn' disabled={isSaving}>
             {isSaving ? 'Submitting...' : 'Submit Complaint'}
          </button>
-         {errorMessage && <p className="text-red-500">{errorMessage}</p>}
-         {/* Place text loader when saving */}
-         {/* Error message not displayed even though state exists */}
+         {errorMessage && <p className="text-red-500 text-sm">{errorMessage}</p>}
       </div>
    )
 }
