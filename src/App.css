@@ -2,7 +2,6 @@
   max-width: 1280px;
   margin: 0 auto;
   padding: 2rem;
-  text-align: center;
 }
 
 .logo {
@@ -59,9 +58,7 @@
   box-sizing: border-box;
 }
 
-.complain-form button {
-  padding: 8px;
-}
+
 
 .error-message {
   color: red;
@@ -71,4 +68,69 @@
 .complain-item {
   border-bottom: 1px solid #ccc;
   padding: 10px 0;
+}
+
+
+/* complain form */
+.complain-form {
+  backdrop-filter: blur(10px);
+  box-shadow: rgba(0, 0, 0, 0.2) 0px 4px 10px;
+  margin-bottom: 20px;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 20px;
+  padding: 20px;
+}
+.complain-form input:focus, .complain-form textarea:focus{
+  border: 1px solid rgba(202, 223, 205, 0.95);
+  outline: 0px solid rgba(202, 223, 205, 0.95);
+}
+.complain-form input, .complain-form textarea{
+  border: 1px solid rgba(202, 223, 205, 0.5);
+  padding: 15px;
+  border-radius: 15px;
+  background-color: rgba(255, 255, 255, 0.1);;
+  color: white;
+  font-size: 16px;
+  font-family: Arial, sans-serif;
+}
+.complain-form input::placeholder, .complain-form textarea::placeholder{
+  color: white;
+  font-size: 16px;
+}
+.complain-form button {
+  color: rgb(255, 255, 255);
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 700;
+  width: 100%;
+  background: linear-gradient(135deg, rgb(255, 95, 109), rgb(255, 195, 113));
+  border-style: none;
+  border-radius: 100px;
+  padding: 16px;
+  transition: 0.3s;
+}
+.complain-form button:hover {
+  box-shadow: rgba(255, 255, 255, 0.2) 0px 4px 10px;
+  transform: translateY(-2px);
+}
+
+
+/* complain list */
+.complain-item {
+  box-shadow: rgba(0, 0, 0, 0.2) 0px 4px 10px;
+  margin-bottom: 10px;
+  background: rgba(255, 255, 255, 0.2);
+  border-width: 1px;
+  border-style: solid;
+  border-color: rgba(255, 255, 255, 0.3);
+  border-image: initial;
+  border-radius: 20px;
+  padding: 20px 25px;
+  transition: 0.3s;
+}
+
+.complain-item:hover {
+  box-shadow: rgba(0, 0, 0, 0.4) 0px 4px 10px;
+  cursor: pointer;
+  transform: translateY(-2px);
 }

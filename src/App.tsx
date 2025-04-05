@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-
+import "./App.css"
 const baseUrl = "https://sugarytestapi.azurewebsites.net/";
 const listPath = "TestApi/GetComplains";
 const savePath = "TestApi/SaveComplain";
@@ -15,10 +15,14 @@ function App() {
   // Fetch complaints from the API
   const fetchComplains = async () => {
     setIsLoading(true);
-    const response = await fetch(`${baseUrl}${listPath}`);
-    const data = await response.json();
-    setComplains(data);
-    setIsLoading(false);
+    try {
+      const response = await fetch(`${baseUrl}${listPath}`);
+      const data = await response.json();
+      setComplains(data);
+      setIsLoading(false);
+    } catch (error) {
+      setErrorMessage(error)
+    }
   };
 
   // Save a new complaint
@@ -37,9 +41,9 @@ function App() {
       });
       const data = await response.json();
       if (!data.Success) throw new Error("Failed to save complaint.");
-      // Missing: Update complaints list after successful submission
+      setComplains(data);
     } catch (e) {
-      // Error state not being set
+      setErrorMessage(error)
     } finally {
       setIsSaving(false);
     }
@@ -47,47 +51,55 @@ function App() {
 
   useEffect(() => {
     fetchComplains();
-  }, []); // Missing dependency array cleanup
+  }, []);
 
   return (
     <div className="wrapper">
-      <h2>Submit a Complaint</h2>
+      <div className="container">
+        <h2>Submit a Complaint</h2>
 
-      <div className="complain-form">
-        <input
-          type="text"
-          placeholder="Title"
-          value={title}
-          onChange={(e) => setTitle(e.target.value)}
-        />
-        <textarea
-          placeholder="Enter your complaint"
-          value={body}
-          onChange={(e) => setBody(e.target.value)}
-        />
+        <div className="complain-form">
+          <input
+            type="text"
+            placeholder="Title"
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
+          />
+          <textarea
+            placeholder="Enter your complaint"
+            value={body}
+            onChange={(e) => setBody(e.target.value)}
+          />
 
-        <button onClick={handleSubmit}>
-          {isSaving ? 'Submitting...' : 'Submit Complaint'}
-        </button>
+          <button onClick={handleSubmit}>
+            {isSaving ? 'Submitting...' : 'Submit Complaint'}
+          </button>
 
-        {/* Place text loader when saving */}
-        {/* Error message not displayed even though state exists */}
+
+
+          {/* Error message */}
+          {errorMessage && <p style={{ color: "red" }}>{errorMessage}error</p>}
+        </div>
+
+        <h2>Complaints List</h2>
+        <div className="complaints">
+          {isLoading ? (<div style={{ position: "absolute", left: 0, top: 0, width: "100%", height: "100%" }}>
+            <p>Loading...</p>
+          </div>
+          ) : complains.length ? (
+            complains.map((complain) => (
+              <div key={complain.Id} className="complain-item">
+                <h3>{complain.Title}</h3>
+                <p>{complain.Body}</p>
+              </div>
+            ))
+          ) : (
+            <p>No complaints available.</p>
+          )}
+        </div>
+
       </div>
 
-      <h2>Complaints List</h2>
-
-      {isLoading ? (
-        <div>Loading...</div>
-      ) : complains.length ? (
-        complains.map((complain) => (
-          <div key={complain.Id} className="complain-item">
-            <h3>{complain.Title}</h3>
-            <p>{complain.Body}</p>
-          </div>
-        ))
-      ) : (
-        <p>No complaints available.</p>
-      )}
     </div>
   );
 }
