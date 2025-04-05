@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import './App.css'
 
 const baseUrl = "https://sugarytestapi.azurewebsites.net/";
 const listPath = "TestApi/GetComplains";
@@ -25,19 +26,21 @@ function App() {
   const handleSubmit = async () => {
     try {
       setIsSaving(true);
-      const response = await fetch(savePath, {
+      const response = await fetch(`${baseUrl}${savePath}`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          Title: "Test Title",
-          Body: "Test Body",
+          Title: title,
+          Body: body,
         }),
       });
       const data = await response.json();
       if (!data.Success) throw new Error("Failed to save complaint.");
       // Missing: Update complaints list after successful submission
+      fetchComplains();
+      emptyInputs()
     } catch (e) {
       // Error state not being set
     } finally {
@@ -45,8 +48,17 @@ function App() {
     }
   };
 
+  function emptyInputs() {
+    setBody("")
+    setTitle("")
+  }
+
   useEffect(() => {
     fetchComplains();
+
+    return () => {
+      console.log('clean up')
+    }
   }, []); // Missing dependency array cleanup
 
   return (

@@ -55,12 +55,12 @@
 .complain-form textarea {
   width: 100%;
   margin-bottom: 10px;
-  padding: 8px;
+  padding: 14px;
   box-sizing: border-box;
 }
 
 .complain-form button {
-  padding: 8px;
+  padding: 12px;
 }
 
 .error-message {
