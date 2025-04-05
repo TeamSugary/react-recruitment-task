@@ -26,10 +26,18 @@ function App() {
   // Fetch complaints from the API
   const fetchComplains = async () => {
     setIsLoading(true);
-    const response = await fetch(`${baseUrl}${listPath}`);
-    const data = await response.json();
-    setComplains(data);
-    setIsLoading(false);
+
+    try {
+      const response = await fetch(`${baseUrl}${listPath}`);
+      const data = await response.json();
+      setComplains(data);
+    } catch (error: any) {
+
+      console.log(error.message)
+    } finally {
+
+      setIsLoading(false);
+    }
   };
 
   // Save a new complaint

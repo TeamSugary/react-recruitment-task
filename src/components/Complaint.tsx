@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useEffect } from "react"
 
 interface ComplaintProps {
     complaintData: {
@@ -11,7 +11,7 @@ interface ComplaintProps {
 
 export default function Complaint({ complaintData }: ComplaintProps) {
 
-
+    
     return (
         <div className="complain-item">
             <h3>{complaintData.Title}</h3>
