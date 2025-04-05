@@ -4,6 +4,7 @@ import { TComplain } from './types/complain';
 const baseUrl = "https://sugarytestapi.azurewebsites.net/";
 const listPath = "TestApi/GetComplains";
 const savePath = "TestApi/SaveComplain";
+import PuffLoader from "react-spinners/PuffLoader";
 
 function App() {
   const [complains, setComplains] = useState([]);
@@ -53,7 +54,10 @@ function App() {
   };
 
   useEffect(() => {
-    fetchComplains();
+    if (!isSaving) {
+      fetchComplains();
+    }
+
   }, [isSaving]);
 
   return (
@@ -85,11 +89,25 @@ function App() {
         </div>
 
         <h2>Complaints List</h2>
-        <div className="complaints">
-          {isLoading ? (<div style={{ position: "absolute", left: 0, top: 0, width: "100%", height: "100%" }}>
-            <p>Loading...</p>
-          </div>
-          ) : complains.length ? (
+        <div className="complaints" style={{ position: "relative" }}>
+          {isLoading && (
+
+            <div style={{ position: "absolute", left: 0, top: 0, width: "100%", height: "100%" }}>
+              <div className="complain-item">
+                <PuffLoader
+                  color='white'
+                  size={100}
+                  aria-label="Loading Spinner"
+                  data-testid="loader"
+                />
+                <h3></h3>
+                <h3></h3>
+              </div>
+
+            </div>
+          )}
+
+          {complains.length ? (
             complains.map((complain: TComplain) => (
               <div key={complain.Id} className="complain-item">
                 <h3>{complain.Title}</h3>
