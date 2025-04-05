@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import ComplaintForm from "./components/ComplaintForm/ComplaintForm";
 import Toast from "./components/shared/Toast/Toast";
 import ComplaintList from "./components/ComplaintList/ComplaintList";
+import ThemeToggle from "./components/shared/ThemeToggle/ThemeToggle";
 
 const baseUrl = "https://sugarytestapi.azurewebsites.net/";
 const listPath = "TestApi/GetComplains";
@@ -80,6 +81,7 @@ function App() {
       <div className="app">
         <header className="app-header">
           <h1>Complaint Management System</h1>
+          <ThemeToggle />
         </header>
 
         <main className="app-content">
