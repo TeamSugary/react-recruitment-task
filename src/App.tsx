@@ -14,15 +14,17 @@ const App = () => {
     fetchData: fetchComplaints,
   } = useApiFetch<Complaint[]>();
 
-  // Load complaints initially and when refresh is triggered
   useEffect(() => {
     fetchComplaints("TestApi/GetComplains").catch((error) => {
       console.error("Failed to fetch complaints:", error);
     });
   }, [fetchComplaints, refreshTrigger]);
 
-  // Callback to trigger refresh after successful submission
   const handleComplaintSubmitted = () => {
+    setRefreshTrigger((prev) => prev + 1);
+  };
+
+  const handleRefresh = () => {
     setRefreshTrigger((prev) => prev + 1);
   };
 
@@ -32,14 +34,19 @@ const App = () => {
         <h1 className="app-title">Complaint Management System</h1>
       </header>
 
-      <div className="content-wrapper">
-        <ComplaintForm onComplaintSubmitted={handleComplaintSubmitted} />
+      <div className="content-wrapper" style={{ display: "flex", gap: "20px" }}>
+        <div style={{ flex: 1 }}>
+          <ComplaintForm onComplaintSubmitted={handleComplaintSubmitted} />
+        </div>
+        <div style={{ flex: 1 }}>
+          <ComplaintList
+            complaints={complaints}
+            isLoading={complaintsLoading}
+            error={complaintsError}
+            onRefresh={handleRefresh}
+          />
+        </div>
       </div>
-      <ComplaintList
-        complaints={complaints}
-        isLoading={complaintsLoading}
-        error={complaintsError}
-      />
     </div>
   );
 };

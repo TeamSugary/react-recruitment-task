@@ -29,7 +29,7 @@ body {
 }
 
 .content-wrapper {
-  max-width: 500px;
+  max-width: 1200px;
   margin: 0 auto;
 }
 
@@ -151,24 +151,54 @@ body {
 /* styles for complain list */
 
 .list-card {
-  background-color: #fff;
+  background: #fff;
   border-radius: 8px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-  padding: 24px;
-  margin-bottom: 24px;
-  width: 100%;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 0;
+}
+
+.complaints-list {
+  scrollbar-width: thin;
+}
+
+.complaints-list::-webkit-scrollbar {
+  width: 8px;
+}
+
+.complaints-list::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+.complaints-list::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 4px;
+}
+
+.complaints-list::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+.refresh-button {
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 5px 10px;
+  font-size: 14px;
+}
+
+.refresh-button:hover:not(:disabled) {
+  background-color: #45a049;
+}
+
+.refresh-button:disabled {
+  background-color: #cccccc;
 }
 
 @media (max-width: 425px) {
   .list-card {
     padding: 16px;
   }
-}
-
-.complaints-list {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
 }
 
 @media (max-width: 425px) {
@@ -180,14 +210,14 @@ body {
 }
 
 .complaint-item {
-  border-left: 4px solid #4a90e2;
-  background-color: #f0f7ff;
-  padding: 16px;
-  border-radius: 0 4px 4px 0;
-  transition: box-shadow 0.2s;
-  width: 100%;
-  box-sizing: border-box;
+  background: #f5f7fa;
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 4px;
+  border: 1px solid #e0e0e0;
 }
+
+
 
 .complaint-item:hover {
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);

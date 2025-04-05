@@ -19,3 +19,7 @@ export interface ComplaintListProps {
   isLoading: boolean;
   error: string | null;
 }
+
+export interface ExtendedComplaintListProps extends ComplaintListProps {
+  onRefresh: () => void;
+}
