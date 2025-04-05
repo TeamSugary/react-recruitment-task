@@ -169,6 +169,8 @@ function App() {
     fetchComplains()
   }, [])
 
+  const renderPagination = !search && !startDate && !endDate && !isLoading
+
   return (
     <div className="wrapper">
       <title>Sugary Complaint</title>
@@ -188,8 +190,12 @@ function App() {
         </Dropdown>
       </div>
       <ComplainList search={search} complains={searchedComplains.slice(currentPage * 10 - 10, currentPage * 10)} isLoading={isLoading} />
-      {!search && !startDate && !endDate && <Pagination total={searchedComplains.length || 0} currentPage={currentPage} setCurrentPage={setCurrentPage} />}
-      {showToast && <p className="toast">Added New Complain</p>}
+      {renderPagination && <Pagination total={searchedComplains.length || 0} currentPage={currentPage} setCurrentPage={setCurrentPage} />}
+      {showToast && (
+        <p className="toast" role="status">
+          Added New Complain
+        </p>
+      )}
     </div>
   )
 }
@@ -214,6 +220,8 @@ const Search = ({ search, setSearch, handleSearch }: SearchProps) => {
       name="search"
       id="search"
       placeholder="🔍 Search Complain"
+      aria-label="Search complaints by title or body"
+      aria-describedby="search-instruction"
     />
   )
 }
@@ -232,8 +240,23 @@ interface ComplainFormProps {
 const ComplainForm = ({ title, body, isSaving, inputErrors, errorMessage, onTitleChange, onBodyChange, onSubmit }: ComplainFormProps) => {
   return (
     <div className="complain-form">
-      <input data-input-error={inputErrors.includes('title')} type="text" placeholder="Title" value={title} onChange={(e) => onTitleChange(e.target.value)} />
-      <textarea data-input-error={inputErrors.includes('body')} placeholder="Enter your complaint" value={body} onChange={(e) => onBodyChange(e.target.value)} />
+      <input
+        data-input-error={inputErrors.includes('title')}
+        type="text"
+        placeholder="Title"
+        value={title}
+        onChange={(e) => onTitleChange(e.target.value)}
+        aria-label="Complaint Title"
+        aria-invalid={inputErrors.includes('title')}
+      />
+      <textarea
+        data-input-error={inputErrors.includes('body')}
+        placeholder="Enter your complaint"
+        value={body}
+        onChange={(e) => onBodyChange(e.target.value)}
+        aria-label="Complaint Body"
+        aria-invalid={inputErrors.includes('body')}
+      />
       {errorMessage && <p className="error-message">{errorMessage}</p>}
       <button onClick={onSubmit} disabled={isSaving}>
         {isSaving ? <div className="loader" /> : 'Submit Complaint'}
@@ -249,10 +272,10 @@ interface ComplainListProps {
 }
 
 const ComplainList = memo(({ complains, isLoading, search }: ComplainListProps) => {
-  if (isLoading) return <div className="loader" />
+  if (isLoading) return <div className="loader" role="status" aria-label="Loading complaints..." />
   if (!complains.length)
     return (
-      <p>
+      <p role="status" aria-live="polite">
         No complaints available{' '}
         <em>
           {' '}
@@ -264,7 +287,7 @@ const ComplainList = memo(({ complains, isLoading, search }: ComplainListProps) 
   return (
     <>
       {search && (
-        <p>
+        <p role="status" aria-live="polite">
           Showing complains for{' '}
           <em>
             <strong>
@@ -299,7 +322,7 @@ const ComplainList = memo(({ complains, isLoading, search }: ComplainListProps) 
             )
           )
           return (
-            <div key={complain.Id} className="complain-item">
+            <div key={complain.Id} className="complain-item" role="list">
               <h3>{highlightedTitle}</h3>
               <strong>
                 <em>{formatDateTime(complain?.CreatedAt || '')}</em>
