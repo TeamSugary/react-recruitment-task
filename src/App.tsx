@@ -1,44 +1,77 @@
 import { useState, useEffect } from 'react';
+import "./App.css"
 
+
+
+
+// 
+interface Complain {
+  Id: number;
+  Title: string;
+  Body: string;
+}
+
+
+// 
 const baseUrl = "https://sugarytestapi.azurewebsites.net/";
 const listPath = "TestApi/GetComplains";
 const savePath = "TestApi/SaveComplain";
 
 function App() {
-  const [complains, setComplains] = useState([]);
-  const [title, setTitle] = useState("");
-  const [body, setBody] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
-  const [isSaving, setIsSaving] = useState(false);
-  const [errorMessage, setErrorMessage] = useState("");
+
+  // 
+  const [complains, setComplains] = useState<Complain[]>([]);
+   const [title, setTitle] = useState<string>("");
+   const [body, setBody] = useState<string>("");
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [isSaving, setIsSaving] = useState<boolean>(false);
+  const [errorMessage, setErrorMessage] = useState<string>("");
 
   // Fetch complaints from the API
   const fetchComplains = async () => {
-    setIsLoading(true);
-    const response = await fetch(`${baseUrl}${listPath}`);
-    const data = await response.json();
-    setComplains(data);
-    setIsLoading(false);
+      setIsLoading(true);
+    try{
+      const response = await fetch(`${baseUrl}${listPath}`);
+      const data = await response.json();
+      setComplains(data);
+    }catch(e){
+        console.error("Error fetching complains:", e);
+        setErrorMessage("Failed to fetch complaints.")
+    }
+    finally{
+      setIsLoading(false);
+    }
+   
   };
 
   // Save a new complaint
   const handleSubmit = async () => {
+    setErrorMessage("");
+    if(title.length < 8) return setErrorMessage("Title must be at least 8 char")
+    if(body.length < 32) return setErrorMessage("Desciption must be at least 32 char");
+     setIsSaving(true);
+    // 
     try {
-      setIsSaving(true);
-      const response = await fetch(savePath, {
+      // 
+      const response = await fetch(`${baseUrl}${savePath}`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          Title: "Test Title",
-          Body: "Test Body",
+          title,
+          body,
         }),
       });
       const data = await response.json();
       if (!data.Success) throw new Error("Failed to save complaint.");
       // Missing: Update complaints list after successful submission
+      await fetchComplains();
+      setTitle("");
+      setBody("")
     } catch (e) {
+      console.error(e);
+      setErrorMessage("Failed to save complaint. Please try again.")
       // Error state not being set
     } finally {
       setIsSaving(false);
@@ -49,18 +82,23 @@ function App() {
     fetchComplains();
   }, []); // Missing dependency array cleanup
 
+
+  // 
   return (
     <div className="wrapper">
-      <h2>Submit a Complaint</h2>
-
+      <h2 className='head-title'>Submit a Complaint</h2>
+      {/*  */}
       <div className="complain-form">
         <input
+          required
           type="text"
           placeholder="Title"
           value={title}
           onChange={(e) => setTitle(e.target.value)}
         />
         <textarea
+          rows={6}
+          required
           placeholder="Enter your complaint"
           value={body}
           onChange={(e) => setBody(e.target.value)}
@@ -72,12 +110,14 @@ function App() {
 
         {/* Place text loader when saving */}
         {/* Error message not displayed even though state exists */}
+        {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}
       </div>
 
-      <h2>Complaints List</h2>
-
+      <h2 className='complain-header'>Complaints List</h2>
+       
+       {/*  */}
       {isLoading ? (
-        <div>Loading...</div>
+        <div style={{color:"#000", fontSize:"2.5rem", padding:"4rem 0rem"}}>Loading...</div>
       ) : complains.length ? (
         complains.map((complain) => (
           <div key={complain.Id} className="complain-item">

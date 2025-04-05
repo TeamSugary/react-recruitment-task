@@ -1,10 +1,19 @@
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+html, body {
+  max-width: 100%;
+  padding: 0;
+  margin:0;
+}
 #root {
   max-width: 1280px;
   margin: 0 auto;
-  padding: 2rem;
   text-align: center;
 }
-
 .logo {
   height: 6em;
   padding: 1.5em;
@@ -42,25 +51,74 @@
 }
 
 .wrapper {
+  padding: 24px 16px;
   width: 100%;
-  max-width: 600px;
   margin: 0 auto;
+  background: #649173; 
+  background: -webkit-linear-gradient(to right, #DBD5A4, #649173);
+  background: linear-gradient(to right, #DBD5A4, #649173); 
+  
+
 }
 
 .complain-form {
+  box-shadow: rgba(0, 0, 0, 0.2) 0px 4px 10px;
+  padding: 1.5rem;
+  border-radius: 16px;
+  max-width: 600px;
+  margin:0 auto;
   margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  background: #649173;  /* fallback for old browsers */
+  background: -webkit-linear-gradient(to right, #649173, #DBD5A4);
+  background: linear-gradient(to right, #DBD5A4, #649173); 
+
+
 }
 
 .complain-form input,
 .complain-form textarea {
   width: 100%;
   margin-bottom: 10px;
-  padding: 8px;
+  padding: 12px;
   box-sizing: border-box;
+  background: #ae636309;
+  border-radius: 16px;
+  border-color: #5b7564;
+  overflow:hidden;
+  border: 2px solid #9fb69b;
+}
+.complain-form input::placeholder,
+.complain-form textarea::placeholder{
+  color: rgb(241, 241, 241);
+  font-size: 1rem;
+  font-weight: 600;
+}
+.complain-form input:focus,
+.complain-form textarea:focus{
+  outline: none; 
+  color: rgb(141, 141, 141);
+  font-size: 1rem;
+  font-weight: 600;
+  border-color: #5b7564;
+  transition: all 0.2s ease;
 }
 
 .complain-form button {
-  padding: 8px;
+  padding: 12px;
+  width: 100%;
+  margin-bottom: 10px;
+  border-radius: 16px;
+  border:2px solid transparent;
+  background: linear-gradient(135deg, #ff5f6d, #ffc371) padding-box,
+  linear-gradient(135deg, #ff818b, #ffc677) border-box;
+  color: #fff;
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+
+
 }
 
 .error-message {
@@ -69,6 +127,53 @@
 }
 
 .complain-item {
-  border-bottom: 1px solid #ccc;
-  padding: 10px 0;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  text-align: left;
+  max-width: 650px;
+  padding: 1rem;
+  margin: auto;
+  margin-bottom: 10px;
+  box-sizing: border-box;
+  border-radius: 16px;
+  background: #E7E9BB; 
+  background: -webkit-linear-gradient(to right, #E7E9BB, #5d576b); 
+  background: linear-gradient(to right, #E7E9BB, #5d576b);
+  box-shadow: rgba(0, 0, 0, 0.2) 0px 4px 10px;
+}
+.complain-item h3{
+  color: #393939;
+  text-transform: capitalize;
+  font-weight: 700;
+  font-size: 1.5rem;
+
+}
+.complain-item P{
+  color: #393939;
+  text-transform: capitalize;
+  font-weight: 400;
+  font-size: 1rem;
+}
+
+
+.head-title {
+  font-size: 4rem;
+  background: -webkit-linear-gradient(#5b7564, #d3cc98);
+  background-clip:text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+
+}
+.complain-header{
+  max-width: 650px;
+  margin: 0 auto;
+ text-align:left;
+ padding:20px 0px;
+ font-size: 2rem;
+ font-weight: 700;
+ background: -webkit-linear-gradient(#f8f8f8, #ffffff);
+ background-clip:text;
+ -webkit-background-clip: text;
+ -webkit-text-fill-color: transparent;
+ text-shadow: rgba(0, 0, 0, 0.5) 3px -1px 9px;
 }
