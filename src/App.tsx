@@ -1,9 +1,8 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect } from "react";
 
 const baseUrl = "https://sugarytestapi.azurewebsites.net/";
 const listPath = "TestApi/GetComplains";
 const savePath = "TestApi/SaveComplain";
-
 
 interface Complain {
   Id: number;
@@ -30,6 +29,10 @@ function App() {
 
   // Save a new complaint
   const handleSubmit = async () => {
+    if (!/\S/.test(title) || !/\S/.test(body)) {
+      setErrorMessage("Please fill in both fields.");
+      return;
+    }
     try {
       setIsSaving(true);
       const response = await fetch(savePath, {
@@ -47,8 +50,12 @@ function App() {
       // Missing: Update complaints list after successful submission
     } catch (e) {
       // Error state not being set
+      setErrorMessage((e as Error).message);
     } finally {
       setIsSaving(false);
+      setTitle("");
+      setBody("");
+      setErrorMessage(""); // Clear error message after submission
     }
   };
 
@@ -74,11 +81,12 @@ function App() {
         />
 
         <button onClick={handleSubmit}>
-          {isSaving ? 'Submitting...' : 'Submit Complaint'}
+          {isSaving ? "Submitting..." : "Submit Complaint"}
         </button>
 
         {/* Place text loader when saving */}
         {/* Error message not displayed even though state exists */}
+        {errorMessage && <p className="error">{errorMessage}</p>}
       </div>
 
       <h2>Complaints List</h2>
