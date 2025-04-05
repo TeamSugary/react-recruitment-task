@@ -3,7 +3,7 @@ import ComplaintForm from "./components/ComplaintForm/ComplaintForm";
 import Toast from "./components/shared/Toast/Toast";
 import ComplaintList from "./components/ComplaintList/ComplaintList";
 import ThemeToggle from "./components/shared/ThemeToggle/ThemeToggle";
-import AdvancedCursor from "./components/shared/CursorEffect/AdvancedCursor";
+import ErrorBoundary from "./components/shared/ErrorBoundary/ErrorBoundary";
 
 const baseUrl = "https://sugarytestapi.azurewebsites.net/";
 const listPath = "TestApi/GetComplains";
@@ -86,8 +86,10 @@ function App() {
   }, [])
 
   return (
+    
+    <ErrorBoundary>
       <div className="app">
-        <AdvancedCursor />
+        {/* <AdvancedCursor /> */}
         <header className="app-header">
           <h1>Complaint Management System</h1>
           <ThemeToggle />
@@ -110,6 +112,7 @@ function App() {
 
         <div id="toast-container"></div>
       </div>
+      </ErrorBoundary>
   );
 }
 
