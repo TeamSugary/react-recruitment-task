@@ -1,6 +1,7 @@
 import { useState, useEffect, FormEvent } from 'react';
 import Complaint from "../src/components/Complaint"
 import './App.css'
+import ErrorBoundary from './components/ErrorBoundary';
 
 const baseUrl = "https://sugarytestapi.azurewebsites.net/";
 const listPath = "TestApi/GetComplains";
@@ -115,15 +116,18 @@ function App() {
 
       <h2>Complaints List</h2>
 
-      {isLoading ? (
-        <div>Loading...</div>
-      ) : complains.length ? (
-        complains.map((complain: Complain) => (
-          <Complaint key={complain.Id} complaintData={complain} />
-        ))
-      ) : (
-        <p>No complaints available.</p>
-      )}
+
+      <ErrorBoundary>
+        {isLoading ? (
+          <div>Loading...</div>
+        ) : complains.length ? (
+          complains.map((complain: Complain) => (
+            <Complaint key={complain.Id} complaintData={complain} />
+          ))
+        ) : (
+          <p>No complaints available.</p>
+        )}
+      </ErrorBoundary>
     </div>
   );
 }
