@@ -1,4 +1,4 @@
-import { ChangeEvent, memo, useEffect, useRef, useState } from 'react'
+import { ChangeEvent, Dispatch, memo, SetStateAction, useEffect, useRef, useState } from 'react'
 import './App.css'
 
 const BASE_URL = 'https://sugarytestapi.azurewebsites.net/TestApi'
@@ -54,6 +54,7 @@ function App() {
   const [showToast, setShowToast] = useState(false)
   const [startDate, setStartDate] = useState<string>('')
   const [endDate, setEndDate] = useState<string>('')
+  const [currentPage, setCurrentPage] = useState(1)
 
   const fetchComplains = async () => {
     setIsLoading(true)
@@ -118,11 +119,6 @@ function App() {
         setShowToast(false)
       }, 1000)
 
-      // i was gonna update local state first to save api calls but then
-      //  i noticed the time was wrong in the backend and i pushed
-      // the current time in my local state which was making a mismatch in time,
-      //  so i called this function again, in this case I would fix the backend
-      // if it was possible
       await fetchComplains()
 
       window.scroll({ top: 0, left: 0, behavior: 'smooth' })
@@ -175,6 +171,7 @@ function App() {
 
   return (
     <div className="wrapper">
+      <title>Sugary Complaint</title>
       <h2 className="submit-complaint">Submit a Complaint</h2>
       <ComplainForm title={title} body={body} isSaving={isSaving} inputErrors={inputErrors} errorMessage={errorMessage} onTitleChange={setTitle} onBodyChange={setBody} onSubmit={handleSubmit} />
       <div className="complain-list-header">
@@ -190,7 +187,8 @@ function App() {
           <DateRangePicker startDate={startDate} setStartDate={setStartDate} endDate={endDate} setEndDate={setEndDate} onChange={handleDateFilter} />
         </Dropdown>
       </div>
-      <ComplainList search={search} complains={searchedComplains} isLoading={isLoading} />
+      <ComplainList search={search} complains={searchedComplains.slice(currentPage * 10 - 10, currentPage * 10)} isLoading={isLoading} />
+      {!search && !startDate && !endDate && <Pagination total={searchedComplains.length || 0} currentPage={currentPage} setCurrentPage={setCurrentPage} />}
       {showToast && <p className="toast">Added New Complain</p>}
     </div>
   )
@@ -385,11 +383,13 @@ const DateRangePicker = ({ onChange, startDate, setStartDate, endDate, setEndDat
 
   return (
     <div className="date-range-picker">
-      <em className='date-header'>
+      <em className="date-header">
         <strong>Date Filter</strong>
-        <button className="reset-btn" onClick={handleReset}>
-          &times;
-        </button>
+        {(startDate || endDate) && (
+          <button className="reset-btn" onClick={handleReset}>
+            &times;
+          </button>
+        )}
       </em>
       <div className="date-input">
         <label htmlFor="start-date">Start Date</label>
@@ -400,6 +400,97 @@ const DateRangePicker = ({ onChange, startDate, setStartDate, endDate, setEndDat
         <label htmlFor="end-date">End Date</label>
         <input type="date" id="end-date" value={endDate} onChange={handleEndDateChange} placeholder="End Date" />
       </div>
+    </div>
+  )
+}
+
+interface PaginationProp {
+  total: number
+  currentPage: number
+  setCurrentPage: Dispatch<SetStateAction<number>>
+}
+
+const Pagination = ({ currentPage, setCurrentPage, total }: PaginationProp) => {
+  const lastPage = Math.ceil(total / 10)
+
+  const handlePageChange = (type: string, num?: number) => {
+    if (type === 'plus') {
+      setCurrentPage((prev) => Math.min(prev + 1, lastPage))
+    } else if (type === 'minus') {
+      setCurrentPage((prev) => Math.max(prev - 1, 1))
+    } else {
+      setCurrentPage(num!)
+    }
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+  }
+
+  const getVisiblePages = () => {
+    const pages = []
+    if (lastPage <= 5) {
+      for (let i = 1; i <= lastPage; i++) {
+        pages.push(i)
+      }
+    } else {
+      if (currentPage <= 3) {
+        pages.push(1, 2, 3, 4, 5)
+      } else if (currentPage >= lastPage - 2) {
+        for (let i = lastPage - 4; i <= lastPage; i++) {
+          pages.push(i)
+        }
+      } else {
+        for (let i = currentPage - 2; i <= currentPage + 2; i++) {
+          pages.push(i)
+        }
+      }
+    }
+    return pages
+  }
+
+  const visiblePages = getVisiblePages()
+
+  return (
+    <div className="pagination-container">
+      <button onClick={() => handlePageChange('minus')} className={`page-link ${currentPage === 1 ? 'disabled pointer-none' : ''}`}>
+        <div className="page-inner">
+          <svg xmlns="http://www.w3.org/2000/svg" className="icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M7 16l-4-4m0 0l4-4m-4 4h18" />
+          </svg>
+          <span className="page-text">Previous</span>
+        </div>
+      </button>
+
+      {lastPage > 5 && currentPage > 3 && (
+        <>
+          <button onClick={() => handlePageChange('exact', 1)} className={`page-link hidden-sm ${currentPage === 1 ? 'page-active pointer-none' : ''}`}>
+            1
+          </button>
+          {currentPage > 4 && <span className="page-ellipsis">...</span>}
+        </>
+      )}
+
+      {visiblePages.map((page) => (
+        <button key={page} onClick={() => handlePageChange('exact', page)} className={`page-link hidden-sm ${currentPage === page ? 'page-active pointer-none' : ''}`}>
+          {page}
+        </button>
+      ))}
+
+      {lastPage > 5 && currentPage < lastPage - 2 && (
+        <>
+          {currentPage < lastPage - 3 && <span className="page-ellipsis">...</span>}
+          <button onClick={() => handlePageChange('exact', lastPage)} className={`page-link hidden-sm ${currentPage === lastPage ? 'page-active pointer-none' : ''}`}>
+            {lastPage}
+          </button>
+        </>
+      )}
+
+      <button onClick={() => handlePageChange('plus')} className={`page-link ${currentPage === lastPage ? 'pointer-none' : ''}`}>
+        <div className="page-inner">
+          <span className="page-text">Next</span>
+          <svg xmlns="http://www.w3.org/2000/svg" className="icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+          </svg>
+        </div>
+      </button>
     </div>
   )
 }
