@@ -100,7 +100,9 @@
   text-transform: capitalize;
 }
 
-
+.wrapper > h2{
+  text-align: start;
+}
 
 .error-message {
   color: red;

@@ -76,10 +76,11 @@ function App() {
   }
 
   useEffect(() => {
+    const controller = new AbortController();
     fetchComplains();
 
     return () => {
-      console.log('clean up')
+      controller.abort(); 
     }
   }, []); // Missing dependency array cleanup
 
@@ -115,15 +116,12 @@ function App() {
           {isSaving ? 'Submitting...' : 'Submit Complaint'}
         </button>
 
-
         {/* Place text loader when saving */}
         {/* Error message not displayed even though state exists */}
         <p className='error-message'>{errorMessage && errorMessage}</p>
       </form>
 
       <h2>Complaints List</h2>
-
-
 
       {isSaving && <div className='loader' />}
 
