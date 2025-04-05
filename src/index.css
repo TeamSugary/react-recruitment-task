@@ -73,16 +73,16 @@ body {
   box-sizing: border-box;
 }
 
-input,
+.form-input,
 textarea,
-button {
+.form-btn {
   display: block;
   width: 100%;
   background: none;
   box-sizing: border-box;
 }
 
-input,
+.form-input,
 textarea {
   padding: 14px 20px;
   background: #ebf4f2;
@@ -93,7 +93,7 @@ textarea {
   transition: border-color 0.5s ease;
 }
 
-input:focus,
+.form-input:focus,
 textarea:focus {
   border-color: #000053;
 }
@@ -102,7 +102,7 @@ textarea {
   margin: 20px 0;
 }
 
-button {
+.form-btn {
   padding: 10px 0;
   background: #000053;
   color: white;
@@ -215,6 +215,14 @@ button {
   opacity: 0.9;
 }
 
+.complain-message {
+  font-size: 14px;
+  text-align: center;
+  color: #000053;
+  font-weight: bold;
+  padding: 10px 0;
+}
+
 /* Mini Desktop: 3 items per row */
 @media (max-width: 1180px) {
   .complain-grid {
@@ -257,5 +265,9 @@ button {
 
   .form-container {
     padding: 0 20px;
+  }
+
+  .complain-form {
+    padding: 20px;
   }
 }

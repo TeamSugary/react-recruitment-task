@@ -51,7 +51,7 @@ function ComplaintForm({ fetchComplains }: { fetchComplains: () => void }) {
       });
       const data = await response.json();
       if (data.Success) {
-        toast.success("Complain post successfully");
+        toast.success("Complain registered successfully!");
         fetchComplains();
         setComplainData({
           title: "",
@@ -78,7 +78,7 @@ function ComplaintForm({ fetchComplains }: { fetchComplains: () => void }) {
       <div>
         <form onSubmit={handleSubmit} className="complain-form">
           <input
-            className="input"
+            className="form-input"
             type="text"
             name="title"
             placeholder="Complaint Title"
@@ -93,7 +93,7 @@ function ComplaintForm({ fetchComplains }: { fetchComplains: () => void }) {
             rows={5}
           />
 
-          <button type="submit">
+          <button className="form-btn" type="submit" disabled={isSaving}>
             {isSaving ? "Submitting..." : "Submit Complaint"}
           </button>
         </form>

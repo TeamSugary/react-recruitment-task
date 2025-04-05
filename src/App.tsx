@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import "./App.css";
 import ComplaintForm from "./components/ComplaintForm/ComplaintForm";
 import toast from "react-hot-toast";
@@ -13,33 +13,39 @@ export const savePath = "/SaveComplain";
 function App() {
   const [complains, setComplains] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const isMounted = useRef(true);
 
   // Fetch complaints from the API
   const fetchComplains = async () => {
     setIsLoading(true);
-    const response = await fetch(`${baseUrl}${listPath}`);
-    const data = await response.json();
-    setComplains(data);
-    setIsLoading(false);
+    try {
+      const response = await fetch(`${baseUrl}${listPath}`);
+      if (!response.ok) {
+        throw new Error("Failed to fetch complaints");
+      }
+      const data = await response.json();
+      setComplains(data);
+    } catch (error: any) {
+      toast.error(error.message || "Failed to load complaints");
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   useEffect(() => {
-    let isMounted = true;
-
     const fetchData = async () => {
       try {
         await fetchComplains();
       } catch (error: any) {
-        if (isMounted) {
-          toast.error(error);
+        if (isMounted.current) {
+          toast.error(error.message || "Failed to load complaints");
         }
       }
     };
-
     fetchData();
 
     return () => {
-      isMounted = false;
+      isMounted.current = false;
     };
   }, []);
 

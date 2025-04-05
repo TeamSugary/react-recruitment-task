@@ -33,16 +33,22 @@ const ComplaintViewer: React.FC<ComplaintViewerProps> = ({ complains }) => {
         <div className="round"></div>
       </div>
 
-      <div className="complain-grid">
-        {paginatedComplains.map((complain) => (
-          <div className="complain-card" key={complain.Id}>
-            <h3 className="complain-title">{complain.Title}</h3>
-            <p className="complain-body">{complain.Body}</p>
-          </div>
-        ))}
-      </div>
+      {complains.length === 0 ? (
+        <div className="no-complaints">
+          <p className="complain-message">Hurry! No complaints found.</p>
+        </div>
+      ) : (
+        <div className="complain-grid">
+          {paginatedComplains.map((complain) => (
+            <div className="complain-card" key={complain.Id}>
+              <h3 className="complain-title">{complain.Title}</h3>
+              <p className="complain-body">{complain.Body}</p>
+            </div>
+          ))}
+        </div>
+      )}
 
-      {hasMore && (
+      {hasMore && complains.length > 0 && (
         <div className="load-more-wrapper">
           <button className="load-more-btn" onClick={handleLoadMore}>
             Load More
