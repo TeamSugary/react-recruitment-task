@@ -19,7 +19,6 @@ const ComplaintForm: React.FC<ComplaintFormProps> = ({
     const trimmedTitle = title.trim();
     const trimmedBody = body.trim();
 
-    // Validation
     if (!trimmedTitle && !trimmedBody) {
       setValidationError("Please provide both a title and description");
       return;
