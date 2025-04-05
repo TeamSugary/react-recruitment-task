@@ -1,8 +1,19 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, FormEvent } from 'react';
+import Complaint from "../src/components/Complaint"
+import './App.css'
+import ErrorBoundary from './components/ErrorBoundary';
 
 const baseUrl = "https://sugarytestapi.azurewebsites.net/";
 const listPath = "TestApi/GetComplains";
 const savePath = "TestApi/SaveComplain";
+
+
+interface Complain {
+  Title: string;
+  Body: string;
+  Id: number;
+}
+
 
 function App() {
   const [complains, setComplains] = useState([]);
@@ -15,79 +26,116 @@ function App() {
   // Fetch complaints from the API
   const fetchComplains = async () => {
     setIsLoading(true);
-    const response = await fetch(`${baseUrl}${listPath}`);
-    const data = await response.json();
-    setComplains(data);
-    setIsLoading(false);
+
+    try {
+      const response = await fetch(`${baseUrl}${listPath}`);
+      const data = await response.json();
+      setComplains(data);
+    } catch (error) {
+      console.log(error)
+    } finally {
+
+      setIsLoading(false);
+    }
   };
 
   // Save a new complaint
-  const handleSubmit = async () => {
+  const handleSubmit = async (event: FormEvent) => {
+    // Prevent the default form submission behavior
+    event.preventDefault();
+    setErrorMessage("")
     try {
       setIsSaving(true);
-      const response = await fetch(savePath, {
+      const response = await fetch(`${baseUrl}${savePath}`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          Title: "Test Title",
-          Body: "Test Body",
+          Title: title,
+          Body: body,
         }),
       });
       const data = await response.json();
       if (!data.Success) throw new Error("Failed to save complaint.");
       // Missing: Update complaints list after successful submission
-    } catch (e) {
+      fetchComplains();
+      emptyInputs()
+    } catch (error: any) {
       // Error state not being set
+      setErrorMessage(error.message || "An unexpected error occurred.");
+
     } finally {
       setIsSaving(false);
     }
   };
 
+  function emptyInputs() {
+    setBody("")
+    setTitle("")
+  }
+
   useEffect(() => {
+    const controller = new AbortController();
     fetchComplains();
+
+    return () => {
+      controller.abort(); 
+    }
   }, []); // Missing dependency array cleanup
 
   return (
     <div className="wrapper">
       <h2>Submit a Complaint</h2>
 
-      <div className="complain-form">
-        <input
-          type="text"
-          placeholder="Title"
-          value={title}
-          onChange={(e) => setTitle(e.target.value)}
-        />
-        <textarea
-          placeholder="Enter your complaint"
-          value={body}
-          onChange={(e) => setBody(e.target.value)}
-        />
-
-        <button onClick={handleSubmit}>
+      <form className="complain-form" onSubmit={(event) => handleSubmit(event)}>
+        <label htmlFor="title">
+          <input
+            type="text"
+            placeholder="Title"
+            id="title" name="title"
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
+            minLength={3}
+            maxLength={20}
+            required
+          />
+        </label>
+        <label htmlFor="body">
+          <textarea
+            placeholder="Enter your complaint"
+            id="body" name="body"
+            value={body}
+            onChange={(e) => setBody(e.target.value)}
+            minLength={6}
+            maxLength={200}
+            required
+          />
+        </label>
+        <button type='submit' disabled={isSaving}>
           {isSaving ? 'Submitting...' : 'Submit Complaint'}
         </button>
 
         {/* Place text loader when saving */}
         {/* Error message not displayed even though state exists */}
-      </div>
+        <p className='error-message'>{errorMessage && errorMessage}</p>
+      </form>
 
       <h2>Complaints List</h2>
 
-      {isLoading ? (
-        <div>Loading...</div>
-      ) : complains.length ? (
-        complains.map((complain) => (
-          <div key={complain.Id} className="complain-item">
-            <h3>{complain.Title}</h3>
-            <p>{complain.Body}</p>
-          </div>
-        ))
-      ) : (
-        <p>No complaints available.</p>
-      )}
+      {isSaving && <div className='loader' />}
+
+      <ErrorBoundary>
+        {isLoading ? (
+          <div>Loading...</div>
+        ) : complains.length ? (
+          complains.map((complain: Complain) => (
+            <Complaint key={complain.Id} complaintData={complain} />
+          ))
+        ) : (
+          <p>No complaints available.</p>
+        )}
+      </ErrorBoundary>
     </div>
   );
 }
