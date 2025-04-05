@@ -1,4 +1,7 @@
 import { useState, useEffect } from 'react';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 
 const baseUrl = "https://sugarytestapi.azurewebsites.net/";
 const listPath = "TestApi/GetComplains";
@@ -48,13 +51,15 @@ function App() {
       });
       const data = await response.json();
       if (!data.Success) throw new Error("Failed to save complaint.");
+      toast.success("Complaint submitted successfully!");
       // Missing: Update complaints list after successful submission
       await fetchComplains();
       setTitle("");
       setBody("");
     } catch (e) {
       // Error state not being set\
-      setErrorMessage((e as Error).message || "Failed to save complaint.");
+      // setErrorMessage((e as Error).message || "Failed to save complaint.");
+      toast.error("Something went wrong. Please try again.");
     } finally {
       setIsSaving(false);
     }
@@ -115,6 +120,7 @@ function App() {
       ) : (
         <p>No complaints available.</p>
       )}
+      <ToastContainer />
     </div>
   );
 }
