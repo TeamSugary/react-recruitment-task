@@ -1,0 +1,40 @@
+.cursor-main {
+    position: fixed;
+    width: var(--cursor-size, 20px);
+    height: var(--cursor-size, 20px);
+    border-radius: 50%;
+    background-color: var(--primary-color);
+    mix-blend-mode: difference;
+    pointer-events: none;
+    transform: translate(-50%, -50%);
+    transition: 
+      transform var(--transition-slow) var(--ease-out),
+      width var(--transition-normal),
+      height var(--transition-normal),
+      background-color var(--transition-normal);
+    z-index: 9999;
+    will-change: transform;
+  }
+  
+  .cursor-main.cursor-pointer {
+    --cursor-size: 24px;
+    background-color: var(--primary-hover);
+    transform: translate(-50%, -50%) scale(1.2);
+  }
+  
+  .cursor-trail {
+    position: fixed;
+    border-radius: 50%;
+    background-color: var(--primary-color);
+    pointer-events: none;
+    transform: translate(-50%, -50%);
+    z-index: 9998;
+    transition: 
+      transform var(--transition-slow) var(--ease-out),
+      opacity var(--transition-slow),
+      width var(--transition-slow),
+      height var(--transition-slow);
+    will-change: transform, opacity;
+    opacity: 0;
+  }
+  

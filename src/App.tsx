@@ -3,6 +3,7 @@ import ComplaintForm from "./components/ComplaintForm/ComplaintForm";
 import Toast from "./components/shared/Toast/Toast";
 import ComplaintList from "./components/ComplaintList/ComplaintList";
 import ThemeToggle from "./components/shared/ThemeToggle/ThemeToggle";
+import AdvancedCursor from "./components/shared/CursorEffect/AdvancedCursor";
 
 const baseUrl = "https://sugarytestapi.azurewebsites.net/";
 const listPath = "TestApi/GetComplains";
@@ -77,8 +78,16 @@ function App() {
     }
   }, []);
 
+  useEffect(() => {
+    document.documentElement.classList.add('cursor-hidden')
+    return () => {
+      document.documentElement.classList.remove('cursor-hidden')
+    }
+  }, [])
+
   return (
       <div className="app">
+        <AdvancedCursor />
         <header className="app-header">
           <h1>Complaint Management System</h1>
           <ThemeToggle />

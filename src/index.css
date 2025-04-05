@@ -42,6 +42,15 @@
   --font-size-lg: 1.25rem;
   --font-size-xl: 1.5rem;
   --font-size-xxl: 2rem;
+
+  /* cursor-specific */
+  --cursor-size: 16px;
+  --cursor-pointer-size: 24px;
+  --cursor-trail-count: 5;
+  --cursor-trail-opacity: 0.8;
+  --cursor-color: var(--primary-color);
+  --cursor-pointer-color: var(--primary-hover);
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 [data-theme="dark"] {
