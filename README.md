@@ -142,4 +142,5 @@ This will start the server, and you can view the application in your browser at 
 
 **Note**: We specifically look for attention to detail in handling loading states, error scenarios, and creating intuitive user interactions. Avoid using any UI libraries - demonstrate raw CSS skills.
 
-Good luck! We're excited to see your solution! 🚀
+![image](https://github.com/user-attachments/assets/311c420f-eaf5-4a0e-a654-92cb389dde01)
+
