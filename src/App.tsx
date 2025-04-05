@@ -31,9 +31,8 @@ function App() {
       const response = await fetch(`${baseUrl}${listPath}`);
       const data = await response.json();
       setComplains(data);
-    } catch (error: any) {
-
-      console.log(error.message)
+    } catch (error) {
+      console.log(error)
     } finally {
 
       setIsLoading(false);
@@ -64,7 +63,6 @@ function App() {
       emptyInputs()
     } catch (error: any) {
       // Error state not being set
-      console.log(error.message)
       setErrorMessage(error.message || "An unexpected error occurred.");
 
     } finally {
@@ -113,9 +111,10 @@ function App() {
             required
           />
         </label>
-        <button type='submit'>
+        <button type='submit' disabled={isSaving}>
           {isSaving ? 'Submitting...' : 'Submit Complaint'}
         </button>
+
 
         {/* Place text loader when saving */}
         {/* Error message not displayed even though state exists */}
@@ -124,6 +123,9 @@ function App() {
 
       <h2>Complaints List</h2>
 
+
+
+      {isSaving && <div className='loader' />}
 
       <ErrorBoundary>
         {isLoading ? (

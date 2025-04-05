@@ -1,4 +1,5 @@
 import React, { useEffect } from "react"
+import ErrorBoundary from "./ErrorBoundary";
 
 interface ComplaintProps {
     complaintData: {
@@ -11,11 +12,14 @@ interface ComplaintProps {
 
 export default function Complaint({ complaintData }: ComplaintProps) {
 
-    
+
     return (
-        <div className="complain-item">
-            <h3>{complaintData.Title}</h3>
-            <p>{complaintData.Body}</p>
-        </div>
+
+        <ErrorBoundary>
+            <div className="complain-item">
+                <h3>{complaintData.Title}</h3>
+                <p>{complaintData.Body}</p>
+            </div>
+        </ErrorBoundary>
     )
 }
