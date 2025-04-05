@@ -274,7 +274,7 @@ const ComplainForm = ({ title, body, isSaving, inputErrors, errorMessage, onTitl
         aria-invalid={inputErrors.includes('body')}
       />
       {errorMessage && <p className="error-message">{errorMessage}</p>}
-      <button onClick={onSubmit} disabled={isSaving}>
+      <button onClick={onSubmit} disabled={isSaving} className={`${isSaving ? 'pointer-none' : ''}`}>
         {isSaving ? <div className="loader" /> : 'Submit Complaint'}
       </button>
     </div>
