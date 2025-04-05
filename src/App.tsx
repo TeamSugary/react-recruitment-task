@@ -238,9 +238,24 @@ interface ComplainFormProps {
 }
 
 const ComplainForm = ({ title, body, isSaving, inputErrors, errorMessage, onTitleChange, onBodyChange, onSubmit }: ComplainFormProps) => {
+  const titleInputRef = useRef<HTMLInputElement>(null)
+  const descriptionInputRef = useRef<HTMLTextAreaElement>(null)
+
+  useEffect(() => {
+    if (!inputErrors.length) return
+    const setFocus = (el: HTMLInputElement | HTMLTextAreaElement) => el.focus()
+
+    if (inputErrors.includes('title') && titleInputRef.current) {
+      setFocus(titleInputRef.current)
+    } else if (inputErrors.includes('body') && descriptionInputRef.current) {
+      setFocus(descriptionInputRef.current)
+    }
+  }, [inputErrors])
+
   return (
     <div className="complain-form">
       <input
+        ref={titleInputRef}
         data-input-error={inputErrors.includes('title')}
         type="text"
         placeholder="Title"
@@ -250,6 +265,7 @@ const ComplainForm = ({ title, body, isSaving, inputErrors, errorMessage, onTitl
         aria-invalid={inputErrors.includes('title')}
       />
       <textarea
+        ref={descriptionInputRef}
         data-input-error={inputErrors.includes('body')}
         placeholder="Enter your complaint"
         value={body}

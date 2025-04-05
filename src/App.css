@@ -99,7 +99,9 @@ h2 {
 }
 
 .complain-form input[data-input-error="true"],
-.complain-form textarea[data-input-error="true"] {
+.complain-form textarea[data-input-error="true"],
+.complain-form input[data-input-error="true"]:focus,
+.complain-form textarea[data-input-error="true"]:focus {
   border-color: #ff6f6f;
 }
 
@@ -122,6 +124,13 @@ h2 {
   opacity: 1
 }
 
+.complain-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
 .complain-form button {
   background: linear-gradient(135deg, #ff5f6d, #ffc371);
   border: none;
@@ -132,7 +141,7 @@ h2 {
   font-weight: 700;
   padding: 16px;
   transition: all .3s ease;
-  width: 100%
+  width: 200px;
 }
 
 .complain-form button:hover {
@@ -146,6 +155,7 @@ h2 {
   width: 200px;
   display: block;
   font-weight: 700;
+  text-align: center;
 }
 
 .complain-item {
