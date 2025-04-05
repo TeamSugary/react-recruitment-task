@@ -1,5 +1,8 @@
 import { useState, useEffect } from "react";
 import "./App.css";
+import { motion } from "framer-motion";
+import Lottie from "lottie-react";
+import animationData from "./assets/Animation.json"; // তোমার Lottie JSON ফাইল
 
 // API URLs
 const baseUrl = "https://sugarytestapi.azurewebsites.net/";
@@ -78,33 +81,83 @@ function App() {
 
   return (
     <div className="container">
-      <div className="form-wrapper">
+      <div>
         <h2 className="form-title">Submit a Complaint</h2>
+        <p className="form-subtitle">
+          Let us know your concern — we're here to help.
+        </p>
+      </div>
+      <div className="form-wrapper">
+        <div className="form-container">
+          <div className="side-image-container">
+            <motion.img
+              className="side-image"
+              src={"https://i.imgur.com/K2477Rs.png"}
+              alt="moving image"
+              animate={{
+                x: [0, 0, 100, 0], 
+                y: [0, 30, 0, 0],
+              }}
+              transition={{
+                duration: 20,
+                repeat: Infinity,
+                ease: "easeInOut",
+              }}
+            />
+          </div>
 
-        <input
-          type="text"
-          className="input"
-          placeholder="Title"
-          value={title}
-          onChange={(e) => setTitle(e.target.value)}
-        />
+          <div className="complain-form">
+            <form className="">
+              <input
+                type="text"
+                className="input"
+                placeholder="Title"
+                value={title}
+                onChange={(e) => setTitle(e.target.value)}
+              />
 
-        <textarea
-          className="textarea"
-          placeholder="Enter your complaint"
-          value={body}
-          onChange={(e) => setBody(e.target.value)}
-        />
+              <textarea
+                className="textarea"
+                placeholder="Enter your complaint"
+                value={body}
+                onChange={(e) => setBody(e.target.value)}
+              />
 
-        <button className="button" onClick={handleSubmit} disabled={isSaving}>
-          {isSaving ? "Submitting..." : "Submit Complaint"}
-        </button>
+              <button
+                className="button"
+                onClick={handleSubmit}
+                disabled={isSaving}
+              >
+                {isSaving ? "Submitting..." : "Submit Complaint"}
+              </button>
+            </form>
+          </div>
+        </div>
 
         {errorMessage && <p className="error">{errorMessage}</p>}
       </div>
 
       <div className="list-wrapper">
-        <h2 className="list-title">Complaints List</h2>
+      <div className="lottie-background">
+          <Lottie
+            animationData={animationData}
+            loop
+            autoplay
+            style={{
+              width: "300px", // প্রয়োজন অনুযায়ী adjust করো
+              height: "300px",
+              position: "absolute",
+            }}
+          />
+        </div>
+        <div className="list-title-container">
+          <h2 className="list-title">Complaints List</h2>
+          <p className="list-subtitle">Here are all the submitted complaints from users.</p>
+
+        </div>
+
+        {/* Lottie Animation Background */}
+       
 
         <div className="complain-list">
           {isLoading ? (

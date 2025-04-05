@@ -1,77 +1,4 @@
-/* #root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
-}
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
-}
-
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
-}
-
-.card {
-  padding: 2em;
-}
-
-.read-the-docs {
-  color: #888;
-}
-
-.wrapper {
-  width: 100%;
-  max-width: 600px;
-  margin: 0 auto;
-}
-
-.complain-form {
-  margin-bottom: 20px;
-}
-
-.complain-form input,
-.complain-form textarea {
-  width: 100%;
-  margin-bottom: 10px;
-  padding: 8px;
-  box-sizing: border-box;
-}
-
-.complain-form button {
-  padding: 8px;
-}
-
-.error-message {
-  color: red;
-  margin-top: 10px;
-}
-
-.complain-item {
-  border-bottom: 1px solid #ccc;
-  padding: 10px 0;
-}  */
 
 
 /* Base Reset */
@@ -103,18 +30,109 @@ body {
   box-shadow: 0 6px 16px rgba(0, 0, 0, 0.05);
   transition: box-shadow 0.3s ease;
 }
+.container {
+  position: relative;
+  /* height: 100vh; */
+}
+
+.list-wrapper {
+  position: relative;
+  z-index: 1;
+}
+
+.lottie-background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 20%;
+  height: 20%;
+  z-index: -1; /* Ensure the Lottie background is behind the content */
+}
+
+.complain-list {
+  position: relative;
+  z-index: 1;
+  padding: 20px;
+  color: white; /* Or any color depending on your background */
+}
+
+.complain-card {
+  background-color: rgba(255, 255, 255, 0.8);
+  margin: 10px 0;
+  padding: 10px;
+  border-radius: 8px;
+}
+
+
+.list-wrapper{
+  position: relative;
+}
+
+.form-wrapper{
+  background-image: url('https://i.imgur.com/BJwrB4j.jpeg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  margin-top: 60px;
+}
 
 .form-wrapper:hover,
 .list-wrapper:hover {
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
 }
 
+.side-image{
+  width: 60%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.form-container{
+  display: flex;
+  justify-content: space-around;
+  margin: 60px 0;
+}
+
+.complain-form{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  justify-items: center;
+
+}
+
+.side-image-container{
+  width: 70%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .form-title,
 .list-title {
-  font-size: 24px;
+  font-size: 32px;
   font-weight: 600;
-  margin-bottom: 20px;
   color: #111827;
+  text-align: center;
+  margin: 0;
+}
+
+.form-subtitle{
+  text-align: center;
+  color: #6b7280;
+  margin: 0;
+}
+
+.list-title-container{
+  background-color: #f3f4f6;
+  width: 60%;
+  margin: auto;
+  position: relative;
+  top: 80px;
+}
+
+.list-subtitle{
   text-align: center;
 }
 
@@ -186,9 +204,10 @@ body {
 }
 
 .complain-list{
+  width: 60%;
+  margin: auto;
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 20px;
+  margin-top: 180px;
 }
 /* Complaints */
 .complain-card {
@@ -202,6 +221,27 @@ body {
 .complain-card:hover {
   transform: translateY(-2px);
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.lottie-background {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%); 
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  display: flex;
+  justify-content: center;
+  /* align-items: center; */
+  pointer-events: none; 
+}
+
+.content {
+  position: relative;
+  z-index: 1; /* This keeps your content on top */
+  padding: 20px;
+  color: white; /* বা যেকোনো color */
 }
 
 .complain-card h3 {
@@ -225,6 +265,11 @@ body {
   .form-title,
   .list-title {
     font-size: 20px;
+  }
+
+  .list-title-container{
+    background-color: #f3f4f6;
+    border: 2px solid red;
   }
 
   .button {
