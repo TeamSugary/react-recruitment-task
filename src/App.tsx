@@ -1,7 +1,8 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, JSX } from 'react';
 import ComplaintsForm from './components/complaints-form';
 import CardSkeleton from './components/card-skeleton';
 import ComplaintCard from './components/complaint-card';
+import { ClipboardX, TriangleAlert } from 'lucide-react';
 
 interface Complaint {
   Id: number;
@@ -10,19 +11,13 @@ interface Complaint {
   CreatedAt: string;
 }
 
-interface ApiResponse<T = Complaint[]> {
-  Data: T;
-  Message: string | null;
-  ReturnCode: number;
-  Success: boolean;
-}
 
 const baseUrl = "https://sugarytestapi.azurewebsites.net/";
 const listPath = "TestApi/GetComplains";
 
-function App() {
+function App(): JSX.Element {
   const [complaints, setComplaints] = useState<Complaint[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
 
   // Fetch complaints from the API
@@ -38,8 +33,8 @@ function App() {
       if (!response.ok) {
         throw new Error(`HTTP error! Status: ${response.status}`);
       }
-      const data: ApiResponse = await response.json();
-      // setComplaints(data);
+      const data = await response.json();
+      setComplaints(data);
     } catch (err) {
       setError(
         err instanceof Error ? err.message : "An unknown error occurred"
@@ -59,12 +54,15 @@ function App() {
 
       <div className='md:columns-2 lg:columns-3 xl:columns-4 *:break-inside-avoid space-y-4 mt-5'>
         {/* complaints form */}
-        <ComplaintsForm refetchComplaint={fetchComplaints} />
+        <ComplaintsForm refetchComplaints={fetchComplaints} />
 
         {/* Error state */}
         {error && (
-          <div className="card bg-red-500/20 !border-red-500">
-            Error: {error}
+          <div className="card bg-red-500/20 !border-red-500 text-center">
+            <TriangleAlert className='mx-auto text-red-500 opacity-85' size={50} />
+            <p className='text-red-500 font-semibold'>
+              Error: {error}
+            </p>
           </div>
         )}
 
@@ -82,8 +80,11 @@ function App() {
                 />
               ))
             ) : (
-              <div className="card bg-yellow-500/20 !border-yellow-500">
-                No complaints found
+              <div className="card bg-yellow-500/20 !border-yellow-500 text-center">
+                <ClipboardX className='mx-auto text-yellow-500 opacity-85' size={50} />
+                <p className='text-yellow-500 font-semibold'>
+                  No complaints found.
+                </p>
               </div>
             )}
           </>

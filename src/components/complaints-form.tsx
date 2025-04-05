@@ -1,10 +1,13 @@
 import { useEffect, useState } from "react";
+interface ComplaintsFormProps {
+   refetchComplaints: () => Promise<void>
+}
 
-export default function ComplaintsForm({ refetchComplaint }) {
-   const [title, setTitle] = useState("");
-   const [body, setBody] = useState("");
-   const [isSaving, setIsSaving] = useState(false);
-   const [errorMessage, setErrorMessage] = useState("");
+export default function ComplaintsForm({ refetchComplaints }: ComplaintsFormProps) {
+   const [title, setTitle] = useState<string>("");
+   const [body, setBody] = useState<string>("");
+   const [isSaving, setIsSaving] = useState<boolean>(false);
+   const [errorMessage, setErrorMessage] = useState<string>("");
    const baseUrl = "https://sugarytestapi.azurewebsites.net/";
    const savePath = "TestApi/SaveComplain";
 
@@ -16,7 +19,7 @@ export default function ComplaintsForm({ refetchComplaint }) {
    }, [title, body])
 
    // Save a new complaint
-   const handleSubmit = async () => {
+   const handleSubmit = async (): Promise<void> => {
       try {
          if (!title || !body) {
             setErrorMessage("Title and body are required.");
@@ -34,18 +37,16 @@ export default function ComplaintsForm({ refetchComplaint }) {
             }),
          });
          // refetch complaints after saving
-         refetchComplaint();
+         refetchComplaints();
          const data = await response.json();
          if (!data.Success) throw new Error("Failed to save complaint.");
          setTitle("");
          setBody("");
          // Missing: Update complaints list after successful submission
       } catch (e) {
-         if (e instanceof Error) {
-            setErrorMessage(e.message);
-         } else {
-            setErrorMessage("An unknown error occurred.");
-         }
+         setErrorMessage(
+            e instanceof Error ? e.message : "An unknown error occurred"
+         );
       } finally {
          setIsSaving(false);
       }
