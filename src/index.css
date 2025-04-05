@@ -1,68 +1,181 @@
-:root {
-  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
-
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
-
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-a {
-  font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
-}
-a:hover {
-  color: #535bf2;
-}
-
+/* Global Body Styling */
 body {
   margin: 0;
   display: flex;
-  place-items: center;
+  justify-content: center;
+  align-items: center;
   min-width: 320px;
   min-height: 100vh;
+  background: linear-gradient(135deg,rgb(166, 110, 239),rgba(0, 183, 255, 0.72))!important; /* Unified Gradient */
+  color: #fff;
+  font-family: 'Arial', sans-serif;
 }
 
-h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
+/* Main container for form and complaints (Keep content centered) */
+.main-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center; /* Ensure content is centered vertically */
+  padding: 50px;
+  border-radius: 15px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 400px;
+  
+  background: linear-gradient(135deg,rgb(166, 110, 239),rgb(0, 183, 255)); /* Unified Gradient */
+  overflow: hidden; /* Prevent overflow */
 }
 
+/* Form container */
+.form-container {
+  width: 100%;
+  margin-bottom: 30px;
+}
+
+/* Complaints List Heading */
+.complaints-list-heading {
+  font-size: 24px;
+  font-weight: bold;
+  text-align: left;
+  color: #fff;
+  margin-bottom: 20px;
+  width: 100%;
+}
+
+/* Complaints List */
+.complaints-list {
+  margin-top: 20px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  text-align: left;
+  padding-left: 20px;
+  padding-right: 20px; /* Added padding for responsiveness */
+}
+
+/* Complaint box */
+.complaint-box {
+  background: rgba(255, 255, 255, 0.1);
+  padding: 15px;
+  border-radius: 25px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  transition: 0.3s ease, transform 0.3s ease;
+  word-wrap: break-word; /* To handle text overflow */
+}
+
+.complaint-box:hover {
+  background: rgba(255, 255, 255, 0.2);
+  transform: translateY(-5px);
+}
+
+/* Form elements */
+input,
+textarea {
+  width: 100%;
+  margin-bottom: 15px;
+  padding: 15px;
+  border-radius: 25px;
+  border: none;
+  outline: none;
+  font-size: 14px;
+  background: rgba(255, 255, 255, 0.3);
+  color: #fff;
+}
+
+/* Button styling */
 button {
-  border-radius: 8px;
-  border: 1px solid transparent;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
-  font-weight: 500;
-  font-family: inherit;
-  background-color: #1a1a1a;
+  width: 100%;
+  padding: 15px;
+  border-radius: 50px !important;
+  background: linear-gradient(to right, #ff5858, #ffcc70);
+  border: none;
+  color: white;
+  font-weight: 600;
   cursor: pointer;
-  transition: border-color 0.25s;
-}
-button:hover {
-  border-color: #646cff;
-}
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
+  transition: all 0.3s ease;
 }
 
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
+button:hover {
+  opacity: 0.9;
+}
+
+button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+.error-message {
+  color: red;
+  margin-top: 10px;
+  font-size: 0.9rem;
+}
+
+/* Responsive Styles */
+
+/* Small devices (phones, less than 600px) */
+@media (max-width: 600px) {
+  .main-container {
+    padding: 20px;
+    max-width: 100%; /* Ensure it's full-width on small screens */
   }
-  a:hover {
-    color: #747bff;
+
+  .form-container {
+    padding: 0 10px; /* Add some padding to the form */
   }
+
+  .complaints-list {
+    padding-left: 10px; /* Reduce padding for small screens */
+    padding-right: 10px;
+  }
+
+  .complaint-box {
+    font-size: 14px; /* Make text size smaller for small devices */
+    padding: 10px;
+  }
+
+  .complaints-list-heading {
+    font-size: 18px; /* Reduce the heading size for small devices */
+  }
+
+  input,
+  textarea {
+    font-size: 14px;
+    padding: 10px;
+  }
+
   button {
-    background-color: #f9f9f9;
+    padding: 12px; /* Smaller button padding for small screens */
+  }
+
+  .error-message,
+  .success-message {
+    font-size: 0.8rem;
+  }
+}
+
+/* Medium devices (tablets, 600px - 768px) */
+@media (max-width: 768px) {
+  .main-container {
+    max-width: 80%;
+  }
+
+  .complaint-box {
+    font-size: 16px; /* Slightly bigger font for medium devices */
+  }
+
+  .complaints-list-heading {
+    font-size: 20px;
+  }
+
+  input,
+  textarea {
+    font-size: 16px;
+    padding: 12px;
+  }
+
+  button {
+    padding: 14px;
   }
 }
