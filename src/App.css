@@ -10,7 +10,7 @@ html, body {
   margin:0;
 }
 #root {
-  max-width: 1280px;
+  max-width: 100%;
   margin: 0 auto;
   text-align: center;
 }
@@ -157,13 +157,23 @@ html, body {
 
 
 .head-title {
-  font-size: 4rem;
+  font-size: 5rem;
   background: -webkit-linear-gradient(#5b7564, #d3cc98);
   background-clip:text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 
 }
+@media (max-width: 768px) {
+  .head-title {
+    font-size: 4rem; 
+  }
+}
+
+
+
+
+/*  */
 .complain-header{
   max-width: 650px;
   margin: 0 auto;
