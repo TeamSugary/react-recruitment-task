@@ -24,10 +24,17 @@ a:hover {
 
 body {
   margin: 0;
-  display: flex;
   place-items: center;
   min-width: 320px;
   min-height: 100vh;
+  background-image: linear-gradient(
+    to right top,
+    rgb(5, 25, 55),
+    rgb(0, 77, 122),
+    rgb(0, 135, 147),
+    rgb(0, 191, 114),
+    rgb(168, 235, 18)
+  );
 }
 
 h1 {
