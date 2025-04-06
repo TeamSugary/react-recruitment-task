@@ -23,23 +23,29 @@ function App() {
 
   // Save a new complaint
   const handleSubmit = async () => {
+    if (!title.trim() || !body.trim()) {
+      setErrorMessage("Please enter valid title and complaint");
+      return;
+    }
     try {
       setIsSaving(true);
-      const response = await fetch(savePath, {
+      setErrorMessage("");
+      const response = await fetch(`${baseUrl}${savePath}`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          Title: "Test Title",
-          Body: "Test Body",
+          Title: title,
+          Body: body,
         }),
       });
       const data = await response.json();
       if (!data.Success) throw new Error("Failed to save complaint.");
       // Missing: Update complaints list after successful submission
+      await fetchComplains();
     } catch (e) {
-      // Error state not being set
+      setErrorMessage(e.message || "An error occurred.");
     } finally {
       setIsSaving(false);
     }
