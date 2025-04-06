@@ -1,93 +1,164 @@
 import { useState, useEffect } from 'react';
 
-const baseUrl = "https://sugarytestapi.azurewebsites.net/";
-const listPath = "TestApi/GetComplains";
-const savePath = "TestApi/SaveComplain";
+interface Complaint {
+  Id: number;
+  Title: string;
+  Body: string;
+  CreatedAt?: string;
+  Status?: string;
+}
+
+const API_BASE_URL = "https://sugarytestapi.azurewebsites.net/";
+const LIST_PATH = "TestApi/GetComplains";
+const SAVE_PATH = "TestApi/SaveComplain";
 
 function App() {
-  const [complains, setComplains] = useState([]);
+  const [complaints, setComplaints] = useState<Complaint[]>([]);
   const [title, setTitle] = useState("");
   const [body, setBody] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
-  const [errorMessage, setErrorMessage] = useState("");
+  const [error, setError] = useState<string | null>(null);
+  const [success, setSuccess] = useState<string | null>(null);
 
-  // Fetch complaints from the API
-  const fetchComplains = async () => {
-    setIsLoading(true);
-    const response = await fetch(`${baseUrl}${listPath}`);
-    const data = await response.json();
-    setComplains(data);
-    setIsLoading(false);
+  const fetchComplaints = async () => {
+    try {
+      setIsLoading(true);
+      setError(null);
+
+      const response = await fetch(`${API_BASE_URL}${LIST_PATH}`);
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      const data: Complaint[] = await response.json();
+
+      setComplaints(data);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Fetching failed");
+      setComplaints([]);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
-  // Save a new complaint
-  const handleSubmit = async () => {
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    setError(null);
+    setSuccess(null);
+
+    if (!title.trim() || !body.trim()) {
+      setError("Please fill in all fields");
+      return;
+    }
+
     try {
       setIsSaving(true);
-      const response = await fetch(savePath, {
+
+      const response = await fetch(`${API_BASE_URL}${SAVE_PATH}`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({
-          Title: "Test Title",
-          Body: "Test Body",
-        }),
+        body: JSON.stringify({ Title: title, Body: body }),
       });
-      const data = await response.json();
-      if (!data.Success) throw new Error("Failed to save complaint.");
-      // Missing: Update complaints list after successful submission
-    } catch (e) {
-      // Error state not being set
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      setSuccess("Complaint submitted successfully!");
+      setTitle("");
+      setBody("");
+
+      await fetchComplaints();
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Submission failed");
     } finally {
       setIsSaving(false);
     }
   };
 
   useEffect(() => {
-    fetchComplains();
-  }, []); // Missing dependency array cleanup
+    fetchComplaints();
+  }, []);
 
   return (
     <div className="wrapper">
-      <h2>Submit a Complaint</h2>
+      <h1>Customer Complaints</h1>
 
-      <div className="complain-form">
-        <input
-          type="text"
-          placeholder="Title"
-          value={title}
-          onChange={(e) => setTitle(e.target.value)}
-        />
-        <textarea
-          placeholder="Enter your complaint"
-          value={body}
-          onChange={(e) => setBody(e.target.value)}
-        />
-
-        <button onClick={handleSubmit}>
-          {isSaving ? 'Submitting...' : 'Submit Complaint'}
-        </button>
-
-        {/* Place text loader when saving */}
-        {/* Error message not displayed even though state exists */}
-      </div>
-
-      <h2>Complaints List</h2>
-
-      {isLoading ? (
-        <div>Loading...</div>
-      ) : complains.length ? (
-        complains.map((complain) => (
-          <div key={complain.Id} className="complain-item">
-            <h3>{complain.Title}</h3>
-            <p>{complain.Body}</p>
+      <section className="complaint-section">
+        <h2>Submit a Complaint</h2>
+        <form onSubmit={handleSubmit} className="complaint-form">
+          <div className="form-group">
+            <label htmlFor="title">Title</label>
+            <input
+              id="title"
+              type="text"
+              placeholder="Enter title"
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
+              disabled={isSaving}
+            />
           </div>
-        ))
-      ) : (
-        <p>No complaints available.</p>
-      )}
+
+          <div className="form-group">
+            <label htmlFor="body">Details</label>
+            <textarea
+              id="body"
+              placeholder="Enter your complaint details"
+              value={body}
+              onChange={(e) => setBody(e.target.value)}
+              disabled={isSaving}
+              rows={5}
+            />
+          </div>
+
+          {error && <div className="error-message">{error}</div>}
+          {success && <div className="success-message">{success}</div>}
+
+          <button type="submit" className="primary-button" disabled={isSaving || !title.trim() || !body.trim()}>
+            {isSaving ? (
+              <>
+                <span className="spinner" aria-hidden="true"></span>
+                Submitting...
+              </>
+            ) : (
+              'Submit Complaint'
+            )}
+          </button>
+        </form>
+      </section>
+
+      <section className="complaints-list">
+        <h2>Recent Complaints</h2>
+
+        {isLoading ? (
+          <div className="loading-spinner">Loading complaints...</div>
+        ) : complaints.length > 0 ? (
+          <div className="complaints-grid">
+            {complaints.map((complaint) => (
+              <article key={complaint.Id} className="complaint-card">
+                <h3>{complaint.Title}</h3>
+                <p>{complaint.Body}</p>
+                {complaint.CreatedAt && (
+                  <time dateTime={complaint.CreatedAt}>
+                    {new Date(complaint.CreatedAt).toLocaleDateString()}
+                  </time>
+                )}
+                {complaint.Status && (
+                  <span className={`status-badge ${complaint.Status?.toLowerCase()}`}>
+                    {complaint.Status}
+                  </span>
+                )}
+              </article>
+            ))}
+          </div>
+        ) : (
+          <p className="no-complaints">No complaints found</p>
+        )}
+      </section>
     </div>
   );
 }
