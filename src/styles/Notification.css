@@ -1,0 +1,79 @@
+.notification {
+  position: relative;
+  padding: 0.75rem;
+  margin-top: 0.5rem;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.error-message {
+  background-color: #f8d7da;
+  color: #721c24;
+  border-left: 4px solid #f5c6cb;
+}
+
+.success-message {
+  background-color: #d4edda;
+  color: #155724;
+  border-left: 4px solid #c3e6cb;
+}
+
+.notification-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.dismiss-button {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  font-size: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  margin-left: 8px;
+  padding: 0;
+  transition: background-color 0.2s;
+}
+
+.error-message .dismiss-button {
+  color: #721c24;
+}
+
+.error-message .dismiss-button:hover {
+  background-color: rgba(114, 28, 36, 0.1);
+}
+
+.success-message .dismiss-button {
+  color: #155724;
+}
+
+.success-message .dismiss-button:hover {
+  background-color: rgba(21, 87, 36, 0.1);
+}
+
+.progress-bar-container {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
+.progress-bar {
+  height: 100%;
+  transition: width 0.1s linear;
+}
+
+.error-message .progress-bar {
+  background-color: #dc3545;
+}
+
+.success-message .progress-bar {
+  background-color: #28a745;
+}
