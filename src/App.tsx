@@ -49,8 +49,7 @@ function App(): JSX.Element {
 
   return (
     <div className="app-wrapper">
-      <h2 className="text-2xl font-bold mb-4">Complaints List</h2>
-
+      <h2 className='app-header'>Add and view <span> complaints</span></h2>
       <div className='form-and-complaints-container'>
         {/* complaints form */}
         <ComplaintsForm refetchComplaints={fetchComplaints} />
@@ -66,10 +65,10 @@ function App(): JSX.Element {
         )}
 
         {/* Loading state */}
-        {!isLoading && <CardSkeleton count={23} />}
+        {isLoading && <CardSkeleton count={23} />}
 
         {/* Success state */}
-        {isLoading && !error && (
+        {!isLoading && !error && (
           <>
             {complaints.length > 0 ? (
               complaints.map((complaint) => (

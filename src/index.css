@@ -6,6 +6,7 @@
   --primary: 100, 108, 255;
   --primary-dark: 83, 91, 242;
   --muted: 121, 127, 134;
+  --danger: 251, 44, 54;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -27,11 +28,42 @@
 body {
   background-color: rgb(var(--background));
   color: rgb(var(--body-text));
+  padding: 1rem;
 }
 
 .app-wrapper {
   max-width: 112rem;
   margin: 0 auto;
+}
+
+.app-header {
+  margin: 0 0 2rem 0;
+  text-align: center;
+
+  &>span {
+    position: relative;
+
+    &::before {
+      content: '';
+      position: absolute;
+      width: 100%;
+      height: 0.2rem;
+      bottom: 0rem;
+      background-color: rgb(var(--primary));
+      z-index: -1;
+      border-radius: 0.1rem;
+      -webkit-border-radius: 0.1rem;
+      -moz-border-radius: 0.1rem;
+      -ms-border-radius: 0.1rem;
+      -o-border-radius: 0.1rem;
+      transform: scaleX(1.2) translateY(5px) skewY(-3deg);
+      -webkit-transform: scaleX(1.2) translateY(5px) skewY(-3deg);
+      -moz-transform: scaleX(1.2) translateY(5px) skewY(-3deg);
+      -ms-transform: scaleX(1.2) translateY(5px) skewY(-3deg);
+      -o-transform: scaleX(1.2) translateY(5px) skewY(-3deg);
+    }
+
+  }
 }
 
 input,
@@ -42,6 +74,7 @@ textarea {
   outline: none;
   transition: all 0.3s ease-in-out;
   background-color: transparent;
+  color: rgb(var(--body-text));
 
   &:hover {
     border-color: rgba(var(--primary), 1);

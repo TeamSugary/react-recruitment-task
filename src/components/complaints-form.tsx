@@ -1,4 +1,5 @@
-import { useEffect, useState } from "react";
+import { FormEvent, useEffect, useState } from "react";
+import "../styles/complaints-form.css"
 
 interface ComplaintsFormProps {
    refetchComplaints: () => Promise<void>
@@ -20,7 +21,8 @@ export default function ComplaintsForm({ refetchComplaints }: ComplaintsFormProp
    }, [title, body])
 
    // Save a new complaint
-   const handleSubmit = async (): Promise<void> => {
+   const handleSubmit = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
+      e.preventDefault();
       try {
          if (!title || !body) {
             setErrorMessage("Title and body are required.");
@@ -43,7 +45,6 @@ export default function ComplaintsForm({ refetchComplaints }: ComplaintsFormProp
          if (!data.Success) throw new Error("Failed to save complaint.");
          setTitle("");
          setBody("");
-         // Missing: Update complaints list after successful submission
       } catch (e) {
          setErrorMessage(
             e instanceof Error ? e.message : "An unknown error occurred"
@@ -54,8 +55,8 @@ export default function ComplaintsForm({ refetchComplaints }: ComplaintsFormProp
    };
 
    return (
-      <div className='card !border-2 border-dashed hover:!border-primary'>
-         <h2 className="text-lg text-muted font-bold">Submit a Complaint</h2>
+      <form className='card form-container' onSubmit={handleSubmit}>
+         <h2 style={{ color: "rgb(var(--muted))", fontWeight: 600, fontSize: "1rem" }}>Submit a Complaint</h2>
          <input
             type="text"
             placeholder="Title"
@@ -68,10 +69,10 @@ export default function ComplaintsForm({ refetchComplaints }: ComplaintsFormProp
             rows={5}
             onChange={(e) => setBody(e.target.value)}
          />
-         <button onClick={handleSubmit} className='btn' disabled={isSaving}>
+         <button type="submit" className='btn' disabled={isSaving}>
             {isSaving ? 'Submitting...' : 'Submit Complaint'}
          </button>
-         {errorMessage && <p className="text-red-500 text-sm">{errorMessage}</p>}
-      </div>
+         {errorMessage && <p className="form-error">{errorMessage}</p>}
+      </form>
    )
 }
