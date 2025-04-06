@@ -1,74 +1,157 @@
-#root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
-}
+body {
+  background-image: linear-gradient(
+    to right top,
+    rgb(5, 25, 55),
+    rgb(0, 77, 122),
+    rgb(0, 135, 147),
+    rgb(0, 191, 114),
+    rgb(168, 235, 18)
+  );
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
-}
-
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
-}
-
-.card {
-  padding: 2em;
-}
-
-.read-the-docs {
-  color: #888;
+  margin: 0;
+  min-height: 100dvb;
 }
 
 .wrapper {
   width: 100%;
-  max-width: 600px;
+  max-width: 40rem;
   margin: 0 auto;
+  padding: 1.25rem;
+}
+
+.wrapper h2 {
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
 }
 
 .complain-form {
-  margin-bottom: 20px;
+  width: 100%;
+  backdrop-filter: blur(10px);
+  background-color: var(--semitransparent-bg);
+  border-radius: 25px;
+  box-shadow: rgba(0, 0, 0, 0.2) 0px 4px 10px 0px;
+  margin-bottom: 1.25rem;
+  padding: 1.25rem;
 }
 
 .complain-form input,
 .complain-form textarea {
-  width: 100%;
-  margin-bottom: 10px;
-  padding: 8px;
+  background-color: var(--semitransparent-bg);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 25px;
   box-sizing: border-box;
+  color: rgb(255, 255, 255);
+  color-scheme: initial;
+  font-size: 1rem;
+  margin-bottom: 0.625rem;
+  outline: none;
+  padding: 0.9375rem;
+  width: 100%;
+}
+
+.complain-form textarea {
+  min-height: 6.25rem;
+  max-height: 15lh;
+  field-sizing: content;
+  resize: vertical;
+}
+
+.complain-form input:focus,
+.complain-form textarea:focus {
+  border-color: rgba(255, 255, 255, 1);
+}
+
+.complain-form input::placeholder,
+.complain-form textarea::placeholder {
+  color: #f0f0f0c0 !important;
 }
 
 .complain-form button {
-  padding: 8px;
+  background: linear-gradient(135deg, #ff5f6d, #ffc371);
+  border: none;
+  border-radius: 100px;
+  color: #ffffff;
+  font-size: 1rem;
+  font-weight: 700;
+  padding: 1rem;
+  transition: all 0.3s ease;
+  width: 100%;
+}
+
+.complain-form button:hover {
+  box-shadow: 0 4px 10px #fff3;
+  transform: translateY(-2px);
 }
 
 .error-message {
   color: red;
-  margin-top: 10px;
+  margin-top: 0.625rem;
 }
 
 .complain-item {
-  border-bottom: 1px solid #ccc;
-  padding: 10px 0;
+  background: #fff3;
+  border: 1px solid hsla(0, 0%, 100%, 0.3);
+  border-radius: 30px;
+  box-shadow: 0 4px 10px #0003;
+  cursor: pointer;
+  margin-bottom: 0.625rem;
+  padding: 1.25rem 1.5625rem;
+  text-align: start;
+  transition: all 0.3s ease;
+}
+
+.complain-item:hover {
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+  cursor: pointer;
+  transform: translateY(-2px);
+}
+
+.complain-item h3 {
+  margin: 0;
+  margin-bottom: 1.17rem;
+}
+
+.toast {
+  min-width: 20rem;
+  max-width: 30rem;
+  backdrop-filter: blur(10px);
+  background-color: var(--semitransparent-bg);
+  border-radius: 25px;
+  box-shadow: rgba(0, 0, 0, 0.2) 0px 4px 10px 0px;
+
+  position: fixed;
+  bottom: 1rem;
+  right: 1rem;
+
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+
+  padding: 1rem;
+
+  animation: fadeIn 0.5s ease-in-out;
+  z-index: 50;
+}
+
+.toast button {
+  background-color: transparent;
+
+  font-size: 1rem;
+  padding: 0.5rem 0.75rem;
+
+  border: 1px solid #f0f0f0;
+  border-radius: 100px;
+
+  cursor: pointer;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
