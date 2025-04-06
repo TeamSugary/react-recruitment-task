@@ -3,12 +3,11 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
   padding: 50px;
   border-radius: 15px;
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
   width: 100%;
-  max-width: 500px;
+  max-width: 800px; /* Increased to accommodate both sections */
   background: linear-gradient(135deg, rgb(166, 110, 239), rgb(0, 183, 255));
   overflow: hidden;
 }
@@ -16,11 +15,19 @@
 /* Form container */
 .form-container {
   width: 100%;
+  max-width: 500px;
   margin-bottom: 30px;
 }
 
+/* Complaints list section */
+.complaints-list-section {
+  width: 100%;
+  max-width: 500px;
+  margin-top: 20px;
+}
+
 /* Complaints List Heading */
-.complaints-list-heading {
+#complaint-list-heading {
   font-size: 24px;
   font-weight: bold;
   text-align: left;
@@ -31,14 +38,10 @@
 
 /* Complaints List */
 .complaints-list {
-  margin-top: 20px;
   width: 100%;
   display: flex;
   flex-direction: column;
   gap: 15px;
-  text-align: left;
-  padding-left: 20px;
-  padding-right: 20px;
 }
 
 /* Complaint box */
@@ -50,14 +53,7 @@
   transition: 0.3s ease, transform 0.3s ease;
   word-wrap: break-word;
   width: 100%;
-  min-height: 150px;
-  height: auto;
   box-sizing: border-box;
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  margin-bottom: 15px;
 }
 
 /* Title Styling */
@@ -66,6 +62,7 @@
   font-weight: bold;
   margin-bottom: 10px;
   color: #fff;
+  text-align: left;
 }
 
 /* Message Styling */
@@ -73,6 +70,7 @@
   font-size: 14px;
   color: #fff;
   margin-bottom: 10px;
+  text-align: left;
 }
 
 /* Hover effect for complaint boxes */
@@ -81,47 +79,29 @@
   transform: translateY(-5px);
 }
 
-/* Responsive adjustments for the component */
+/* Responsive adjustments */
 @media (max-width: 600px) {
   .main-container {
     padding: 20px;
     max-width: 100%;
   }
 
-  .form-container {
-    padding: 0 10px;
-  }
-
-  .complaints-list {
-    padding-left: 10px;
-    padding-right: 10px;
+  .form-container,
+  .complaints-list-section {
+    padding: 0;
   }
 
   .complaint-box {
-    font-size: 14px;
     padding: 10px;
-    min-height: 120px;
-  height: 120px;
-  margin-bottom: 10px;
   }
 
-  .complaints-list-heading {
-    font-size: 18px;
+  #complaint-list-heading {
+    font-size: 20px;
   }
 }
 
 @media (max-width: 768px) {
   .main-container {
-    max-width: 80%;
-  }
-
-  .complaint-box {
-    font-size: 16px;
-    min-height: 130px;
-    height: 130px;
-  }
-
-  .complaints-list-heading {
-    font-size: 20px;
+    max-width: 90%;
   }
 }

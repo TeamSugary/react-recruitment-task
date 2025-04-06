@@ -14,6 +14,7 @@ body {
 /* Global Button styling */
 button {
   width: 100%;
+  max-width: 500px;
   padding: 15px;
   border-radius: 50px;
   background: linear-gradient(to right, #ff5858, #ffcc70);
@@ -37,6 +38,7 @@ button:disabled {
 input,
 textarea {
   width: 100%;
+  max-width: 500px;
   margin-bottom: 15px;
   padding: 15px;
   border-radius: 25px;
@@ -47,30 +49,19 @@ textarea {
   color: #fff;
 }
 
-/* Responsive Styles */
-
-/* Small devices (phones, less than 600px) */
-@media (max-width: 600px) {
-  input,
-  textarea {
-    font-size: 14px;
-    padding: 10px;
-  }
-
-  button {
-    padding: 12px;
-  }
+/* Error and success messages */
+.error-message,
+.success-message {
+  width: 100%;
+  max-width: 500px;
+  text-align: left;
+  margin-top: 10px;
 }
 
-/* Medium devices (tablets, 600px - 768px) */
-@media (max-width: 768px) {
-  input,
-  textarea {
-    font-size: 16px;
-    padding: 12px;
-  }
+.error-message {
+  color: #ff6b6b;
+}
 
-  button {
-    padding: 14px;
-  }
+.success-message {
+  color: #51cf66;
 }

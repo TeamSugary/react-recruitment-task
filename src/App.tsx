@@ -1,139 +1,133 @@
-import { useState, useEffect } from "react";
-
-const baseUrl = "https://sugarytestapi.azurewebsites.net/";
-const listPath = "TestApi/GetComplains";
-const savePath = "TestApi/SaveComplain";
-
-interface Complain {
-  Id: number;
-  Title: string;
-  Body: string;
-}
+import React, { useState, useEffect } from "react";
+import { useComplainStore } from "./store/useComplainStore";
 
 function App() {
-  const [complains, setComplains] = useState<Complain[]>([]);
+  const {
+    complains,
+    isLoading,
+    isSaving,
+    errorMessage,
+    successMessage,
+    fetchComplains,
+    addComplain,
+    clearMessages,
+  } = useComplainStore();
+
   const [title, setTitle] = useState("");
   const [body, setBody] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
-  const [isSaving, setIsSaving] = useState(false);
-  const [errorMessage, setErrorMessage] = useState("");
-  const [successMessage, setSuccessMessage] = useState("");
 
-  const fetchComplains = async () => {
-    try {
-      setIsLoading(true);
-      setErrorMessage("");
-      const response = await fetch(`${baseUrl}${listPath}`);
-      if (!response.ok) throw new Error("Failed to fetch complaints.");
-      const data = await response.json();
-      setComplains(data);
-    } catch (error) {
-      setErrorMessage(error instanceof Error ? error.message : "Error loading complaints.");
-    } finally {
-      setIsLoading(false);
-    }
-  };
+  useEffect(() => {
+    fetchComplains();
+  }, [fetchComplains]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    try {
-      if (!title.trim() || !body.trim()) {
-        setErrorMessage("Please fill in both fields.");
-        return;
-      }
-
-      if (title.length > 50) {
-        setErrorMessage("Title must be less than 50 characters.");
-        return;
-      }
-
-      if (body.length > 500) {
-        setErrorMessage("Complaint must be less than 500 characters.");
-        return;
-      }
-
-      setErrorMessage("");
-      setIsSaving(true);
-      const response = await fetch(`${baseUrl}${savePath}`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ Title: title, Body: body }),
+    if (!title.trim() || !body.trim()) {
+      useComplainStore.setState({
+        errorMessage: "Please fill in both fields.",
       });
-
-      const data = await response.json();
-      if (!data.Success) throw new Error("Failed to save complaint.");
-
-      setTitle("");
-      setBody("");
-      setSuccessMessage("Complaint submitted successfully!");
-      setTimeout(() => setSuccessMessage(""), 3000);
-      fetchComplains();
-    } catch (error) {
-      setErrorMessage(error instanceof Error ? error.message : "Error saving complaint.");
-    } finally {
-      setIsSaving(false);
+      return;
     }
+
+    if (title.length > 50) {
+      useComplainStore.setState({
+        errorMessage: "Title must be less than 50 characters.",
+      });
+      return;
+    }
+
+    if (body.length > 500) {
+      useComplainStore.setState({
+        errorMessage: "Complaint must be less than 500 characters.",
+      });
+      return;
+    }
+
+    await addComplain(title, body);
+    setTitle("");
+    setBody("");
+
+    setTimeout(() => {
+      clearMessages();
+    }, 3000);
   };
 
-  useEffect(() => {
-    fetchComplains();
-  }, []);
-
   return (
-    <div className="main-container">
-      <div className="form-container">
-        {/* Form Section */}
-        <h2>Submit a Complaint</h2>
-        <form onSubmit={handleSubmit} className="complain-form">
+    <main className="main-container" role="main">
+      <section className="form-container">
+        <h2 id="complaint-heading">Submit a Complaint</h2>
+        <form
+          onSubmit={handleSubmit}
+          className="complain-form"
+          aria-labelledby="complaint-heading"
+        >
+          <label htmlFor="title" className="sr-only">
+            Complaint Title
+          </label>
           <input
+            id="title"
             type="text"
             placeholder="Title"
             value={title}
             onChange={(e) => setTitle(e.target.value)}
             maxLength={50}
             required
+            aria-required="true"
           />
+
+          <label htmlFor="body" className="sr-only">
+            Complaint Details
+          </label>
           <textarea
+            id="body"
             placeholder="Enter your complaint"
             value={body}
             onChange={(e) => setBody(e.target.value)}
             maxLength={500}
             required
+            aria-required="true"
             rows={5}
           />
-          <button type="submit" disabled={isSaving}>
+
+          <button type="submit" disabled={isSaving} aria-busy={isSaving}>
             {isSaving ? "Submitting..." : "Submit Complaint"}
           </button>
 
-          {errorMessage && <p className="error-message">{errorMessage}</p>}
-          {successMessage && <p className="success-message">{successMessage}</p>}
+          {errorMessage && (
+            <p className="error-message" role="alert">
+              {errorMessage}
+            </p>
+          )}
+          {successMessage && (
+            <p className="success-message" role="status">
+              {successMessage}
+            </p>
+          )}
         </form>
-      </div>
+      </section>
 
-      {/* Complaint List Heading */}
-      <div className="complaints-list-heading">
-        <h3>Complaint List</h3>
-      </div>
+      <section className="complaints-list-section" aria-labelledby="complaint-list-heading">
+        <h3 id="complaint-list-heading">Complaint List</h3>
 
-      {/* Complaints List - With background for each complaint */}
-      <div className="complaints-list">
-        {isLoading ? (
-          <p>Loading complaints...</p>
-        ) : complains.length ? (
-          complains.map((complain) => (
-            <div key={complain.Id} className="complaint-box">
-              <h3>{complain.Title}</h3>
-              <p>{complain.Body}</p>
-            </div>
-          ))
-        ) : (
-          <p>No complaints available.</p>
-        )}
-      </div>
-    </div>
+        <div className="complaints-list">
+          {isLoading ? (
+            <p>Loading complaints...</p>
+          ) : complains.length ? (
+            complains.map((complain) => (
+              <article key={complain.Id} className="complaint-box" aria-labelledby={`complaint-title-${complain.Id}`}>
+                <h4 id={`complaint-title-${complain.Id}`} className="complaint-title">
+                  {complain.Title}
+                </h4>
+                <p className="complaint-message">{complain.Body}</p>
+              </article>
+            ))
+          ) : (
+            <p>No complaints available.</p>
+          )}
+        </div>
+      </section>
+    </main>
   );
 }
 
