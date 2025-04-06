@@ -22,6 +22,10 @@
 .complaint-card p {
   color: #555;
   margin-bottom: 1rem;
+
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  white-space: normal;
 }
 
 .complaint-footer {
