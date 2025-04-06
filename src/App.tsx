@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react';
-
 const baseUrl = "https://sugarytestapi.azurewebsites.net/";
 const listPath = "TestApi/GetComplains";
 const savePath = "TestApi/SaveComplain";
@@ -14,19 +13,26 @@ function App() {
 
   // Fetch complaints from the API
   const fetchComplains = async () => {
-    setIsLoading(true);
-    const response = await fetch(`${baseUrl}${listPath}`);
-    const data = await response.json();
-    setComplains(data);
-    setIsLoading(false);
+    try {
+      setIsLoading(true);
+      const response = await fetch(`${baseUrl}${listPath}`);
+      const data = await response.json();
+      setComplains(data);
+    } catch (e) {
+      setErrorMessage("Failed to load complaints.");
+    } finally {
+      setIsLoading(false);
+    }
   };
+  
 
-  // Save a new complaint
+// Save a new complaint
   const handleSubmit = async () => {
     if (!title.trim() || !body.trim()) {
       setErrorMessage("Please enter valid title and complaint");
       return;
     }
+   
     try {
       setIsSaving(true);
       setErrorMessage("");
@@ -41,6 +47,8 @@ function App() {
         }),
       });
       const data = await response.json();
+      setTitle("");
+      setBody(""); 
       if (!data.Success) throw new Error("Failed to save complaint.");
       // Missing: Update complaints list after successful submission
       await fetchComplains();
@@ -66,6 +74,7 @@ function App() {
           value={title}
           onChange={(e) => setTitle(e.target.value)}
         />
+        
         <textarea
           placeholder="Enter your complaint"
           value={body}
