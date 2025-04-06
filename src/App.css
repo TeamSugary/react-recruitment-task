@@ -13,23 +13,22 @@ body {
   font-size: xx-large;
 }
 
-
 body.dark {
   background-color: #121212;
   color: #ffffff;
 }
 
-body.dark .complain-card h3{
+body.dark .complain-card h3 {
   color: #ffffff;
 }
-body.dark .complain-card p{
+body.dark .complain-card p {
   color: #ffffff8e;
 }
 
-body.dark .list-subtitle{
+body.dark .list-subtitle {
   color: #ffffffbb;
 }
-body.dark .form-subtitle{
+body.dark .form-subtitle {
   color: #ffffffbb;
 }
 
@@ -43,15 +42,14 @@ body.dark .form-subtitle{
   box-sizing: border-box;
 }
 
-nav{
+nav {
   display: flex;
   align-items: center;
   justify-content: space-between;
   border-bottom: 1px solid #d1d5db;
-
 }
 
-.nav-logo{
+.nav-logo {
   display: flex;
   align-items: center;
   padding: 1rem;
@@ -60,7 +58,7 @@ nav{
   padding: 0;
 }
 
-nav img{
+nav img {
   width: 50px;
   height: 50px;
 }
@@ -264,11 +262,11 @@ nav img{
   border-width: 100%;
 }
 
-.spinner{
+.spinner {
   color: white;
   animation: spin 1s linear infinite;
 }
-.spinner2{
+.spinner2 {
   color: blue;
   animation: spin 1s linear infinite;
 }
@@ -283,7 +281,6 @@ nav img{
 }
 /* Complaints */
 .complain-card {
-
   /* background-color: #ffffff; */
   padding: 20px;
   border-radius: 8px;
@@ -346,18 +343,170 @@ nav img{
   color: #374151;
 }
 
-/* Responsive Touch */
-@media (max-width: 600px) {
-  /* .container {
-    padding: 0.75rem;
-  } */
+.arrow-container {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  z-index: -1;
+}
+.arrow-container2 {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  z-index: -1;
+}
+
+.arrow {
+  width: 200px;
+  height: 80px;
+  padding: 5px;
+  object-fit: cover;
+  z-index: -1;
+}
+.arrow2 {
+  width: 200px;
+  height: 80px;
+  padding: 5px;
+  object-fit: cover;
+  z-index: -1;
+}
+
+
+@media (max-width: 1024px) {
+  .form-container {
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+  }
+
+  .side-image-container,
+  .complain-form {
+    width: 100%;
+  }
+
+  .side-image {
+    width: 100%;
+    height: auto;
+  }
+
+  .list-title-container {
+    width: 80%;
+  }
+
+  .complain-list {
+    width: 90%;
+  }
+  .side-image {
+    object-fit: contain;
+    width: 50%;
+    animation: none !important;
+    transform: none !important;
+    position: static;
+  }
+}
+
+@media (max-width: 768px) {
+  .form-title,
+  .list-title {
+    font-size: 28px;
+  }
+
+  .form-subtitle,
+  .list-subtitle {
+    font-size: 16px;
+  }
+
+  .input,
+  .textarea {
+    font-size: 14px;
+    padding: 12px;
+  }
+
+  .button {
+    font-size: 15px;
+    padding: 10px;
+  }
+
+  .complain-card h3 {
+    font-size: 18px;
+  }
+
+  .complain-card p {
+    font-size: 14px;
+  }
+
+  .complain-list {
+    width: 100%;
+    margin-top: 100px;
+    padding-right: 0;
+    padding-left: 0;
+    margin-bottom: 40px;
+  }
+
+  .side-image {
+    object-fit: contain;
+    width: 50%;
+    animation: none !important;
+    transform: none !important;
+    position: static;
+  }
+}
+
+@media (max-width: 480px) {
+  .container {
+    padding: 0 1rem;
+    padding-bottom: 40px;
+  }
+
+  .form-wrapper,
+  .list-wrapper {
+    padding: 20px;
+  }
 
   .form-title,
   .list-title {
+    font-size: 28px;
+    letter-spacing: 1px;
+  }
+
+  .form-subtitle,
+  .list-subtitle {
+    font-size: 14px;
+  }
+
+  .input,
+  .textarea {
+    padding: 10px;
+  }
+
+  .list-title-container {
+    width: 100%;
+    top: 60px;
+  }
+
+  .complain-list {
+    width: 100%;
+    margin-top: 100px;
+    padding-right: 0;
+    padding-left: 0;
+    margin-bottom: 40px;
+  }
+
+  .arrow,
+  .arrow2 {
+    width: 150px;
+    height: 60px;
+  }
+
+  .spinner,
+  .spinner2 {
     font-size: 20px;
   }
 
-  */ .button {
-    font-size: 15px;
+  .side-image {
+    object-fit: contain;
+    animation: none !important;
+    transform: none !important;
+    position: static;
   }
 }

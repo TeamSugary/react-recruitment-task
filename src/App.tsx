@@ -161,6 +161,7 @@ function App() {
       </div>
 
       <div className="list-wrapper">
+        
         <div className="lottie-background">
           <Lottie
             animationData={animationData}
@@ -181,7 +182,9 @@ function App() {
         </div>
 
         {/* Lottie Animation Background */}
-
+        <div className="arrow-container2">
+          <img className="arrow2" src="https://i.imgur.com/mmWqwXR.png" alt="" />
+        </div>
         <div className="complain-list">
           {isLoading ? (
             <p className="loading">
@@ -197,6 +200,9 @@ function App() {
           ) : (
             <p className="no-complain">No complaints available.</p>
           )}
+        </div>
+        <div className="arrow-container">
+          <img className="arrow" src="https://i.imgur.com/mmWqwXR.png" alt="" />
         </div>
       </div>
     </div>
