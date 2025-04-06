@@ -2,20 +2,18 @@
 
 @layer base {
   body {
-    @apply text-white  to-yellow-400 via-green-600
-  from-indigo-950 bg-gradient-to-tr;
+    @apply text-white bg-gradient-to-tr from-blue-700 via-green-500 to-lime-500 ;
   }
 }
 .wrapper{
-  width: 600px; 
-  margin: auto;
+  @apply w-[600px] m-auto max-sm:w-[350px]
 }
 
 @utility flex-column{
   @apply flex  justify-center flex-col
 }
 @utility box{
-  @apply rounded-4xl bg-[rgba(255,255,255,.2)] p-5 w-[600px] mx-auto 
+  @apply rounded-4xl bg-[rgba(255,255,255,.2)] p-5 w-[600px] max-sm:w-[350px] max-sm:p-2 mx-auto drop-shadow-black shadow-xl 
 }
 @utility inner-box{
   @apply rounded-4xl bg-[rgba(255,255,255,.2)] py-4 px-5 w-full mx-auto  border-amber-50 focus:border-1 outline-none
@@ -27,5 +25,15 @@
   @apply text-2xl font-bold pb-5 mr-auto
 }
 @utility box-1{
-  @apply rounded-4xl bg-[rgba(255,255,255,.2)] p-5 w-[600px] mx-auto hover:-translate-y-1 transition-all duration-300 cursor-pointer 
+  @apply rounded-4xl bg-[rgba(255,255,255,.2)] p-5 w-[600px] max-sm:w-[350px] max-sm:p-2 mx-auto hover:-translate-y-1 transition-all duration-300 cursor-pointer drop-shadow-black shadow-xl 
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+.no-scrollbar {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
 }
