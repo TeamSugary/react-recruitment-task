@@ -3,18 +3,28 @@ body {
   margin: 0;
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: flex-start; /* Changed from center to flex-start for better mobile layout */
   min-width: 320px;
   min-height: 100vh;
   background: linear-gradient(135deg, rgb(166, 110, 239), rgba(0, 183, 255, 0.72));
   color: #fff;
   font-family: 'Arial', sans-serif;
+  padding: 20px; /* Added padding to prevent edge touching */
+  box-sizing: border-box; /* Ensures padding is included in width calculation */
+}
+
+/* Main container adjustments for mobile */
+.main-container {
+  width: 100%;
+  max-width: 500px; /* Matches your input/button max-width */
+  padding: 20px;
+  box-sizing: border-box;
 }
 
 /* Global Button styling */
 button {
   width: 100%;
-  max-width: 500px;
+  max-width: 100%; /* Changed from 500px to 100% to fit container */
   padding: 15px;
   border-radius: 50px;
   background: linear-gradient(to right, #ff5858, #ffcc70);
@@ -26,7 +36,7 @@ button {
 }
 
 button:hover {
-  opacity: 0.9;
+  opacity: 0.8;
 }
 
 button:disabled {
@@ -38,7 +48,7 @@ button:disabled {
 input,
 textarea {
   width: 100%;
-  max-width: 500px;
+  max-width: 100%; /* Changed from 500px to 100% to fit container */
   margin-bottom: 15px;
   padding: 15px;
   border-radius: 25px;
@@ -47,15 +57,18 @@ textarea {
   font-size: 14px;
   background: rgba(255, 255, 255, 0.3);
   color: #fff;
+  box-sizing: border-box; /* Ensures padding is included in width calculation */
 }
 
 /* Error and success messages */
 .error-message,
 .success-message {
   width: 100%;
-  max-width: 500px;
+  max-width: 100%; /* Changed from 500px to 100% to fit container */
   text-align: left;
   margin-top: 10px;
+  padding: 10px;
+  box-sizing: border-box;
 }
 
 .error-message {
@@ -64,4 +77,22 @@ textarea {
 
 .success-message {
   color: #51cf66;
+}
+
+/* Mobile-specific adjustments */
+@media (max-width: 600px) {
+  body {
+    padding: 15px;
+    align-items: flex-start; /* Better for scrollable content */
+  }
+  
+  .main-container {
+    padding: 15px;
+  }
+  
+  input,
+  textarea,
+  button {
+    padding: 12px;
+  }
 }
