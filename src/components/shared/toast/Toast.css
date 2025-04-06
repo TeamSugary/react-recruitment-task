@@ -1,6 +1,6 @@
 #toast-container {
     position: fixed;
-    bottom: 20px;
+    top: 20px;
     right: 20px;
     z-index: 1000;
   }
@@ -20,19 +20,12 @@
     animation: slideOutToRight 0.3s ease forwards;
   }
   
-  .toast.success {
-    border-left: 4px solid #4ecdc4;
-  }
-  
-  .toast.error {
-    border-left: 4px solid #ff6b6b;
-  }
-  
   .toast-content {
     display: flex;
     align-items: center;
     padding: var(--spacing-md);
     gap: var(--spacing-md);
+    font-weight: bold;
   }
   
   .toast-icon {

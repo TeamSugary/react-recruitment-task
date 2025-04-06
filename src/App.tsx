@@ -4,6 +4,8 @@ import Toast from "./components/shared/Toast/Toast";
 import ComplaintList from "./components/ComplaintList/ComplaintList";
 import ThemeToggle from "./components/shared/ThemeToggle/ThemeToggle";
 import ErrorBoundary from "./components/shared/ErrorBoundary/ErrorBoundary";
+import "./App.css";
+import heroBanner from "./assets/hero-illlustration.svg";
 
 const baseUrl = "https://sugarytestapi.azurewebsites.net/";
 const listPath = "TestApi/GetComplains";
@@ -26,7 +28,6 @@ function App() {
       const data = await response.json();
       setComplains(data);
       // console.log(data);
-
     } catch (error) {
       if (error instanceof Error) {
         setErrorMessage(error.message);
@@ -75,23 +76,22 @@ function App() {
 
     return () => {
       controller.abort(); // Cleanup function to abort fetch request
-    }
+    };
   }, []);
 
   useEffect(() => {
-    document.documentElement.classList.add('cursor-hidden')
+    document.documentElement.classList.add("cursor-hidden");
     return () => {
-      document.documentElement.classList.remove('cursor-hidden')
-    }
-  }, [])
+      document.documentElement.classList.remove("cursor-hidden");
+    };
+  }, []);
 
   return (
-    
     <ErrorBoundary>
       <div className="app">
         {/* <AdvancedCursor /> */}
         <header className="app-header">
-          <h1>Complaint Management System</h1>
+          <h1><a href="#">Feedback Control</a></h1>
           <ThemeToggle />
         </header>
 
@@ -99,20 +99,21 @@ function App() {
           <section className="form-section">
             <ComplaintForm onSubmit={handleSubmit} />
           </section>
-
-          <section className="list-section">
-            <ComplaintList
-              complaints={complains}
-              isLoading={isLoading}
-              error={errorMessage}
-              onRefresh={fetchComplains}
-            />
+          <section className="image-section">
+            <img src={heroBanner} alt="hero banner" />
           </section>
         </main>
-
+        <section className="list-section">
+          <ComplaintList
+            complaints={complains}
+            isLoading={isLoading}
+            error={errorMessage}
+            onRefresh={fetchComplains}
+          />
+        </section>
         <div id="toast-container"></div>
       </div>
-      </ErrorBoundary>
+    </ErrorBoundary>
   );
 }
 

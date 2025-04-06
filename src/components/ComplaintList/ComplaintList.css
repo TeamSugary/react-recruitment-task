@@ -2,13 +2,7 @@
     background-color: var(--bg-secondary);
     border-radius: var(--border-radius-lg);
     padding: var(--spacing-xl);
-    box-shadow: 0 4px 12px var(--shadow-color);
-    transition: transform var(--transition-normal), box-shadow var(--transition-normal);
-  }
-  
-  .complaint-list-container:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 24px var(--shadow-color);
+    transition: transform var(--transition-slow), box-shadow var(--transition-slow);
   }
   
   .complaint-list-header {
@@ -23,17 +17,6 @@
     font-size: var(--font-size-xl);
     position: relative;
     display: inline-block;
-  }
-  
-  .complaint-list-header h2::after {
-    content: "";
-    position: absolute;
-    bottom: -8px;
-    left: 0;
-    width: 60px;
-    height: 3px;
-    background: linear-gradient(90deg, var(--secondary-color), var(--primary-color));
-    border-radius: 3px;
   }
   
   .refresh-button {
@@ -74,14 +57,14 @@
   
   .search-container svg {
     position: absolute;
-    left: var(--spacing-md);
+    left: var(--spacing-base);
     color: var(--text-muted);
   }
   
   .search-input {
     width: 100%;
-    padding: var(--spacing-md);
-    padding-left: calc(var(--spacing-md) * 2 + 16px);
+    padding: var(--spacing-base);
+    padding-left: calc(var(--spacing-base) * 2 + 16px);
     border: 1px solid var(--border-color);
     border-radius: var(--border-radius-md);
     background-color: var(--bg-primary);
@@ -111,7 +94,7 @@
     align-items: center;
     gap: var(--spacing-sm);
     width: 100%;
-    padding: var(--spacing-md);
+    padding: var(--spacing-base);
     background-color: var(--bg-primary);
     border: 1px solid var(--border-color);
     border-radius: var(--border-radius-md);
@@ -127,7 +110,7 @@
   
   .dropdown-menu {
     position: absolute;
-    top: calc(100% + 5px);
+    top: calc(100% + 0px);
     left: 0;
     width: 100%;
     background-color: var(--bg-primary);
@@ -146,7 +129,7 @@
   }
   
   .dropdown-menu button {
-    padding: var(--spacing-md);
+    padding: var(--spacing-base);
     text-align: left;
     background: none;
     border: none;
@@ -167,6 +150,7 @@
   
   .complaint-cards {
     display: grid;
+    grid-template-columns: 1fr;
     gap: var(--spacing-lg);
   }
   
@@ -182,6 +166,10 @@
   
     .filter-sort-container {
       flex: 1;
+    }
+    .complaint-cards {
+      grid-template-columns: 1fr 1fr;
+      gap: var(--spacing-lg);
     }
   }
   

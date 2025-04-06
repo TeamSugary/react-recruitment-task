@@ -52,7 +52,7 @@ const ComplaintForm: React.FC<ComplaintFormProps> = ({ onSubmit }) => {
 
   return (
     <div className="complaint-form-container">
-      <h2>Submit a Complaint</h2>
+      <h2>Report a Problem</h2>
       <form className="complaint-form" onSubmit={handleSubmit}>
         <div className="form-group">
           <label htmlFor="title">Title</label>

@@ -11,7 +11,6 @@ const RefreshIcon: React.FC = () => {
       strokeWidth="2"
       strokeLinecap="round"
       strokeLinejoin="round"
-      className="animated-icon"
     >
       <path d="M23 4v6h-6"></path>
       <path d="M1 20v-6h6"></path>

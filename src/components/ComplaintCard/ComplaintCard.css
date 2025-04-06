@@ -1,12 +1,12 @@
 .complaint-card {
     background-color: var(--bg-primary);
     border-radius: var(--border-radius-md);
-    box-shadow: 0 2px 8px var(--shadow-color);
+    /* box-shadow: 0 2px 8px var(--shadow-color); */
     padding: var(--spacing-lg);
     transition: transform var(--transition-normal), box-shadow var(--transition-normal);
     animation: slideInFromBottom 0.5s ease forwards;
     opacity: 0;
-    border-left: 4px solid var(--primary-color);
+    /* border-left: 4px solid var(--primary-color); */
   }
   
   .complaint-card:hover {

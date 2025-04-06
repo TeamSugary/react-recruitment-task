@@ -14,7 +14,7 @@
   
   .theme-toggle:hover {
     background-color: var(--bg-tertiary);
-    transform: rotate(15deg);
+    /* transform: rotate(15deg); */
   }
   
   .theme-toggle svg {
@@ -24,7 +24,7 @@
   }
   
   .theme-toggle:active svg {
-    transform: scale(0.9);
+    transform: scale(0.9) translateY(2px) rotate(15deg) translateX(1px);  
   }
   
   

@@ -80,7 +80,7 @@ const ComplaintList: React.FC<ComplaintListProps> = ({ complaints, isLoading, er
   return (
     <div className="complaint-list-container">
       <div className="complaint-list-header">
-        <h2>Complaints List</h2>
+        <h2>Submitted Complaints</h2>
         <button className="refresh-button" onClick={onRefresh} disabled={isLoading}>
           <RefreshIcon />
         </button>
@@ -143,7 +143,7 @@ const ComplaintList: React.FC<ComplaintListProps> = ({ complaints, isLoading, er
       {isLoading ? (
         <Loading message="Loading complaints..." />
       ) : error ? (
-        <ErrorMessage message={error} />
+        <ErrorMessage message={"Failed to load complaints"} />
       ) : filteredComplaints.length === 0 ? (
         <Empty message={searchQuery ? "No complaints match your search" : "No complaints available"} />
       ) : (

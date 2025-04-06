@@ -1,14 +1,16 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap');
+
 :root {
   /* Color variables */
   --primary-color: #ff6b6b;
   --primary-hover: #ff8787;
-  --secondary-color: #4ecdc4;
-  --secondary-hover: #5fe3da;
+  --secondary-color: #92E3A9;
+  --secondary-hover: #a5e4b7;
   --accent-color: #ffe66d;
 
   /* Light theme */
   --bg-primary: #ffffff;
-  --bg-secondary: #f8f9fa;
+  --bg-secondary: #f2f2f2;
   --bg-tertiary: #e9ecef;
   --text-primary: #212529;
   --text-secondary: #495057;
@@ -21,6 +23,7 @@
   /* Spacing */
   --spacing-xs: 0.25rem;
   --spacing-sm: 0.5rem;
+  --spacing-base: .75rem;
   --spacing-md: 1rem;
   --spacing-lg: 1.5rem;
   --spacing-xl: 2rem;
@@ -54,7 +57,7 @@
 }
 
 [data-theme="dark"] {
-  --bg-primary: #121212;
+  --bg-primary: #191919;
   --bg-secondary: #1e1e1e;
   --bg-tertiary: #2d2d2d;
   --text-primary: #f8f9fa;
@@ -71,7 +74,7 @@
 }
 
 body {
-  font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans",
+  font-family: "Poppins","Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans",
     "Helvetica Neue", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -85,6 +88,33 @@ input,
 textarea,
 select {
   font-family: inherit;
+}
+
+::-webkit-scrollbar {
+  width: 12px;
+  height: 12px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-secondary);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--primary-color);
+  border-radius: 4px;
+}
+
+[data-theme="dark"] ::-webkit-scrollbar-thumb {
+  background: var(--secondary-color);
+}
+
+html {
+  scrollbar-width:auto;
+  scrollbar-color: var(--primary-color) var(--bg-secondary);
+}
+
+[data-theme="dark"] html {
+  scrollbar-color: var(--secondary-color) var(--bg-secondary);
 }
 
 /* Animation keyframes */
@@ -182,3 +212,4 @@ select {
     transform: translateY(0px);
   }
 }
+

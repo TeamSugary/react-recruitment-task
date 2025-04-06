@@ -19,7 +19,7 @@
   }
   
   .animated-icon {
-    animation: float 3s ease-in-out infinite;
+    animation: pulse 3s ease-in-out infinite;
   }
   
   .empty-message {
