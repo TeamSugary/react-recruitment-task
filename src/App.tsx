@@ -13,25 +13,42 @@ interface Complaint {
     CreatedAt: string;
 }
 
+interface NewComplaint {
+    title: string;
+    body: string;
+}
+
 function App() {
     const [complains, setComplains] = useState<Complaint[]>([]);
-    const [title, setTitle] = useState<string>("");
-    const [body, setBody] = useState<string>("");
+    const [newComplaint, setNewComplaint] = useState<NewComplaint>({
+        title: "",
+        body: "",
+    });
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const [isSaving, setIsSaving] = useState<boolean>(false);
     const [errorMessage, setErrorMessage] = useState<string>("");
 
     // Fetch complaints from the API
-    const fetchComplains = async () => {
+    const fetchComplains = async (controller: AbortSignal) => {
         setIsLoading(true);
-        const response = await fetch(`${baseUrl}${listPath}`);
+        const response = await fetch(`${baseUrl}${listPath}`, {
+            signal: controller,
+        });
         const data = await response.json();
         setComplains(data);
         setIsLoading(false);
     };
 
+    const handleInput = (
+        e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+    ) => {
+        const { name, value } = e.target;
+        setNewComplaint((prev) => ({ ...prev, [name]: value }));
+    };
+
     // Save a new complaint
-    const handleSubmit = async () => {
+    const handleSubmit = async (e: React.FormEvent) => {
+        e.preventDefault();
         try {
             setIsSaving(true);
             const response = await fetch(savePath, {
@@ -55,24 +72,29 @@ function App() {
     };
 
     useEffect(() => {
-        fetchComplains();
+        const controller = new AbortController();
+        fetchComplains(controller.signal);
+        return () => controller.abort();
     }, []); // Missing dependency array cleanup
 
     return (
         <div className="wrapper">
             <h2>Submit a Complaint</h2>
 
-            <div className="complain-form">
+            <form className="complain-form">
+                <label htmlFor="title"></label>
                 <input
                     type="text"
                     placeholder="Title"
-                    value={title}
-                    onChange={(e) => setTitle(e.target.value)}
+                    name="title"
+                    value={newComplaint?.title}
+                    onChange={handleInput}
                 />
                 <textarea
                     placeholder="Enter your complaint"
-                    value={body}
-                    onChange={(e) => setBody(e.target.value)}
+                    name="body"
+                    value={newComplaint?.body}
+                    onChange={handleInput}
                 />
 
                 <button onClick={handleSubmit}>
@@ -81,7 +103,7 @@ function App() {
 
                 {/* Place text loader when saving */}
                 {/* Error message not displayed even though state exists */}
-            </div>
+            </form>
 
             <h2>Complaints List</h2>
 
