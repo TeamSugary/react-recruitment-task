@@ -15,14 +15,29 @@
   height: 24px;
   color: var(--primary-color);
   margin-bottom: var(--spacing-sm);
+  display: flex; /* Add this */
+  align-items: center; /* Add this */
+  justify-content: center; /* Add this */
 }
 
-.animated-icon {
-  animation: pulse 1.5s ease-in-out infinite;
+.error-icon svg {
+  width: 100%; /* Add this */
+  height: 100%; /* Add this */
+  animation: gentlePulse 2s ease-in-out infinite;
+  transform-origin: center center; 
 }
 
 .error-text {
   color: var(--primary-color);
   font-size: var(--font-size-md);
   margin: 0;
+}
+
+@keyframes gentlePulse {
+  0%, 100% {
+    opacity: 0.4;
+  }
+  50% {
+    opacity: 1;
+  }
 }
