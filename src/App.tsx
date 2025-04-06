@@ -1,45 +1,73 @@
-import { useState, useEffect } from 'react';
-
+import { useState, useEffect, useCallback } from 'react';
 const baseUrl = "https://sugarytestapi.azurewebsites.net/";
 const listPath = "TestApi/GetComplains";
 const savePath = "TestApi/SaveComplain";
 
 function App() {
-  const [complains, setComplains] = useState([]);
-  const [title, setTitle] = useState("");
-  const [body, setBody] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
-  const [isSaving, setIsSaving] = useState(false);
-  const [errorMessage, setErrorMessage] = useState("");
+  interface Complaint {
+  Id: number;
+  Title: string;
+  Body: string;
+  }
+  
+ 
+  const [complains, setComplains] = useState<Complaint[]>([]);
+  const [title, setTitle] = useState<string>("");
+  const [body, setBody] = useState<string>("");
+  const [isSaving, setIsSaving] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [errorMessage, setErrorMessage] = useState<string>("");
 
   // Fetch complaints from the API
-  const fetchComplains = async () => {
-    setIsLoading(true);
-    const response = await fetch(`${baseUrl}${listPath}`);
-    const data = await response.json();
-    setComplains(data);
-    setIsLoading(false);
-  };
+  const fetchComplains = useCallback(async (): Promise<void> => {
+    try {
+      setIsLoading(true);
+      const response = await fetch(`${baseUrl}${listPath}`);
+      const data: Complaint[] = await response.json();
+      setComplains(data);
+    } catch (e) {
+      const error = e as Error;
+  setErrorMessage(error.message || "An error occurred.");
+    } finally {
+      setIsLoading(false);
+    }
+  }, []);
+  
+  console.log(complains)
 
-  // Save a new complaint
-  const handleSubmit = async () => {
+// Save a new complaint
+  const handleSubmit = async (): Promise<void>  => {
+    if (!title || !body) {
+      setErrorMessage("Please enter valid title and complaint body");
+      return;
+    }
+   
     try {
       setIsSaving(true);
-      const response = await fetch(savePath, {
+      setErrorMessage("");
+      const response = await fetch(`${baseUrl}${savePath}`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          Title: "Test Title",
-          Body: "Test Body",
+          Title: title,
+          Body: body,
         }),
       });
-      const data = await response.json();
+      interface ApiResponse {
+        Success: boolean;
+      }
+      
+      const data: ApiResponse = await response.json();
+      setTitle("");
+      setBody(""); 
       if (!data.Success) throw new Error("Failed to save complaint.");
       // Missing: Update complaints list after successful submission
+      await fetchComplains();
     } catch (e) {
-      // Error state not being set
+      const error = e as Error;
+  setErrorMessage(error.message || "An error occurred.");
     } finally {
       setIsSaving(false);
     }
@@ -47,7 +75,7 @@ function App() {
 
   useEffect(() => {
     fetchComplains();
-  }, []); // Missing dependency array cleanup
+  }, [fetchComplains]); // Missing dependency array cleanup
 
   return (
     <div className="wrapper">
@@ -58,20 +86,29 @@ function App() {
           type="text"
           placeholder="Title"
           value={title}
-          onChange={(e) => setTitle(e.target.value)}
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+            setTitle(e.target.value)
+          }
+           aria-label="Complaint title"
         />
+        
         <textarea
           placeholder="Enter your complaint"
           value={body}
-          onChange={(e) => setBody(e.target.value)}
+          onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) =>
+            setBody(e.target.value)
+          }
+          aria-label="Complaint body"
         />
 
         <button onClick={handleSubmit}>
-          {isSaving ? 'Submitting...' : 'Submit Complaint'}
+          Submit Complaint
         </button>
 
         {/* Place text loader when saving */}
+        {isSaving ? <p>Saving...</p> : ''}
         {/* Error message not displayed even though state exists */}
+        {errorMessage && <div className="error-message">{errorMessage}</div>}
       </div>
 
       <h2>Complaints List</h2>
@@ -81,7 +118,7 @@ function App() {
       ) : complains.length ? (
         complains.map((complain) => (
           <div key={complain.Id} className="complain-item">
-            <h3>{complain.Title}</h3>
+             <h3>{complain.Title}</h3>
             <p>{complain.Body}</p>
           </div>
         ))
