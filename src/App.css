@@ -3,52 +3,32 @@
   margin: 0 auto;
   padding: 2rem;
   text-align: center;
+
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
+body {
+  background: linear-gradient(to right, #0f2027, #203a43, #1f4037);
 }
 
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
 
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
-}
 
-.card {
-  padding: 2em;
-}
-
-.read-the-docs {
-  color: #888;
-}
 
 .wrapper {
   width: 100%;
-  max-width: 600px;
-  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(300px, 1fr));
+  gap: 100px;
+
 }
 
 .complain-form {
   margin-bottom: 20px;
+  background-color: transparent;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow:
+    0 4px 8px rgba(0, 0, 0, 0.2),
+    0 6px 20px rgba(0, 0, 0, 0.19);
 }
 
 .complain-form input,
@@ -57,18 +37,280 @@
   margin-bottom: 10px;
   padding: 8px;
   box-sizing: border-box;
+  background-color: transparent;
+  border-radius: 1rem;
+  padding: 20px;
+  border: 1px solid #ccc;
+
 }
+
 
 .complain-form button {
-  padding: 8px;
+  padding: 12px 20px;
+  background: linear-gradient(135deg, #4e54c8, #8f94fb);
+  /* Gradient color */
+  color: #fff;
+  border: none;
+  border-radius: 30px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
 }
 
-.error-message {
-  color: red;
-  margin-top: 10px;
+.complain-form button:hover {
+  background: linear-gradient(135deg, #6a82fb, #fc5c7d);
+  transform: scale(1.05);
 }
+
+
 
 .complain-item {
-  border-bottom: 1px solid #ccc;
-  padding: 10px 0;
+  background-color: transparent;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  margin-bottom: 16px;
+  cursor: pointer;
+  word-break: break-word;
+  white-space: normal;
+  transition: all 0.3s ease; 
+}
+
+.complain-item:hover {
+  border-color: #6a82fb; 
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+  transform: translateY(-2px); 
+}
+
+.complains-list {
+  overflow-y: auto;
+  height: 70dvh;
+
+}
+
+
+
+
+
+
+.skeleton {
+  animation: pulse 1.5s infinite ease-in-out;
+  padding: 20px;
+}
+
+.skeleton-title,
+.skeleton-text {
+  background-color: #444;
+  border-radius: 6px;
+}
+
+.skeleton-title {
+  width: 60%;
+  height: 20px;
+  margin-bottom: 10px;
+}
+
+.skeleton-text {
+  width: 100%;
+  height: 14px;
+}
+
+
+@keyframes pulse {
+  0% {
+    opacity: 0.6;
+  }
+
+  50% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0.6;
+  }
+}
+
+
+
+/* Modal overlay to darken background */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.6);
+  z-index: 9999;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  opacity: 1;
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+/* Modal container */
+.modal-container {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  position: relative;
+  max-width: 500px;
+  width: 90%;
+  text-align: center;
+}
+
+/* Error dialog box */
+.error-dialog {
+  color: black;
+  padding: 12px 20px;
+  border-radius: 8px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.modal-close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 20px;
+  color: #333;
+  cursor: pointer;
+}
+
+
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+
+
+
+
+
+
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #4e54c8, #8f94fb);
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, #6a82fb, #fc5c7d);
+}
+
+
+
+
+
+
+/* ============================
+    Responsive Enhancements
+   ============================ */
+
+/* For Tablets (768px - 1024px) */
+@media (max-width: 1024px) {
+  .wrapper {
+    grid-template-columns: 1fr;
+
+  }
+
+  .complains-list {
+    height: 40dvh;
+  }
+
+  .complain-form,
+  .complain-item {
+    padding: 16px;
+  }
+
+  .modal-container {
+    max-width: 90%;
+    padding: 16px;
+  }
+}
+
+/* For Mobile Devices (up to 767px) */
+@media (max-width: 767px) {
+  #root {
+    padding: 1rem;
+  }
+
+
+
+  .wrapper {
+    grid-template-columns: 1fr;
+
+  }
+
+  .complain-form,
+  .complain-item {
+    padding: 12px;
+  }
+
+  .complain-form input,
+  .complain-form textarea {
+    padding: 14px;
+    font-size: 14px;
+  }
+
+  .complain-form button {
+    width: 100%;
+    font-size: 15px;
+  }
+
+  .modal-container {
+    padding: 12px;
+  }
+
+  .modal-close {
+    font-size: 18px;
+    top: 8px;
+    right: 8px;
+  }
+}
+
+/* For Extra Small Phones (up to 420px) */
+@media (max-width: 420px) {
+
+
+  .modal-container {
+    width: 95%;
+    padding: 10px;
+  }
+
+  .complains-list {
+    height: auto;
+    max-height: 55dvh;
+  }
+
+  .skeleton-title {
+    width: 80%;
+    height: 18px;
+  }
+
+  .skeleton-text {
+    height: 12px;
+  }
+
+  .modal-close {
+    font-size: 16px;
+  }
 }
