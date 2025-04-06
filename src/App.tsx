@@ -1,7 +1,6 @@
-import { useState, useEffect } from 'react';
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-
+import { useEffect, useState } from "react";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const baseUrl = "https://sugarytestapi.azurewebsites.net/";
 const listPath = "TestApi/GetComplains";
@@ -13,53 +12,58 @@ function App() {
   const [body, setBody] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
-  const [errorMessage, setErrorMessage] = useState("");
+  const [errorMessage, setErrorMessage] = useState({ title: "", body: "" });
 
-  // Fetch complaints from the API
   const fetchComplains = async () => {
     try {
       setIsLoading(true);
-    const response = await fetch(`${baseUrl}${listPath}`);
-    const data = await response.json();
-    setComplains(data);
+      const response = await fetch(`${baseUrl}${listPath}`);
+      const data = await response.json();
+      setComplains(data);
     } catch (e) {
-      setErrorMessage("Failed to fetch complaints.");
-    }finally{
-
+      setErrorMessage((prev) => ({ ...prev, body: "Failed to fetch complaints." }));
+    } finally {
       setIsLoading(false);
     }
   };
 
-  // Save a new complaint
   const handleSubmit = async () => {
+    let hasError = false;
+    if (!title) {
+      setErrorMessage((prev) => ({ ...prev, title: "Title is required." }));
+      hasError = true;
+    } else {
+      setErrorMessage((prev) => ({ ...prev, title: "" }));
+    }
+
+    if (!body) {
+      setErrorMessage((prev) => ({ ...prev, body: "Body is required." }));
+      hasError = true;
+    } else {
+      setErrorMessage((prev) => ({ ...prev, body: "" }));
+    }
+
+    if (hasError) return;
+
     try {
-      if (!title || !body) {
-        setErrorMessage("Title and body cannot be empty.");
-        return;
-      }
       setIsSaving(true);
-      setErrorMessage(""); 
       const response = await fetch(`${baseUrl}${savePath}`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({
-          Title: title,
-          Body: body,
-        }),
+        body: JSON.stringify({ Title: title, Body: body }),
       });
+
       const data = await response.json();
-      if (!data.Success) throw new Error("Failed to save complaint.");
-      toast.success("Complaint submitted successfully!");
-      // Missing: Update complaints list after successful submission
+      if (!data.Success) throw new Error("Save failed");
+
+      toast.success("Complaint submitted!");
       await fetchComplains();
       setTitle("");
       setBody("");
     } catch (e) {
-      // Error state not being set\
-      // setErrorMessage((e as Error).message || "Failed to save complaint.");
-      toast.error("Something went wrong. Please try again.");
+      toast.error("Something went wrong.");
     } finally {
       setIsSaving(false);
     }
@@ -67,119 +71,146 @@ function App() {
 
   useEffect(() => {
     fetchComplains();
-  }, []); // Missing dependency array cleanup
+  }, []);
 
   return (
-    <div className="wrapper" style={styles.wrapper}>
-      <h2 style={styles.heading}>Submit a Complaint</h2>
+    <div style={styles.container}>
+      <div style={styles.overlay} />
+      <div style={styles.content}>
+        <div style={styles.singleCard}>
+          <h2 style={styles.heading}>Submit Complaint</h2>
+          <input
+            style={styles.input}
+            placeholder="Title"
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
+          />
+          {errorMessage.title && <p style={styles.error}>{errorMessage.title}</p>}
 
-      <div className="complain-form" style={styles.form}>
-        <input
-          type="text"
-          placeholder="Title"
-          value={title}
-          onChange={(e) => setTitle(e.target.value)}
-          style={styles.input}
-        />
-        <textarea
-          placeholder="Enter your complaint"
-          value={body}
-          onChange={(e) => setBody(e.target.value)}
-          style={styles.textarea}
-        />
+          <textarea
+            style={styles.textarea}
+            placeholder="Your complaint"
+            value={body}
+            onChange={(e) => setBody(e.target.value)}
+          />
+          {errorMessage.body && <p style={styles.error}>{errorMessage.body}</p>}
 
-        <button onClick={handleSubmit}
-        disabled={isSaving || !title || !body}
-        style={{
-          ...styles.button,
-          backgroundColor: isSaving ? "#888" : "#ff6b00",
-          cursor: isSaving ? "not-allowed" : "pointer",
-        }}
-        >
-          {isSaving ? 'Submitting...' : 'Submit Complaint'}
-        </button>
-        {errorMessage && <p style={styles.error}>{errorMessage}</p>}
-      
-        {/* Place text loader when saving */}
-        {/* Error message not displayed even though state exists */}
-      </div>
+          <button
+            onClick={handleSubmit}
+            disabled={isSaving || !title || !body}
+            style={{
+              ...styles.button,
+              backgroundColor: isSaving || !title || !body ? "#999" : "#ff6b00",
+            }}
+          >
+            {isSaving ? "Submitting..." : "Submit"}
+          </button>
 
-      <h2>Complaints List</h2>
-
-      {isLoading ? (
-        <div>Loading...</div>
-      ) : complains.length ? (
-        <div style={styles.list}>
-          {complains.map((complain: any) => (
-            <div key={complain.Id} className="complain-item" style={styles.card}>
-              <h3>{complain.Title}</h3>
-              <p>{complain.Body}</p>
-            </div>
-          ))}
+          <h2 style={{...styles.heading, marginTop: "2rem"}}>Complaints</h2>
+          {isLoading ? (
+            <p style={styles.loading}>Loading...</p>
+          ) : complains.length > 0 ? (
+            complains.map((complain: any) => (
+              <div key={complain.Id} style={styles.complaint}>
+                <h4>{complain.Title}</h4>
+                <p>{complain.Body}</p>
+              </div>
+            ))
+          ) : (
+            <p>No complaints yet.</p>
+          )}
         </div>
-      ) : (
-        <p>No complaints available.</p>
-      )}
+      </div>
       <ToastContainer />
     </div>
   );
 }
 
 const styles: { [key: string]: React.CSSProperties } = {
-  wrapper: {
-    maxWidth: "600px",
-    margin: "0 auto",
-    padding: "1rem",
-    fontFamily: "Arial, sans-serif",
-    color: "#eee",
-    backgroundColor: "#1a1a1a",
+  container: {
+    position: "relative",
     minHeight: "100vh",
+    width: "99vw",
+    backgroundImage: "url('https://images.unsplash.com/photo-1503264116251-35a269479413?auto=format&fit=crop&w=1950&q=80')",
+    backgroundSize: "cover",
+    backgroundPosition: "center",
+    backgroundAttachment: "fixed",
+    padding: "2rem 1rem",
+    boxSizing: "border-box",
+    overflowX: "hidden",
+  },
+  overlay: {
+    position: "fixed",
+    top: 0,
+    left: 0,
+    height: "100vh",
+    width: "100vw",
+    backgroundColor: "rgba(0,0,0,0.6)",
+    zIndex: 0,
+  },
+  content: {
+    position: "relative",
+    zIndex: 1,
+    maxWidth: "800px",
+    width: "100%",
+    margin: "0 auto",
+  },
+  singleCard: {
+    backgroundColor: "rgba(255, 255, 255, 0.05)",
+    backdropFilter: "blur(8px)",
+    borderRadius: "12px",
+    padding: "1.5rem",
+    color: "#fff",
+    boxShadow: "0 0 10px rgba(0,0,0,0.3)",
   },
   heading: {
+    fontSize: "clamp(1.2rem, 2vw, 1.4rem)",
+    marginBottom: "1rem",
     color: "#ff6b00",
-  },
-  form: {
-    display: "flex",
-    flexDirection: "column",
-    gap: "0.75rem",
-    marginBottom: "2rem",
+    textAlign: "center",
   },
   input: {
-    padding: "0.5rem",
+    width: "100%",
+    padding: "0.75rem",
     fontSize: "1rem",
-    borderRadius: "4px",
+    borderRadius: "6px",
     border: "1px solid #ccc",
+    marginBottom: "0.5rem",
+    boxSizing: "border-box",
   },
   textarea: {
-    padding: "0.5rem",
+    width: "100%",
+    height: "100px",
+    padding: "0.75rem",
     fontSize: "1rem",
-    borderRadius: "4px",
+    borderRadius: "6px",
     border: "1px solid #ccc",
-    minHeight: "100px",
+    marginBottom: "0.5rem",
+    boxSizing: "border-box",
   },
   button: {
-    padding: "0.6rem 1rem",
+    width: "100%",
+    padding: "0.75rem",
     fontSize: "1rem",
-    fontWeight: "bold",
     color: "#fff",
     border: "none",
-    borderRadius: "4px",
-    transition: "background-color 0.3s ease",
+    borderRadius: "6px",
+    cursor: "pointer",
+    boxSizing: "border-box",
+  },
+  complaint: {
+    backgroundColor: "rgba(0,0,0,0.3)",
+    padding: "1rem",
+    marginBottom: "1rem",
+    borderRadius: "8px",
   },
   error: {
-    color: "red",
-    marginTop: "0.5rem",
+    color: "#ff4d4d",
+    fontSize: "0.875rem",
+    marginBottom: "0.5rem",
   },
-  list: {
-    display: "flex",
-    flexDirection: "column",
-    gap: "1rem",
-  },
-  card: {
-    padding: "1rem",
-    backgroundColor: "#2a2a2a",
-    borderRadius: "8px",
-    boxShadow: "0 2px 4px rgba(0,0,0,0.3)",
+  loading: {
+    color: "#ddd",
   },
 };
 
