@@ -1,0 +1,92 @@
+.complaint-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+input,
+textarea {
+  padding: 0.75rem;
+  border: 1px solid #ddd;
+  border-radius: 25px;
+  font-family: inherit;
+  font-size: 1rem;
+  color: #fff;
+
+  background: rgba(255, 255, 255, 0.25);
+}
+
+input:focus,
+textarea:focus {
+  outline: none;
+  border-color: #fefefe;
+  box-shadow: 0 0 0 2px rgba(42, 57, 144, 0.2);
+}
+
+.submit-button {
+  background-image: linear-gradient(to left, #ffb070, #ff726d);
+  color: #fff;
+  border: none;
+  border-radius: 25px;
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.submit-button:hover {
+  background-color: #232f75;
+  transform: translateY(-2px);
+  transition: transform 0.5s ease;
+}
+
+.submit-button:disabled {
+  background-color: #a0a8d3;
+  cursor: not-allowed;
+}
+
+.error-message {
+  background-color: #f8d7da;
+  color: #721c24;
+  padding: 0.75rem;
+  border-radius: 4px;
+  border-left: 4px solid #f5c6cb;
+}
+
+.success-message {
+  background-color: #d4edda;
+  color: #155724;
+  padding: 0.75rem;
+  border-radius: 4px;
+  border-left: 4px solid #c3e6cb;
+}
+
+.spinner {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-top: 2px solid white;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
