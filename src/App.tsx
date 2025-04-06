@@ -3,6 +3,8 @@ import "./App.css";
 import { motion } from "framer-motion";
 import Lottie from "lottie-react";
 import animationData from "./assets/Animation.json";
+import { ImSpinner } from "react-icons/im";
+import Swal from "sweetalert2";
 
 // API URLs
 const baseUrl = "https://sugarytestapi.azurewebsites.net/";
@@ -64,7 +66,11 @@ function App() {
 
       const data: SaveResponse = await response.json();
       if (!data.Success) throw new Error("Failed to save complaint.");
-
+      Swal.fire({
+        title: "Save Complaints!",
+        icon: "success",
+        draggable: true
+      });
       await fetchComplains();
       setTitle("");
       setBody("");
@@ -129,7 +135,7 @@ function App() {
 
               {errorMessage && <p className="error">{errorMessage}</p>}
               <button className="button" type="submit" disabled={isSaving}>
-                {isSaving ? "Submitting..." : "Submit Complaint"}
+                {isSaving ? <ImSpinner className="spinner" /> : "Submit Complaint"}
               </button>
             </form>
           </div>
@@ -160,7 +166,7 @@ function App() {
 
         <div className="complain-list">
           {isLoading ? (
-            <p className="loading">Loading...</p>
+            <p className="loading"><ImSpinner className="spinner2" /> Loading...</p>
           ) : complains.length ? (
             complains.map((complain) => (
               <div key={complain.Id} className="complain-card">

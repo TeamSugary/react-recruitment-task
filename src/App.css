@@ -29,6 +29,7 @@ body {
 
 .list-wrapper {
   position: relative;
+  background-image: linear-gradient(to top, #81b4fab4, #dbe7f250); 
   z-index: 1;
 }
 
@@ -209,24 +210,45 @@ body {
 .complain-list {
   width: 60%;
   margin: auto;
-  margin-top: 180px;
+  border-top: 1px dashed #d1d5db;
+  margin-top: 140px;
+  border-width: 100%;
+}
+
+.spinner{
+  color: white;
+  animation: spin 1s linear infinite;
+}
+.spinner2{
+  color: blue;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }
 /* Complaints */
 .complain-card {
+
   background-color: #ffffff;
   padding: 20px;
-  border-radius: 12px;
+  border-radius: 8px;
   margin-bottom: 20px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   transition: transform 0.2s ease, box-shadow 0.2s ease;
   display: flex;
+  border: 1px solid #d1d5db;
   flex-direction: column;
   gap: 10px;
 }
 
 .complain-card:hover {
   transform: translateY(-5px);
-  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
 }
 
 .complain-card h3 {
