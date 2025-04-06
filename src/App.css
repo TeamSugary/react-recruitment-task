@@ -93,6 +93,10 @@ textarea::placeholder {
     padding: 16px;
     transition: all .3s ease;
     width: 100%;
+    transition: all .3s ease-in-out;
+}
+.complain-form button:hover{
+  transform: translateY(-4px);
 }
 .complain-form button:focus{
   border: none;
