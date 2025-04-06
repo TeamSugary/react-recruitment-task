@@ -30,8 +30,8 @@ function App() {
 
     // Fetch complaints from the API
     const fetchComplains = async (controller: AbortSignal) => {
-        setIsLoading(true);
         try {
+            setIsLoading(true);
             const response = await fetch(`${baseUrl}${listPath}`, {
                 signal: controller,
             });
@@ -39,11 +39,14 @@ function App() {
             setComplains(data);
             setIsLoading(false);
         } catch (err: unknown) {
-            if (err instanceof Error)   {
+            if (err instanceof Error) {
+                console.log(err);
+                
                 if ((err as Error).name !== "AbortError")
-                    setErrorMessage(err.message);
+                    setErrorMessage(`${err.name}: ${err.message}`);
             }
-            console.log(err);
+        } finally {
+            setIsLoading(false);
         }
     };
 
@@ -90,7 +93,6 @@ function App() {
             <h2>Submit a Complaint</h2>
 
             <form className="complain-form">
-                <label htmlFor="title"></label>
                 <input
                     type="text"
                     placeholder="Title"
@@ -110,17 +112,24 @@ function App() {
                 </button>
                 {errorMessage && (
                     <div>
-                        <p className="error-message">Error occurred</p>
+                        <p className="error-message">{errorMessage}</p>
                     </div>
                 )}
                 {/* Place text loader when saving */}
+                {isSaving && (
+                    <div className="loader-container">
+                        <span className="loader" />
+                    </div>
+                )}
                 {/* Error message not displayed even though state exists */}
             </form>
 
             <h2>Complaints List</h2>
 
             {isLoading ? (
-                <div>Loading...</div>
+                <div className="loader-container">
+                    <span className="loader" />
+                </div>
             ) : complains.length ? (
                 complains.map((complain) => (
                     <div key={complain.Id} className="complain-item">

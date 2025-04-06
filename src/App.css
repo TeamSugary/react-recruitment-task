@@ -114,14 +114,40 @@
   margin: 1rem;
 }
 
-
-.error-message {
-  display: flex;
+.error-message-container {
   width: 100%;
+  display: flex;
   flex-direction: column;
   padding: 0.6rem;
-  /* align-items: center; */
-  /* justify-content: center; */
+}
+
+.error-message {
   color: rgb(236, 30, 30);
   font-weight: 600;
+  margin-top: 0.75rem;
 }
+
+.loader-container {
+  width: 100%;
+  margin: 1rem;
+}
+
+.loader {
+  width: 48px;
+  height: 48px;
+  border: 5px solid;
+  border-color: #00d7fd transparent;
+  border-radius: 50%;
+  display: inline-block;
+  box-sizing: border-box;
+  animation: rotation 1s linear infinite;
+}
+
+@keyframes rotation {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+} 
