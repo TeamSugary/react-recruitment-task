@@ -5,6 +5,7 @@ body {
   background-color: #f9fafb;
   color: #111827;
   transition: background-color 0.3s ease;
+  overflow-x: hidden;
 }
 
 .red-hat-display {
@@ -19,6 +20,9 @@ body.dark {
 }
 
 body.dark .complain-card h3 {
+  color: #ffffff;
+}
+body.dark .mode-toogle{
   color: #ffffff;
 }
 body.dark .complain-card p {
@@ -102,6 +106,7 @@ nav img {
   margin: 10px 0;
   padding: 10px;
   border-radius: 8px;
+  overflow-x: hidden;
 }
 
 .list-wrapper {
@@ -212,6 +217,22 @@ nav img {
   top: 50px;
   border-radius: 6px;
 }
+
+.mode-toogle{
+  width: 20px;
+  height: 20px;
+  background-color: transparent;
+  border: none;
+  color: #111827;
+
+}
+
+.mode-toogle-button{
+  background-color: transparent;
+  border: none;
+}
+
+
 
 /* Button */
 .button {

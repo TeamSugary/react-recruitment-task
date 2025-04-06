@@ -1,10 +1,11 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import "./App.css";
 import { motion } from "framer-motion";
 import Lottie from "lottie-react";
 import animationData from "./assets/Animation.json";
 import { ImSpinner } from "react-icons/im";
 import Swal from "sweetalert2";
+import { MdOutlineLightMode, MdOutlineNightlight } from "react-icons/md";
 
 // API URLs
 const baseUrl = "https://sugarytestapi.azurewebsites.net/";
@@ -29,8 +30,9 @@ function App() {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isSaving, setIsSaving] = useState<boolean>(false);
   const [errorMessage, setErrorMessage] = useState<string>("");
+  const [darkMode, setDarkMode] = useState<boolean>(false);
 
-  const fetchComplains = async () => {
+  const fetchComplains = useCallback(async () => {
     setIsLoading(true);
     try {
       const response = await fetch(`${baseUrl}${listPath}`);
@@ -41,7 +43,11 @@ function App() {
     } finally {
       setIsLoading(false);
     }
-  };
+  }, []);
+
+  useEffect(() => {
+    fetchComplains();
+  }, [fetchComplains]);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -85,10 +91,7 @@ function App() {
     }
   };
 
-  useEffect(() => {
-    fetchComplains();
-  }, []);
-  const [darkMode, setDarkMode] = useState(false);
+ 
 
   useEffect(() => {
     document.body.className = darkMode ? "dark" : "";
@@ -101,8 +104,8 @@ function App() {
           <img src="https://i.imgur.com/1VFZ2G8.png" alt="logo" />
           <h2 className="red-hat-display">SpeakUp</h2>
         </div>
-        <button onClick={() => setDarkMode(!darkMode)}>
-          {darkMode ? "Light" : "Dark"}
+        <button className="mode-toogle-button" onClick={() => setDarkMode(!darkMode)}>
+          {darkMode ? <MdOutlineLightMode className="mode-toogle" /> : <MdOutlineNightlight className="mode-toogle" />}
         </button>
       </nav>
       <div>
