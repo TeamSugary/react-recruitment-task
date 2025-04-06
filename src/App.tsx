@@ -6,6 +6,7 @@ import animationData from "./assets/Animation.json";
 import { ImSpinner } from "react-icons/im";
 import Swal from "sweetalert2";
 import { MdOutlineLightMode, MdOutlineNightlight } from "react-icons/md";
+import { ToastContainer, toast } from 'react-toastify';
 
 // API URLs
 const baseUrl = "https://sugarytestapi.azurewebsites.net/";
@@ -53,6 +54,7 @@ function App() {
     e.preventDefault();
     if (!title.trim() || !body.trim()) {
       setErrorMessage("Title and body are required.");
+      toast.error("Title and body are required.");
       return;
     }
 
@@ -71,7 +73,7 @@ function App() {
       });
 
       const data: SaveResponse = await response.json();
-      if (!data.Success) throw new Error("Failed to save complaint.");
+      if (!data.Success) throw toast.error("Failed to save complaint.");
       Swal.fire({
         title: "Save Complaints!",
         icon: "success",
@@ -99,6 +101,8 @@ function App() {
 
   return (
     <div className="container">
+              <ToastContainer />
+
       <nav className="nav">
         <div className="nav-logo">
           <img src="https://i.imgur.com/1VFZ2G8.png" alt="logo" />
