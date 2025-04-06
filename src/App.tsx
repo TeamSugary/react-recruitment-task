@@ -5,15 +5,12 @@ const savePath = "TestApi/SaveComplain";
 
 function App() {
   interface Complaint {
-    _id?: string;
-    title: string;
-    body: string;
-    createdAt?: string;
+  Id: number;
+  Title: string;
+  Body: string;
   }
   
-  interface ApiResponse {
-    Success: boolean;
-  }
+ 
   const [complains, setComplains] = useState<Complaint[]>([]);
   const [title, setTitle] = useState<string>("");
   const [body, setBody] = useState<string>("");
@@ -28,14 +25,15 @@ function App() {
       const response = await fetch(`${baseUrl}${listPath}`);
       const data: Complaint[] = await response.json();
       setComplains(data);
-    } catch (error) {
-      setErrorMessage("Failed to load complaints.");
+    } catch (e) {
+      const error = e as Error;
+  setErrorMessage(error.message || "An error occurred.");
     } finally {
       setIsLoading(false);
     }
   }, []);
   
-  
+  console.log(complains)
 
 // Save a new complaint
   const handleSubmit = async (): Promise<void>  => {
@@ -68,7 +66,8 @@ function App() {
       // Missing: Update complaints list after successful submission
       await fetchComplains();
     } catch (e) {
-      setErrorMessage(e.message || "An error occurred.");
+      const error = e as Error;
+  setErrorMessage(error.message || "An error occurred.");
     } finally {
       setIsSaving(false);
     }
@@ -119,7 +118,7 @@ function App() {
       ) : complains.length ? (
         complains.map((complain) => (
           <div key={complain.Id} className="complain-item">
-            <h3>{complain.Title}</h3>
+             <h3>{complain.Title}</h3>
             <p>{complain.Body}</p>
           </div>
         ))
