@@ -28,8 +28,8 @@ function App() {
 
 // Save a new complaint
   const handleSubmit = async () => {
-    if (!title.trim() || !body.trim()) {
-      setErrorMessage("Please enter valid title and complaint");
+    if (!title || !body) {
+      setErrorMessage("Please enter valid title and complaint body");
       return;
     }
    
@@ -73,20 +73,24 @@ function App() {
           placeholder="Title"
           value={title}
           onChange={(e) => setTitle(e.target.value)}
+           aria-label="Complaint title"
         />
         
         <textarea
           placeholder="Enter your complaint"
           value={body}
           onChange={(e) => setBody(e.target.value)}
+          aria-label="Complaint body"
         />
 
         <button onClick={handleSubmit}>
-          {isSaving ? 'Submitting...' : 'Submit Complaint'}
+          Submit Complaint
         </button>
 
         {/* Place text loader when saving */}
+        {isSaving ? <p>Saving...</p> : ''}
         {/* Error message not displayed even though state exists */}
+        {errorMessage && <div className="error-message">{errorMessage}</div>}
       </div>
 
       <h2>Complaints List</h2>
