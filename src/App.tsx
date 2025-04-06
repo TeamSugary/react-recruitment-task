@@ -31,12 +31,20 @@ function App() {
     // Fetch complaints from the API
     const fetchComplains = async (controller: AbortSignal) => {
         setIsLoading(true);
-        const response = await fetch(`${baseUrl}${listPath}`, {
-            signal: controller,
-        });
-        const data = await response.json();
-        setComplains(data);
-        setIsLoading(false);
+        try {
+            const response = await fetch(`${baseUrl}${listPath}`, {
+                signal: controller,
+            });
+            const data = await response.json();
+            setComplains(data);
+            setIsLoading(false);
+        } catch (err: unknown) {
+            if (err instanceof Error)   {
+                if ((err as Error).name !== "AbortError")
+                    setErrorMessage(err.message);
+            }
+            console.log(err);
+        }
     };
 
     const handleInput = (
@@ -100,7 +108,11 @@ function App() {
                 <button onClick={handleSubmit}>
                     {isSaving ? "Submitting..." : "Submit Complaint"}
                 </button>
-
+                {errorMessage && (
+                    <div>
+                        <p className="error-message">Error occurred</p>
+                    </div>
+                )}
                 {/* Place text loader when saving */}
                 {/* Error message not displayed even though state exists */}
             </form>
