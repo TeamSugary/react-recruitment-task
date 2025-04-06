@@ -175,7 +175,12 @@ h2 {
 }
 
 .complain-item h3 {
-  margin-top: 0
+  margin-top: 0;
+  word-break: break-word;
+}
+
+.complain-item p {
+  word-break: break-word;
 }
 
 
