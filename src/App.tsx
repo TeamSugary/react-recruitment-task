@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 const baseUrl = "https://sugarytestapi.azurewebsites.net/";
 const listPath = "TestApi/GetComplains";
 const savePath = "TestApi/SaveComplain";
@@ -22,18 +22,19 @@ function App() {
   const [errorMessage, setErrorMessage] = useState<string>("");
 
   // Fetch complaints from the API
-  const fetchComplains = async (): Promise<void>  => {
+  const fetchComplains = useCallback(async (): Promise<void> => {
     try {
       setIsLoading(true);
       const response = await fetch(`${baseUrl}${listPath}`);
       const data: Complaint[] = await response.json();
       setComplains(data);
-    } catch (e) {
+    } catch (error) {
       setErrorMessage("Failed to load complaints.");
     } finally {
       setIsLoading(false);
     }
-  };
+  }, []);
+  
   
 
 // Save a new complaint
@@ -75,7 +76,7 @@ function App() {
 
   useEffect(() => {
     fetchComplains();
-  }, []); // Missing dependency array cleanup
+  }, [fetchComplains]); // Missing dependency array cleanup
 
   return (
     <div className="wrapper">
