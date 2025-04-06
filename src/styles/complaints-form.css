@@ -1,6 +1,6 @@
 .form-container {
    border: none;
-   background-color: rgba(var(--muted), 0.1);
+   background-color: rgba(var(--muted), 0.1) !important;
    position: relative;
    overflow: hidden;
    border-radius: 0.375rem;
