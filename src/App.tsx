@@ -7,7 +7,7 @@ import ErrorBoundary from "./components/shared/ErrorBoundary/ErrorBoundary";
 import "./App.css";
 import heroBanner from "./assets/hero-illlustration.svg";
 
-const baseUrl = "https://sugarytestapi.azurewebsites.ney/";
+const baseUrl = "https://sugarytestapi.azurewebsites.net/";
 const listPath = "TestApi/GetComplains";
 const savePath = "TestApi/SaveComplain";
 
@@ -92,7 +92,9 @@ function App() {
       <div className="app">
         {/* <AdvancedCursor /> */}
         <header className="app-header">
-          <h1><a href="#">Feedback Control</a></h1>
+          <h1>
+            <a href="#">Feedback Control</a>
+          </h1>
           <ThemeToggle />
         </header>
 
