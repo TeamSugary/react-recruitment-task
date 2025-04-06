@@ -3,7 +3,6 @@ import ComplaintsForm from './components/complaints-form';
 import CardSkeleton from './components/card-skeleton';
 import ComplaintCard from './components/complaint-card';
 import { ClipboardX, TriangleAlert } from 'lucide-react';
-import './App.css';
 
 interface Complaint {
   Id: number;
@@ -11,7 +10,6 @@ interface Complaint {
   Body: string;
   CreatedAt: string;
 }
-
 
 const baseUrl = "https://sugarytestapi.azurewebsites.net/";
 const listPath = "TestApi/GetComplains";
@@ -50,10 +48,10 @@ function App(): JSX.Element {
   }, []);
 
   return (
-    <div className="p-5">
+    <div className="app-wrapper">
       <h2 className="text-2xl font-bold mb-4">Complaints List</h2>
 
-      <div className='md:columns-2 lg:columns-3 xl:columns-4 *:break-inside-avoid space-y-4 mt-5'>
+      <div className='form-and-complaints-container'>
         {/* complaints form */}
         <ComplaintsForm refetchComplaints={fetchComplaints} />
 
@@ -68,10 +66,10 @@ function App(): JSX.Element {
         )}
 
         {/* Loading state */}
-        {isLoading && <CardSkeleton count={23} />}
+        {!isLoading && <CardSkeleton count={23} />}
 
         {/* Success state */}
-        {!isLoading && !error && (
+        {isLoading && !error && (
           <>
             {complaints.length > 0 ? (
               complaints.map((complaint) => (
