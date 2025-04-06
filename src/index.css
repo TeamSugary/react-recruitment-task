@@ -1,68 +1,39 @@
-:root {
-  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
+@import "tailwindcss";
 
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
-
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-a {
-  font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
-}
-a:hover {
-  color: #535bf2;
-}
-
-body {
-  margin: 0;
-  display: flex;
-  place-items: center;
-  min-width: 320px;
-  min-height: 100vh;
-}
-
-h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
-}
-
-button {
-  border-radius: 8px;
-  border: 1px solid transparent;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
-  font-weight: 500;
-  font-family: inherit;
-  background-color: #1a1a1a;
-  cursor: pointer;
-  transition: border-color 0.25s;
-}
-button:hover {
-  border-color: #646cff;
-}
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
-}
-
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
+@layer base {
+  body {
+    @apply text-white bg-gradient-to-tr from-blue-700 via-green-500 to-lime-500 ;
   }
-  a:hover {
-    color: #747bff;
-  }
-  button {
-    background-color: #f9f9f9;
-  }
+}
+.wrapper{
+  @apply w-[600px] m-auto max-sm:w-[350px]
+}
+
+@utility flex-column{
+  @apply flex  justify-center flex-col
+}
+@utility box{
+  @apply rounded-4xl bg-[rgba(255,255,255,.2)] p-5 w-[600px] max-sm:w-[350px] max-sm:p-2 mx-auto drop-shadow-black shadow-xl 
+}
+@utility inner-box{
+  @apply rounded-4xl bg-[rgba(255,255,255,.2)] py-4 px-5 w-full mx-auto  border-amber-50 focus:border-1 outline-none
+}
+@utility btn{
+  @apply w-full text-white bg-gradient-to-r from-red-400 to-red-300 p-3 rounded-full cursor-pointer hover:-translate-y-0.5 transition-all duration-300 font-semibold text-[16px]
+}
+@utility heading-1{
+  @apply text-2xl font-bold pb-5 mr-auto
+}
+@utility box-1{
+  @apply rounded-4xl bg-[rgba(255,255,255,.2)] p-5 w-[600px] max-sm:w-[350px] max-sm:p-2 mx-auto hover:-translate-y-1 transition-all duration-300 cursor-pointer drop-shadow-black shadow-xl 
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+.no-scrollbar {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
 }
