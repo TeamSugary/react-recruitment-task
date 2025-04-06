@@ -186,7 +186,7 @@
   
     .filter-sort-container {
       flex-direction: column;
-      gap: var(--spacing-sm);
+      gap: var(--spacing-md);
     }
   }
   

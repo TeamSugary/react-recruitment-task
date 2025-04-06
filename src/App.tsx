@@ -7,7 +7,7 @@ import ErrorBoundary from "./components/shared/ErrorBoundary/ErrorBoundary";
 import "./App.css";
 import heroBanner from "./assets/hero-illlustration.svg";
 
-const baseUrl = "https://sugarytestapi.azurewebsites.net/";
+const baseUrl = "https://sugarytestapi.azurewebsites.ney/";
 const listPath = "TestApi/GetComplains";
 const savePath = "TestApi/SaveComplain";
 
@@ -32,9 +32,9 @@ function App() {
       if (error instanceof Error) {
         setErrorMessage(error.message);
       } else {
-        setErrorMessage("Failed to fetch complaints");
+        setErrorMessage("Failed to load complaints");
       }
-      Toast.show("Failed to fetch complaints", "error");
+      Toast.show("Failed to load complaints", "error");
     } finally {
       setIsLoading(false);
     }
@@ -63,7 +63,8 @@ function App() {
       fetchComplains(); // refresh after submission
     } catch (error) {
       if (error instanceof Error) {
-        Toast.show(error.message, "error");
+        // Toast.show(error.message, "error");
+        Toast.show("Failed to submit complaint", "error");
       } else {
         Toast.show("Failed to submit complaint", "error");
       }
