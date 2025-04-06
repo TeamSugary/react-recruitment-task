@@ -4,19 +4,29 @@ const listPath = "TestApi/GetComplains";
 const savePath = "TestApi/SaveComplain";
 
 function App() {
-  const [complains, setComplains] = useState([]);
-  const [title, setTitle] = useState("");
-  const [body, setBody] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
-  const [isSaving, setIsSaving] = useState(false);
-  const [errorMessage, setErrorMessage] = useState("");
+  interface Complaint {
+    _id?: string;
+    title: string;
+    body: string;
+    createdAt?: string;
+  }
+  
+  interface ApiResponse {
+    Success: boolean;
+  }
+  const [complains, setComplains] = useState<Complaint[]>([]);
+  const [title, setTitle] = useState<string>("");
+  const [body, setBody] = useState<string>("");
+  const [isSaving, setIsSaving] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [errorMessage, setErrorMessage] = useState<string>("");
 
   // Fetch complaints from the API
-  const fetchComplains = async () => {
+  const fetchComplains = async (): Promise<void>  => {
     try {
       setIsLoading(true);
       const response = await fetch(`${baseUrl}${listPath}`);
-      const data = await response.json();
+      const data: Complaint[] = await response.json();
       setComplains(data);
     } catch (e) {
       setErrorMessage("Failed to load complaints.");
@@ -27,7 +37,7 @@ function App() {
   
 
 // Save a new complaint
-  const handleSubmit = async () => {
+  const handleSubmit = async (): Promise<void>  => {
     if (!title || !body) {
       setErrorMessage("Please enter valid title and complaint body");
       return;
@@ -46,7 +56,11 @@ function App() {
           Body: body,
         }),
       });
-      const data = await response.json();
+      interface ApiResponse {
+        Success: boolean;
+      }
+      
+      const data: ApiResponse = await response.json();
       setTitle("");
       setBody(""); 
       if (!data.Success) throw new Error("Failed to save complaint.");
@@ -72,14 +86,18 @@ function App() {
           type="text"
           placeholder="Title"
           value={title}
-          onChange={(e) => setTitle(e.target.value)}
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+            setTitle(e.target.value)
+          }
            aria-label="Complaint title"
         />
         
         <textarea
           placeholder="Enter your complaint"
           value={body}
-          onChange={(e) => setBody(e.target.value)}
+          onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) =>
+            setBody(e.target.value)
+          }
           aria-label="Complaint body"
         />
 
