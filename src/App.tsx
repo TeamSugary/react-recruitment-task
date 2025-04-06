@@ -3,6 +3,8 @@ import ComplaintsForm from './components/complaints-form';
 import CardSkeleton from './components/card-skeleton';
 import ComplaintCard from './components/complaint-card';
 import { ClipboardX, TriangleAlert } from 'lucide-react';
+import { DarkModeSwitch } from 'react-toggle-dark-mode';
+import { useTheme } from './providers/theme-provider';
 
 interface Complaint {
   Id: number;
@@ -18,6 +20,7 @@ function App(): JSX.Element {
   const [complaints, setComplaints] = useState<Complaint[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
+  const { theme, toggleTheme } = useTheme()
 
   // Fetch complaints from the API
   const fetchComplaints = async (): Promise<void> => {
@@ -49,7 +52,12 @@ function App(): JSX.Element {
 
   return (
     <div className="app-wrapper">
-      <h2 className='app-header'>Add and view <span> complaints</span></h2>
+      <div className='app-header'>
+        <h2 className='app-title'>Add and view <span> complaints</span></h2>
+        {/* theme toggler */}
+        <DarkModeSwitch onChange={toggleTheme} checked={theme === 'light'} moonColor='#94A3B8' sunColor='#FDB813' />
+      </div>
+      {/* all cards */}
       <div className='form-and-complaints-container'>
         {/* complaints form */}
         <ComplaintsForm refetchComplaints={fetchComplaints} />

@@ -17,7 +17,7 @@ interface ComplaintCardProps {
 export default function ComplaintCard({ complaint }: ComplaintCardProps): JSX.Element {
    return (
       <div className="card complaint-card">
-         <h3 className="card-title">{complaint.Title || 'no data added by user'}</h3>
+         <h3 className="card-title">{complaint.Title || 'N/A'}</h3>
          <p className="card-body">{complaint.Body || 'no data added by user'}</p>
          <p className="card-date">
             <Clock size={15} />
