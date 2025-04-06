@@ -1,4 +1,5 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect } from "react";
+import "./App.css";
 
 const baseUrl = "https://sugarytestapi.azurewebsites.net/";
 const listPath = "TestApi/GetComplains";
@@ -25,34 +26,45 @@ function App() {
   const handleSubmit = async () => {
     try {
       setIsSaving(true);
-      const response = await fetch(savePath, {
+      const response = await fetch(`${baseUrl}${savePath}`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          Title: "Test Title",
-          Body: "Test Body",
+          title,
+          body,
         }),
       });
       const data = await response.json();
       if (!data.Success) throw new Error("Failed to save complaint.");
+
+      setTitle("");
+      setBody("");
+      fetchComplains();
       // Missing: Update complaints list after successful submission
     } catch (e) {
+      const err = e as Error;
       // Error state not being set
+      setErrorMessage(err?.message);
     } finally {
       setIsSaving(false);
     }
   };
 
   useEffect(() => {
-    fetchComplains();
+    let IsMounted = true;
+    if (IsMounted) {
+      fetchComplains();
+    }
+    return () => {
+      IsMounted = false;
+    };
   }, []); // Missing dependency array cleanup
 
   return (
     <div className="wrapper">
       <h2>Submit a Complaint</h2>
-
       <div className="complain-form">
         <input
           type="text"
@@ -67,24 +79,28 @@ function App() {
         />
 
         <button onClick={handleSubmit}>
-          {isSaving ? 'Submitting...' : 'Submit Complaint'}
+          {isSaving ? "Submitting..." : "Submit Complaint"}
         </button>
 
         {/* Place text loader when saving */}
-        {/* Error message not displayed even though state exists */}
-      </div>
+        {isSaving && <p>Saving...</p>}
 
+        {/* Error message not displayed even though state exists */}
+        {errorMessage && <div className="error-message">{errorMessage}</div>}
+      </div>
       <h2>Complaints List</h2>
 
       {isLoading ? (
         <div>Loading...</div>
       ) : complains.length ? (
-        complains.map((complain) => (
-          <div key={complain.Id} className="complain-item">
-            <h3>{complain.Title}</h3>
-            <p>{complain.Body}</p>
-          </div>
-        ))
+        complains.map(
+          (complain: { Id: string | number; Title: string; Body: string }) => (
+            <div key={complain.Id} className="complain-item">
+              <h3>{complain.Title}</h3>
+              <p>{complain.Body}</p>
+            </div>
+          )
+        )
       ) : (
         <p>No complaints available.</p>
       )}
