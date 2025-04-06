@@ -2,21 +2,19 @@ import { useState, useEffect } from "react";
 import "./App.css";
 import { motion } from "framer-motion";
 import Lottie from "lottie-react";
-import animationData from "./assets/Animation.json"; // তোমার Lottie JSON ফাইল
+import animationData from "./assets/Animation.json";
 
 // API URLs
 const baseUrl = "https://sugarytestapi.azurewebsites.net/";
 const listPath = "TestApi/GetComplains";
 const savePath = "TestApi/SaveComplain";
 
-// Complaint টাইপ ডিফাইন করছি
 interface Complaint {
   Id: number;
   Title: string;
   Body: string;
 }
 
-// API Response টাইপ (Save করার response)
 interface SaveResponse {
   Success: boolean;
   Message?: string;
@@ -43,7 +41,13 @@ function App() {
     }
   };
 
-  const handleSubmit = async () => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (!title.trim() || !body.trim()) {
+      setErrorMessage("Title and body are required.");
+      return;
+    }
+
     try {
       setIsSaving(true);
       setErrorMessage("");
@@ -95,7 +99,7 @@ function App() {
               src={"https://i.imgur.com/K2477Rs.png"}
               alt="moving image"
               animate={{
-                x: [0, 0, 100, 0], 
+                x: [0, 0, 100, 0],
                 y: [0, 30, 0, 0],
               }}
               transition={{
@@ -107,7 +111,7 @@ function App() {
           </div>
 
           <div className="complain-form">
-            <form className="">
+            <form onSubmit={handleSubmit}>
               <input
                 type="text"
                 className="input"
@@ -123,22 +127,17 @@ function App() {
                 onChange={(e) => setBody(e.target.value)}
               />
 
-              <button
-                className="button"
-                onClick={handleSubmit}
-                disabled={isSaving}
-              >
+              {errorMessage && <p className="error">{errorMessage}</p>}
+              <button className="button" type="submit" disabled={isSaving}>
                 {isSaving ? "Submitting..." : "Submit Complaint"}
               </button>
             </form>
           </div>
         </div>
-
-        {errorMessage && <p className="error">{errorMessage}</p>}
       </div>
 
       <div className="list-wrapper">
-      <div className="lottie-background">
+        <div className="lottie-background">
           <Lottie
             animationData={animationData}
             loop
@@ -152,12 +151,12 @@ function App() {
         </div>
         <div className="list-title-container">
           <h2 className="list-title">Complaints List</h2>
-          <p className="list-subtitle">Here are all the submitted complaints from users.</p>
-
+          <p className="list-subtitle">
+            Here are all the submitted complaints from users.
+          </p>
         </div>
 
         {/* Lottie Animation Background */}
-       
 
         <div className="complain-list">
           {isLoading ? (
