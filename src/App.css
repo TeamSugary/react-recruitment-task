@@ -1,9 +1,36 @@
 /* Base Reset */
 body {
   margin: 0;
-  font-family: "Inter", "Segoe UI", sans-serif;
+  font-family: "Roboto", sans-serif;
   background-color: #f9fafb;
-  color: #1f2937;
+  color: #111827;
+  transition: background-color 0.3s ease;
+}
+
+.red-hat-display {
+  font-family: "Red Hat Display", sans-serif;
+  font-weight: 600;
+  font-size: xx-large;
+}
+
+
+body.dark {
+  background-color: #121212;
+  color: #ffffff;
+}
+
+body.dark .complain-card h3{
+  color: #ffffff;
+}
+body.dark .complain-card p{
+  color: #ffffff8e;
+}
+
+body.dark .list-subtitle{
+  color: #ffffffbb;
+}
+body.dark .form-subtitle{
+  color: #ffffffbb;
 }
 
 /* Container */
@@ -12,15 +39,36 @@ body {
   max-width: 1200px;
   margin-left: auto;
   margin-right: auto;
-  padding: 1rem;
+  padding: 0 1rem 1rem;
   box-sizing: border-box;
+}
+
+nav{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid #d1d5db;
+
+}
+
+.nav-logo{
+  display: flex;
+  align-items: center;
+  padding: 1rem;
+  gap: 1rem;
+  margin: 0;
+  padding: 0;
+}
+
+nav img{
+  width: 50px;
+  height: 50px;
 }
 
 /* Form Section */
 .form-wrapper,
 .list-wrapper {
-  background-color: #ffffff;
-  border-radius: 12px;
+  border-radius: 8px;
   padding: 24px;
   margin-bottom: 30px;
   box-shadow: 0 6px 16px rgba(0, 0, 0, 0.05);
@@ -29,8 +77,10 @@ body {
 
 .list-wrapper {
   position: relative;
-  background-image: linear-gradient(to top, #81b4fab4, #dbe7f250); 
+  /* background-image: linear-gradient(to top, #81b4fab4, #dbe7f250);  */
   z-index: 1;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
 }
 
 .lottie-background {
@@ -50,7 +100,7 @@ body {
 }
 
 .complain-card {
-  background-color: rgba(255, 255, 255, 0.8);
+  /* background-color: rgba(255, 255, 255, 0.8); */
   margin: 10px 0;
   padding: 10px;
   border-radius: 8px;
@@ -113,7 +163,6 @@ body {
 .list-title {
   font-size: 36px;
   font-weight: 700;
-  color: #111827;
   text-align: center;
   letter-spacing: 3px;
   margin-bottom: 15px;
@@ -235,7 +284,7 @@ body {
 /* Complaints */
 .complain-card {
 
-  background-color: #ffffff;
+  /* background-color: #ffffff; */
   padding: 20px;
   border-radius: 8px;
   margin-bottom: 20px;
@@ -288,7 +337,7 @@ body {
 .complain-card h3 {
   margin: 0 0 6px;
   font-size: 18px;
-  color: #1d4ed8;
+  /* color: #1d4ed8; */
 }
 
 .complain-card p {

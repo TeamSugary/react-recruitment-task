@@ -69,7 +69,7 @@ function App() {
       Swal.fire({
         title: "Save Complaints!",
         icon: "success",
-        draggable: true
+        draggable: true,
       });
       await fetchComplains();
       setTitle("");
@@ -88,9 +88,23 @@ function App() {
   useEffect(() => {
     fetchComplains();
   }, []);
+  const [darkMode, setDarkMode] = useState(false);
+
+  useEffect(() => {
+    document.body.className = darkMode ? "dark" : "";
+  }, [darkMode]);
 
   return (
     <div className="container">
+      <nav className="nav">
+        <div className="nav-logo">
+          <img src="https://i.imgur.com/1VFZ2G8.png" alt="logo" />
+          <h2 className="red-hat-display">SpeakUp</h2>
+        </div>
+        <button onClick={() => setDarkMode(!darkMode)}>
+          {darkMode ? "Light" : "Dark"}
+        </button>
+      </nav>
       <div>
         <h2 className="form-title">Submit a Complaint</h2>
         <p className="form-subtitle">
@@ -135,7 +149,11 @@ function App() {
 
               {errorMessage && <p className="error">{errorMessage}</p>}
               <button className="button" type="submit" disabled={isSaving}>
-                {isSaving ? <ImSpinner className="spinner" /> : "Submit Complaint"}
+                {isSaving ? (
+                  <ImSpinner className="spinner" />
+                ) : (
+                  "Submit Complaint"
+                )}
               </button>
             </form>
           </div>
@@ -166,7 +184,9 @@ function App() {
 
         <div className="complain-list">
           {isLoading ? (
-            <p className="loading"><ImSpinner className="spinner2" /> Loading...</p>
+            <p className="loading">
+              <ImSpinner className="spinner2" /> Loading...
+            </p>
           ) : complains.length ? (
             complains.map((complain) => (
               <div key={complain.Id} className="complain-card">
