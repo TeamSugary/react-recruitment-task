@@ -3,6 +3,7 @@ import ComplaintsForm from './components/complaints-form';
 import CardSkeleton from './components/card-skeleton';
 import ComplaintCard from './components/complaint-card';
 import { ClipboardX, TriangleAlert } from 'lucide-react';
+import './App.css';
 
 interface Complaint {
   Id: number;
