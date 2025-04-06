@@ -9,7 +9,7 @@
    background-color: rgba(var(--muted), 0.3);
 }
 
-.skeleton-body-container>.skeleton-body {
+.skeleton-body-container .skeleton-body {
    margin: 0.5rem 0;
 }
 

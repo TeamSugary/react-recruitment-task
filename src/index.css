@@ -134,6 +134,42 @@ textarea {
   word-break: break-all;
 }
 
+.card-error {
+  border-color: rgba(var(--danger), 0.5);
+  background-color: rgba(var(--danger), 0.2);
+  color: rgb(var(--danger));
+
+  &>* {
+    margin: 0 auto;
+  }
+
+  &>svg {
+    opacity: 0.75;
+  }
+
+  &>p {
+    font-weight: 600;
+  }
+}
+
+.card-no-data {
+  border-color: rgba(var(--muted), 0.5);
+  background-color: rgba(var(--muted), 0.2);
+  color: rgb(var(--muted));
+
+  &>* {
+    margin: 0 auto;
+  }
+
+  &>svg {
+    opacity: 0.75;
+  }
+
+  &>p {
+    font-weight: 600;
+  }
+}
+
 .form-and-complaints-container {
 
   &>* {

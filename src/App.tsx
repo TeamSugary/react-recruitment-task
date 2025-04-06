@@ -56,9 +56,9 @@ function App(): JSX.Element {
 
         {/* Error state */}
         {error && (
-          <div className="card bg-red-500/20 !border-red-500 text-center">
-            <TriangleAlert className='mx-auto text-red-500 opacity-85' size={50} />
-            <p className='text-red-500 font-semibold'>
+          <div className="card card-error">
+            <TriangleAlert size={50} />
+            <p>
               Error: {error}
             </p>
           </div>
@@ -78,9 +78,9 @@ function App(): JSX.Element {
                 />
               ))
             ) : (
-              <div className="card bg-yellow-500/20 !border-yellow-500 text-center">
-                <ClipboardX className='mx-auto text-yellow-500 opacity-85' size={50} />
-                <p className='text-yellow-500 font-semibold'>
+              <div className="card card-no-data">
+                <ClipboardX size={50} />
+                <p>
                   No complaints found.
                 </p>
               </div>

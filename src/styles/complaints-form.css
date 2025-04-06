@@ -1,15 +1,58 @@
 .form-container {
-   border: 2px dashed rgba(var(--muted), 0.7) !important;
-   transition: all 0.1s ease-in-out;
-   -webkit-transition: all 0.1s ease-in-out;
-   -moz-transition: all 0.1s ease-in-out;
-   -ms-transition: all 0.1s ease-in-out;
-   -o-transition: all 0.1s ease-in-out;
+   border: none;
+   background-color: rgba(var(--muted), 0.1);
+   position: relative;
+   overflow: hidden;
+   border-radius: 0.375rem;
+   -webkit-border-radius: 0.375rem;
+   -moz-border-radius: 0.375rem;
+   -ms-border-radius: 0.375rem;
+   -o-border-radius: 0.375rem;
 
-   &:hover {
-      border-color: rgb(var(--primary)) !important;
+   & .card-animated-border {
+      position: absolute;
+      inset: 0;
+      border: 2px solid transparent;
+      mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+      -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+      -webkit-mask-composite: xor;
+      mask-composite: exclude;
+      pointer-events: none;
+      border-radius: inherit;
+      -webkit-border-radius: inherit;
+      -moz-border-radius: inherit;
+      -ms-border-radius: inherit;
+      -o-border-radius: inherit;
+   }
+
+   & .card-animated-border::before {
+      content: '';
+      position: absolute;
+      width: 150%;
+      height: 25%;
+      top: calc(50% - 12.5%);
+      left: -25%;
+      background-color: rgb(var(--primary));
+      animation: rotate 4s linear infinite;
+      -webkit-animation: rotate 4s linear infinite;
+      border-radius: inherit;
+      -webkit-border-radius: inherit;
+      -moz-border-radius: inherit;
+      -ms-border-radius: inherit;
+      -o-border-radius: inherit;
    }
 }
+
+@keyframes rotate {
+   to {
+      transform: rotate(1turn);
+      -webkit-transform: rotate(1turn);
+      -moz-transform: rotate(1turn);
+      -ms-transform: rotate(1turn);
+      -o-transform: rotate(1turn);
+   }
+}
+
 
 .form-error {
    color: rgb(var(--danger));

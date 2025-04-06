@@ -1,0 +1,28 @@
+.card {
+   position: relative;
+
+   & .card-title {}
+
+   & .card-body {
+      color: rgba(var(--body-text), 0.8);
+   }
+
+   & .card-date {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      color: rgba(var(--muted), 0.75);
+      font-size: 0.875rem;
+      margin-top: 0.25rem;
+   }
+
+   & .card-overlay {
+      position: absolute;
+      border-radius: inherit;
+      -webkit-border-radius: inherit;
+      -moz-border-radius: inherit;
+      -ms-border-radius: inherit;
+      -o-border-radius: inherit;
+
+   }
+}

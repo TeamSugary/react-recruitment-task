@@ -56,6 +56,9 @@ export default function ComplaintsForm({ refetchComplaints }: ComplaintsFormProp
 
    return (
       <form className='card form-container' onSubmit={handleSubmit}>
+         {/* animated border */}
+         <div className="card-animated-border" />
+         {/* form elements */}
          <h2 style={{ color: "rgb(var(--muted))", fontWeight: 600, fontSize: "1rem" }}>Submit a Complaint</h2>
          <input
             type="text"
