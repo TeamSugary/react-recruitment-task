@@ -36,7 +36,7 @@ h2 {
 .complain-form textarea {
   padding: 0.8rem;
   border: 1px solid #ced4da;
-  border-radius: 8px;
+  border-radius: 12px;
   font-size: 1rem;
   box-sizing: border-box;
   width: 100%;
@@ -106,16 +106,17 @@ h2 {
 .complain-item {
   background-color: white;
   padding: 1.5rem;
-  border-radius: 8px;
+  border-radius: 12px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   margin-bottom: 1rem;
   transition: transform 0.2s;
   cursor: pointer;
-  height: 10rem;
+  height: 8rem;
 }
 
 .complain-item:hover {
-  transform: translateY(-2px);
+  transform: translateY(-4px);
+  box-shadow: 0 8px 10px rgba(0, 0, 0, 0.2);
 }
 
 .complain-item h3 {
@@ -125,6 +126,8 @@ h2 {
   border-bottom: 2px solid #2c3e50;
   padding-bottom: 0.5rem;
   text-align: center;
+  overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .complain-item p {
@@ -133,7 +136,6 @@ h2 {
   margin: 0;
   overflow: hidden;
   text-overflow: ellipsis;
-  /* white-space: nowrap; */
   max-height: 4.5rem;
 }
 

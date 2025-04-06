@@ -60,7 +60,7 @@ function App() {
         }),
       });
       const data = await response.json();
-      console.log(data)
+      // console.log(data)
 
       if (!data.Success) throw new Error("Failed to save complaint.");
 
