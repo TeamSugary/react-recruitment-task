@@ -1,5 +1,45 @@
 # React JS Developer Recruitment Test
 
+# 🗣️ SpeakUp – Complaint Submission App
+
+A modern and responsive complaint submission application built with **React** and **TypeScript**, where users can submit their complaints and view a list of all submitted complaints. Designed with attention to **UI/UX**, **error handling**, and **mobile responsiveness** using raw CSS and animations.
+
+## ✨ Features
+
+- 📝 Submit complaints with title and description
+- 📄 View list of all submitted complaints
+- 🔁 Live loading indicators during fetch/save
+- 🌙 Dark and Light mode toggle
+- 🧠 Animated visual with Framer Motion and Lottie
+- ✅ Form validation and user feedback (SweetAlert2)
+- 📱 Fully responsive design
+- 🔗 API integration with error handling
+
+## 📸 Demo
+
+![SpeakUp Screenshot](https://i.imgur.com/your-screenshot-link.png) <!-- Optional: Add screenshot link -->
+
+## 🚀 Technologies Used
+
+- React 18+
+- TypeScript
+- Framer Motion
+- Lottie-react
+- SweetAlert2
+- Raw CSS (no external UI library)
+- React Icons
+
+## 🛠️ Getting Started
+
+### 1. Clone the Repository
+
+```bash```
+
+git clone https://github.com/Sanjida-Khanam778/react-recruitment-task.git
+
+cd react-recruitment-task
+
+
 Welcome to our React-focused frontend developer assessment! This test evaluates your React proficiency, problem-solving skills, and UI/UX sensibilities through practical implementation and code improvements.
 
 ## Project Overview
