@@ -49,6 +49,9 @@
 
 .complain-form {
   margin-bottom: 20px;
+  display: flex;
+  justify-content: center;
+  gap: 10px;
 }
 
 .complain-form input,
@@ -57,6 +60,10 @@
   margin-bottom: 10px;
   padding: 8px;
   box-sizing: border-box;
+  border-radius: 5px;
+  background-color: #fefefe;
+  color: black;
+  font-size: 1.2rem;
 }
 
 .complain-form button {
@@ -70,5 +77,9 @@
 
 .complain-item {
   border-bottom: 1px solid #ccc;
-  padding: 10px 0;
+  padding: 10px 10px;
+  color: black;
+  background-color: #e4efe7;
+  border-radius: 5px;
+  border: 1px solid #99bc85;
 }
