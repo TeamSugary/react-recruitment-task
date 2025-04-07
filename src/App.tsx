@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 
 const baseUrl = "https://sugarytestapi.azurewebsites.net/";
 const listPath = "TestApi/GetComplains";
-const savePath = "TestApi/SaveComplainss";
+const savePath = "TestApi/SaveComplain";
 
 function App() {
   interface Complain {
