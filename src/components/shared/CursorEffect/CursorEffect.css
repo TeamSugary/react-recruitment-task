@@ -20,7 +20,7 @@
   width: 32px;
   height: 32px;
   background-color: transparent;
-  border: 2px solid rgb(255, 153, 153, 0.2);
+  border: 2px solid rgb(255, 153, 153, 0);
   transition: 
     left 0.5s cubic-bezier(0.075, 0.82, 0.165, 1),
     top 0.5s cubic-bezier(0.075, 0.82, 0.165, 1),
