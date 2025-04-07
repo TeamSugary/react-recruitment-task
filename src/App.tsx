@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import { useState, useEffect } from "react";
 import "./App.css";
 
@@ -28,7 +27,6 @@ function App() {
     const [isSaving, setIsSaving] = useState<boolean>(false);
     const [errorMessage, setErrorMessage] = useState<string>("");
 
-    // Fetch complaints from the API
     const fetchComplains = async (controller: AbortSignal) => {
         try {
             setIsLoading(true);
@@ -40,8 +38,6 @@ function App() {
             setIsLoading(false);
         } catch (err: unknown) {
             if (err instanceof Error) {
-                console.log(err);
-
                 if ((err as Error).name !== "AbortError")
                     setErrorMessage(`${err.name}: ${err.message}`);
             }
@@ -57,7 +53,6 @@ function App() {
         setNewComplaint((prev) => ({ ...prev, [name]: value }));
     };
 
-    // Save a new complaint
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         try {
@@ -76,16 +71,14 @@ function App() {
             if (!data.Success) {
                 throw new Error("Failed to save complaint.");
             } else if (data.Success) {
-                // Missing: Update complaints list after successful submission
                 fetchComplains(new AbortController().signal);
                 setErrorMessage("");
                 setNewComplaint({ title: "", body: "" });
             }
         } catch (err: unknown) {
             if (err instanceof Error) {
-                setErrorMessage(err.name + " " + err.message);
+                setErrorMessage(`${err.name}: ${err.message}`);
             }
-            // Error state not being set
         } finally {
             setIsSaving(false);
         }
@@ -95,7 +88,7 @@ function App() {
         const controller = new AbortController();
         fetchComplains(controller.signal);
         return () => controller.abort();
-    }, []); // Missing dependency array cleanup
+    }, []);
 
     return (
         <div className="wrapper">
@@ -124,13 +117,11 @@ function App() {
                         <p className="error-message">{errorMessage}</p>
                     </div>
                 )}
-                {/* Place text loader when saving */}
                 {isSaving && (
                     <div className="loader-container">
                         <span className="loader" />
                     </div>
                 )}
-                {/* Error message not displayed even though state exists */}
             </form>
 
             <h2>Complaints List</h2>
