@@ -24,6 +24,7 @@ function App() {
   // Save a new complaint
   const handleSubmit = async () => {
     try {
+      setErrorMessage(""); // Reset error message before submission
       setIsSaving(true);
       const response = await fetch(`${baseUrl}${savePath}`, {
         method: "POST",
@@ -46,7 +47,7 @@ function App() {
       setIsSaving(false);
       setBody(""); // Reset body after submission
       setTitle(""); // Reset title after submission
-      setErrorMessage(""); // Reset error message after submission
+
       // fetchComplains();
     }
   };
