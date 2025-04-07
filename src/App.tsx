@@ -33,10 +33,12 @@ function App() {
   const handleSubmit = async () => {
     if (!title.trim()) {
       toast.error("Title is required!");
+      setErrorMessage("Title is required!");
       return;
     }
     if (!body.trim()) {
       toast.error("Body is required!");
+      setErrorMessage("Body is required!");
       return;
     }
     try {
@@ -52,7 +54,21 @@ function App() {
         }),
       });
       const data = await response.json();
-      if (!data.Success) throw new Error("Failed to save complaint.");
+      // if (!data.Success) throw new Error(data.Message);
+
+      if (!data.Success) {
+        if (
+          data.Message?.includes("String or binary data would be truncated")
+        ) {
+          toast.error("Complaint is too long. Please shorten your message.");
+          throw new Error(
+            "Complaint is too long. Please shorten your message."
+          );
+        } else {
+          toast.error(data.Message || "Failed to save complaint.");
+        }
+        throw new Error(data.Message || "Failed to save complaint.");
+      }
       setTitle("");
       setBody("");
       setErrorMessage("");
