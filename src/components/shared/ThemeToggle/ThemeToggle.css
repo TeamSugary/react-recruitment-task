@@ -9,7 +9,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: background-color var(--transition-fast), transform var(--transition-fast);
+    transition: all var(--transition-slow);
   }
   
   .theme-toggle:hover {
