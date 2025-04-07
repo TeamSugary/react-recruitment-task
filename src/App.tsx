@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 
 const baseUrl = "https://sugarytestapi.azurewebsites.net/";
 const listPath = "TestApi/GetComplains";
-const savePath = "TestApi/SaveComplain";
+const savePath = "TestApi/SaveComplainss";
 
 function App() {
   const [complains, setComplains] = useState([]);
@@ -51,9 +51,7 @@ function App() {
         }),
       });
       const data = await response.json();
-      console.log("Data", data);
       if (!data.Success) throw new Error("Failed to save complaint.");
-      // Missing: Update complaints list after successful submission
       alert("Complaint saved successfully!");
       setTitle("");
       setBody("");
@@ -64,7 +62,6 @@ function App() {
       } else {
         setErrorMessage("An unknown error occurred.");
       }
-      // Error state not being set
     } finally {
       setIsSaving(false);
     }
@@ -72,7 +69,7 @@ function App() {
 
   useEffect(() => {
     fetchComplains();
-  }, []); // Missing dependency array cleanup
+  }, []);
   return (
     <div className="wrapper flex flex-col items-center justify-center overflow-x-hidden relative bg-gradient-to-r from-[#3f87a6]  to-[#9198e5]">
       <h2 className="text-white text-center relative z-50 text-3xl font-bold my-10 outline-none">
@@ -81,7 +78,7 @@ function App() {
       <div className=" flex flex-col items-center w-[100vw] z-50 bg">
         <div className="complain-form flex flex-col gap-5 lg:w-[650px] md:w-[650px] w-full md:px-0 px-5 mb-5 items-center p-5">
           <input
-            className="h-[70px] bg-white/40 backdrop-blur-sm px-4 rounded-xl w-full text-black"
+            className="h-[70px] bg-white/40 backdrop-blur-sm px-4 rounded-xl w-full text-black border border-transparent focus:border-blue-500 transition-all duration-300 outline-none"
             type="text"
             placeholder="Title"
             value={title}
@@ -90,17 +87,47 @@ function App() {
           />
           <textarea
             placeholder="Enter your complaint"
-            className="h-[120px] bg-white/40 backdrop-blur-sm pt-3 rounded-xl px-4 resize-none w-full text-black "
+            className="h-[120px] bg-white/40 backdrop-blur-sm pt-3 rounded-xl px-4 resize-none w-full text-black outline-none border border-transparent focus:border-blue-500 transition-all duration-300"
             value={body}
             required
             onChange={(e) => setBody(e.target.value)}
           />
-
           <button
             onClick={handleSubmit}
-            className="sm:w-1/2 bg-gradient-to-r from-[#6091e6] via-[#4c83e1] to-[#1592ac] outline-none w-full p-3 rounded-3xl text-lg font-semibold cursor-pointer hover:shadow-xl shadow-sm"
+            disabled={isSaving}
+            className={`w-full py-3 rounded-xl text-white font-semibold transition-all duration-300 outline-none border-none ${
+              isSaving
+                ? "bg-blue-400 cursor-wait"
+                : "bg-blue-400 hover:bg-blue-500"
+            }`}
           >
-            {isSaving ? "Submitting..." : "Submit Complaint"}
+            {isSaving ? (
+              <span className="flex items-center justify-center gap-2">
+                <svg
+                  className="animate-spin h-5 w-5 text-white"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                >
+                  <circle
+                    className="opacity-25"
+                    cx="12"
+                    cy="12"
+                    r="10"
+                    stroke="currentColor"
+                    strokeWidth="4"
+                  ></circle>
+                  <path
+                    className="opacity-75"
+                    fill="currentColor"
+                    d="M4 12a8 8 0 018-8v8H4z"
+                  ></path>
+                </svg>
+                Submitting...
+              </span>
+            ) : (
+              "Submit Complaint"
+            )}
           </button>
 
           {/* Place text loader when saving */}
@@ -111,7 +138,11 @@ function App() {
             </p>
           )}
 
-          {errorMessage && <p className="text-red-500">{errorMessage}</p>}
+          {errorMessage && (
+            <p className="text-red-500 font-normal text-md text-center">
+              {errorMessage}
+            </p>
+          )}
 
           {/* Error message not displayed even though state exists */}
         </div>
@@ -122,12 +153,34 @@ function App() {
 
         <div className="md:w-[650px] w-full md:px-0 px-5">
           {isLoading ? (
-            <div className="text-black">Loading...</div>
+            <span className="flex items-center justify-center gap-2">
+              <svg
+                className="animate-spin h-10 w-10 text-white"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+              >
+                <circle
+                  className="opacity-25"
+                  cx="12"
+                  cy="12"
+                  r="10"
+                  stroke="currentColor"
+                  strokeWidth="4"
+                ></circle>
+                <path
+                  className="opacity-75"
+                  fill="currentColor"
+                  d="M4 12a8 8 0 018-8v8H4z"
+                ></path>
+              </svg>
+              Loading...
+            </span>
           ) : complains.length ? (
             complains.map((complain) => (
               <div
                 key={complain.Id}
-                className="complain-item my-5 bg-white/20 backdrop-blur-md text-white rounded-xl px-4 py-2 flex flex-col gap-3"
+                className="complain-item my-5 bg-white/20 backdrop-blur-md text-white rounded-xl px-4 py-2 flex flex-col gap-3 transition-all duration-300 hover:scale-x-110"
               >
                 <h3 className="text-xl font-semibold">{complain.Title}</h3>
                 <p className="text-base">{complain.Body}</p>
