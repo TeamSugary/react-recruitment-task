@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, ChangeEvent } from 'react';
 
 interface Complain {
   Id: number;
@@ -75,17 +75,18 @@ function App() {
           type="text"
           placeholder="Title"
           value={title}
-          onChange={(e) => setTitle(e.target.value)}
+          onChange={(e: ChangeEvent<HTMLInputElement>) => setTitle(e.target.value)}
         />
         <textarea
           placeholder="Enter your complaint"
           value={body}
-          onChange={(e) => setBody(e.target.value)}
+          onChange={(e: ChangeEvent<HTMLTextAreaElement>) => setBody(e.target.value)}
         />
 
-        <button onClick={handleSubmit} disabled={isSaving} className="submit-btn">
+        <button className="submit-btn" onClick={handleSubmit} disabled={isSaving}>
           {isSaving ? 'Submitting...' : 'Submit Complaint'}
         </button>
+
         {errorMessage && <p className="error">{errorMessage}</p>}
       </div>
 
@@ -108,3 +109,4 @@ function App() {
 }
 
 export default App;
+
