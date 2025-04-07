@@ -5,7 +5,13 @@ const listPath = "TestApi/GetComplains";
 const savePath = "TestApi/SaveComplainss";
 
 function App() {
-  const [complains, setComplains] = useState([]);
+  interface Complain {
+    Id: number;
+    Title: string;
+    Body: string;
+  }
+
+  const [complains, setComplains] = useState<Complain[]>([]);
   const [title, setTitle] = useState("");
   const [body, setBody] = useState("");
   const [isLoading, setIsLoading] = useState(false);
