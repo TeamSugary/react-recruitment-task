@@ -41,7 +41,7 @@ function App() {
         } catch (err: unknown) {
             if (err instanceof Error) {
                 console.log(err);
-                
+
                 if ((err as Error).name !== "AbortError")
                     setErrorMessage(`${err.name}: ${err.message}`);
             }
@@ -62,20 +62,29 @@ function App() {
         e.preventDefault();
         try {
             setIsSaving(true);
-            const response = await fetch(savePath, {
+            const response = await fetch(`${baseUrl}${savePath}`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
                 },
                 body: JSON.stringify({
-                    Title: "Test Title",
-                    Body: "Test Body",
+                    Title: newComplaint.title,
+                    Body: newComplaint.body,
                 }),
             });
             const data = await response.json();
-            if (!data.Success) throw new Error("Failed to save complaint.");
-            // Missing: Update complaints list after successful submission
-        } catch (e) {
+            if (!data.Success) {
+                throw new Error("Failed to save complaint.");
+            } else if (data.Success) {
+                // Missing: Update complaints list after successful submission
+                fetchComplains(new AbortController().signal);
+                setErrorMessage("");
+                setNewComplaint({ title: "", body: "" });
+            }
+        } catch (err: unknown) {
+            if (err instanceof Error) {
+                setErrorMessage(err.name + " " + err.message);
+            }
             // Error state not being set
         } finally {
             setIsSaving(false);
