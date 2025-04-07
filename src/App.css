@@ -14,7 +14,7 @@ body {
 
 h1 {
   font-weight: 500;
-  font-size: 2.1rem;
+  font-size: 32px;
 }
 
 .btn {
@@ -25,6 +25,8 @@ h1 {
   color: #ffffff;
   font-weight: 600;
   cursor: pointer;
+
+  -webkit-tap-highlight-color: transparent;
 }
 
 .btn:hover {
@@ -47,7 +49,7 @@ h1 {
 
 .error {
   margin-top: 8px;
-  font-size: 0.9rem;
+  font-size: 14px;
   color: #ef0008;
   font-weight: 500;
 }
@@ -67,7 +69,7 @@ h1 {
 .wrapper {
   max-width: 640px;
   margin: auto;
-  height: 100vh;
+  height: 100dvh;
   overflow: hidden;
 }
 
@@ -83,6 +85,7 @@ h1 {
 .complaints-button {
   border-radius: 999px;
   padding: 16px;
+  margin-right: 12px;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -91,6 +94,8 @@ h1 {
   border: none;
   box-shadow: #6a8cb7 0px 2px 4px;
   cursor: pointer;
+
+  -webkit-tap-highlight-color: transparent;
 }
 
 .complaints-button:hover {
@@ -104,7 +109,6 @@ h1 {
 /* Form style */
 .complaint-form-section {
   height: 100vh;
-  padding: 16px;
   z-index: 10;
   background: #ffffff;
   top: 0;
@@ -113,11 +117,13 @@ h1 {
   position: fixed;
 }
 
-.complaint-form-section > .complaint-form-container {
+.complaint-form-container {
+  position: relative;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  padding: 32px;
 }
 
 .complaint-form-section > div > * {
@@ -141,7 +147,7 @@ h1 {
   padding: 16px;
   border: 1px solid #e2e8f0;
   border-radius: 8px;
-  font-size: 1.02rem;
+  font-size: 24px;
   outline: none;
 }
 
@@ -172,7 +178,7 @@ h1 {
 .button-group {
   margin-top: 16px;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   gap: 8px;
   align-items: center;
   justify-content: space-between;
@@ -230,7 +236,7 @@ h1 {
 }
 
 .no-complaints {
-  font-size: 1.01rem;
+  font-size: 18px;
   font-weight: 500;
   text-align: center;
   margin-top: 32px;
@@ -304,7 +310,7 @@ h1 {
 
 .card-title {
   font-weight: 500;
-  font-size: 1.4rem;
+  font-size: 24px;
   margin-bottom: 4px;
   position: relative;
 }
@@ -312,4 +318,74 @@ h1 {
 .card-content {
   color: #1a1a1a;
   word-wrap: break-word;
+}
+
+/* Responsive style */
+@media (max-width: 480px) {
+  h1 {
+    font-size: 24px;
+  }
+
+  .complaints-button {
+    padding: 8px;
+  }
+
+  .card-title {
+    font-size: 18px;
+  }
+
+  .card-content {
+    font-size: 14px;
+  }
+
+  .no-complaints {
+    font-size: 16px;
+  }
+
+  .card {
+    margin: 4px 0px;
+  }
+
+  .complaint-title {
+    font-size: 18px;
+  }
+
+  .complaint-body {
+    font-size: 14px;
+  }
+
+  .error {
+    font-size: 12px;
+  }
+
+  .complaint-form-section {
+    margin: 0;
+    padding: 0;
+  }
+
+  .complaint-form-container {
+    padding: 12px;
+  }
+
+  .complaint-form-header {
+    margin-top: 16px;
+    margin-bottom: 16px;
+  }
+
+  .button-group {
+    margin-top: 4px;
+    flex-direction: column;
+  }
+
+  .success-screen-container {
+    z-index: 10;
+    inset: 0;
+    background-color: #ffffff;
+    position: fixed;
+    text-align: center;
+    font-size: 14px;
+  }
+  .success-screen-container > p {
+    max-width: 240px;
+  }
 }
