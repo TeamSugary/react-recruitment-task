@@ -17,18 +17,21 @@
   border-bottom: 1px solid var(--bg-tertiary);
 }
 
-.app-header h1 a{
+.app-header h1 a {
   font-size: 2.5rem;
-  background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));
+  background: linear-gradient(90deg, var(--accent-color), var(--primary-color));
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
   margin: 0;
   animation: fadeIn 0.8s ease-in-out;
+  text-decoration: none;
 }
 
 .form-section {
   animation: slideInFromLeft 0.5s ease-in-out;
+  display: flex;
+  align-items: center;
 }
 
 .list-section {
@@ -37,7 +40,6 @@
 .image-section {
   animation: slideInFromRight 0.5s ease-in-out;
   display: none;
-  max-width: 600px;
 }
 
 .app-content {
@@ -52,8 +54,9 @@
   .app-content {
     grid-template-columns: 1fr 1fr;
   }
-  .image-section{
-    display: block;
+  .image-section {
+    display: flex;
+    align-items: center;
   }
 }
 
@@ -62,7 +65,7 @@
     padding: 1rem;
   }
 
-  .app-header h1 a{
+  .app-header h1 a {
     font-size: 1.6rem;
   }
 
@@ -76,4 +79,3 @@
     font-size: 1.5rem;
   }
 }
-

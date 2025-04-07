@@ -22,7 +22,7 @@
   .refresh-button {
     background: transparent;
     border: none;
-    color: var(--text-secondary);
+    color: var(--text-primary);
     cursor: pointer;
     padding: var(--spacing-sm);
     border-radius: 50%;
@@ -34,7 +34,7 @@
   
   .refresh-button:hover:not(:disabled) {
     color: var(--primary-color);
-    transform: rotate(30deg);
+    transform: rotate(90deg);
   }
   
   .refresh-button:disabled {

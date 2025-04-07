@@ -1,10 +1,5 @@
-/* .animated-icon {
-    transition: transform 0.3s ease;
-  }
-  
-  button:hover .animated-icon,
-  .dropdown-toggle:hover .animated-icon {
-    transform: scale(1.2);
-  } */
-  
-  
+.refresh-icon {
+  display: inline-flex;
+  width: 20px;
+  height: 20px;
+}

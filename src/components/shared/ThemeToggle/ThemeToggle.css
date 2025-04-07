@@ -14,7 +14,7 @@
   
   .theme-toggle:hover {
     background-color: var(--bg-tertiary);
-    /* transform: rotate(15deg); */
+    color: var(--primary-color);
   }
   
   .theme-toggle svg {

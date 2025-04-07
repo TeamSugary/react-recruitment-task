@@ -6,6 +6,7 @@ import ThemeToggle from "./components/shared/ThemeToggle/ThemeToggle";
 import ErrorBoundary from "./components/shared/ErrorBoundary/ErrorBoundary";
 import "./App.css";
 import heroBanner from "./assets/hero-illlustration.svg";
+import CustomCursor from "./components/shared/CursorEffect/CustomCursor";
 
 const baseUrl = "https://sugarytestapi.azurewebsites.net/";
 const listPath = "TestApi/GetComplains";
@@ -60,7 +61,7 @@ function App() {
         throw new Error(data.Message || "Failed to submit complaint");
       }
       Toast.show("Complaint submitted successfully!", "success");
-      fetchComplains(); // refresh after submission
+      fetchComplains(); // refreshing after submission
     } catch (error) {
       if (error instanceof Error) {
         // Toast.show(error.message, "error");
@@ -74,9 +75,8 @@ function App() {
   useEffect(() => {
     const controller = new AbortController();
     fetchComplains();
-
     return () => {
-      controller.abort(); // Cleanup function to abort fetch request
+      controller.abort(); // Cleanup function to abort
     };
   }, []);
 
@@ -90,7 +90,6 @@ function App() {
   return (
     <ErrorBoundary>
       <div className="app">
-        {/* <AdvancedCursor /> */}
         <header className="app-header">
           <h1>
             <a href="#">Feedback Control</a>
@@ -106,6 +105,7 @@ function App() {
             <img src={heroBanner} alt="hero banner" />
           </section>
         </main>
+
         <section className="list-section">
           <ComplaintList
             complaints={complains}
@@ -114,7 +114,10 @@ function App() {
             onRefresh={fetchComplains}
           />
         </section>
+
         <div id="toast-container"></div>
+        <CustomCursor/>
+        
       </div>
     </ErrorBoundary>
   );

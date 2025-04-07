@@ -1,40 +1,30 @@
-.cursor-main {
-    position: fixed;
-    width: var(--cursor-size, 20px);
-    height: var(--cursor-size, 20px);
-    border-radius: 50%;
-    background-color: var(--primary-color);
-    mix-blend-mode: difference;
-    pointer-events: none;
-    transform: translate(-50%, -50%);
-    transition: 
-      transform var(--transition-slow) var(--ease-out),
-      width var(--transition-normal),
-      height var(--transition-normal),
-      background-color var(--transition-normal);
-    z-index: 9999;
-    will-change: transform;
-  }
-  
-  .cursor-main.cursor-pointer {
-    --cursor-size: 24px;
-    background-color: var(--primary-hover);
-    transform: translate(-50%, -50%) scale(1.2);
-  }
-  
-  .cursor-trail {
-    position: fixed;
-    border-radius: 50%;
-    background-color: var(--primary-color);
-    pointer-events: none;
-    transform: translate(-50%, -50%);
-    z-index: 9998;
-    transition: 
-      transform var(--transition-slow) var(--ease-out),
-      opacity var(--transition-slow),
-      width var(--transition-slow),
-      height var(--transition-slow);
-    will-change: transform, opacity;
-    opacity: 0;
-  }
-  
+/* Updated CursorEffect.css */
+.cursor {
+  position: fixed;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background-color: rgb(255, 153, 153, 0.3);
+  mix-blend-mode: difference;
+  pointer-events: none;
+  transform: translate(-50%, -50%);
+  transition: 
+    left 0.5s cubic-bezier(0.075, 0.82, 0.165, 1),
+    top 0.5s cubic-bezier(0.075, 0.82, 0.165, 1),
+    width 0.4s ease,
+    height 0.4s ease;
+  z-index: 9999;
+}
+
+.cursor-pointer {
+  width: 32px;
+  height: 32px;
+  background-color: transparent;
+  border: 2px solid rgb(255, 153, 153, 0.2);
+  transition: 
+    left 0.5s cubic-bezier(0.075, 0.82, 0.165, 1),
+    top 0.5s cubic-bezier(0.075, 0.82, 0.165, 1),
+    width 0.4s ease,
+    height 0.4s ease,
+    border 0.4s ease;
+}
