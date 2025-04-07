@@ -198,7 +198,8 @@ button:active {
 }
 
 .complain-card {
-  max-width: 400px;
+  width: 100%; 
+  height: auto;
   background: white;
   padding: 1.25rem;
   border-radius: 0.75rem;
@@ -206,8 +207,10 @@ button:active {
   border: 1px solid #f3f4f6;
   transition: box-shadow 0.3s;
   cursor: pointer;
-  min-height: 200px;
   overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 .complain-card:hover {
@@ -332,6 +335,9 @@ button:active {
 
 /* ========== Responsive ========== */
 @media (min-width: 640px) {
+  .complain-card {
+    max-width: 400px;
+  }
   .complaint-page {
     padding: 0;
   }
@@ -345,6 +351,9 @@ button:active {
 }
 
 @media (min-width: 1024px) {
+  .complain-card {
+    max-width: 400px;
+  }
   .complaints-cards {
     display: grid;
     grid-template-columns: repeat(1, 1fr);
