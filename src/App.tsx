@@ -1,4 +1,4 @@
-import { useState, useEffect, ChangeEvent } from 'react';
+import React, { useState, useEffect, ChangeEvent } from 'react';
 
 interface Complain {
   Id: number;
@@ -16,7 +16,8 @@ function App() {
   const [body, setBody] = useState<string>("");
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isSaving, setIsSaving] = useState<boolean>(false);
-  const [errorMessage, setErrorMessage] = useState<string>("");
+  const [toastMessage, setToastMessage] = useState<string | null>(null);
+  const [toastType, setToastType] = useState<"success" | "error" | null>(null);
 
   const fetchComplains = async (): Promise<void> => {
     try {
@@ -25,21 +26,30 @@ function App() {
       const data: Complain[] = await response.json();
       setComplains(data);
     } catch (error) {
-      setErrorMessage("Failed to load complaints.");
+      setToastMessage("Failed to load complaints.");
     } finally {
       setIsLoading(false);
     }
   };
 
+  const showToast = (message: string, type: "success" | "error") => {
+    setToastMessage(message);
+    setToastType(type);
+    setTimeout(() => {
+      setToastMessage(null);
+      setToastType(null);
+    }, 3000);
+  };
+
   const handleSubmit = async (): Promise<void> => {
     if (!title || !body) {
-      setErrorMessage("Title and complaint body are required.");
+      showToast("Title and complaint body are required.", "error");
       return;
     }
 
     try {
       setIsSaving(true);
-      setErrorMessage("");
+      setToastMessage("");
 
       const response = await fetch(savePath, {
         method: "POST",
@@ -55,8 +65,9 @@ function App() {
       setTitle("");
       setBody("");
       fetchComplains();
+      showToast("Complaint submitted successfully!", "success");
     } catch (e) {
-      setErrorMessage("Error submitting complaint.");
+      showToast("Error submitting complaint.", "error");
     } finally {
       setIsSaving(false);
     }
@@ -68,9 +79,21 @@ function App() {
 
   return (
     <div className="wrapper">
+      {toastMessage && (
+        <div className={`toast ${toastType}`}>
+          {toastMessage}
+        </div>
+      )}
+
       <h2 className="section-title">Submit a Complaint</h2>
 
-      <div className="complain-form">
+      <form
+        className="complain-form"
+        onSubmit={(e) => {
+          e.preventDefault();
+          handleSubmit();
+        }}
+      >
         <input
           type="text"
           placeholder="Title"
@@ -83,12 +106,10 @@ function App() {
           onChange={(e: ChangeEvent<HTMLTextAreaElement>) => setBody(e.target.value)}
         />
 
-        <button className="submit-btn" onClick={handleSubmit} disabled={isSaving}>
+        <button className="submit-btn" type="submit" disabled={isSaving}>
           {isSaving ? 'Submitting...' : 'Submit Complaint'}
         </button>
-
-        {errorMessage && <p className="error">{errorMessage}</p>}
-      </div>
+      </form>
 
       <h2 className="section-title">Complaints List</h2>
 
@@ -109,4 +130,3 @@ function App() {
 }
 
 export default App;
-
