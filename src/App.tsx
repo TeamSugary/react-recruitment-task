@@ -1,93 +1,101 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, JSX } from 'react';
+import ComplaintsForm from './components/complaints-form';
+import CardSkeleton from './components/card-skeleton';
+import ComplaintCard from './components/complaint-card';
+import { ClipboardX, TriangleAlert } from 'lucide-react';
+import { DarkModeSwitch } from 'react-toggle-dark-mode';
+import { useTheme } from './providers/theme-provider';
+
+interface Complaint {
+  Id: number;
+  Title: string;
+  Body: string;
+  CreatedAt: string;
+}
 
 const baseUrl = "https://sugarytestapi.azurewebsites.net/";
 const listPath = "TestApi/GetComplains";
-const savePath = "TestApi/SaveComplain";
 
-function App() {
-  const [complains, setComplains] = useState([]);
-  const [title, setTitle] = useState("");
-  const [body, setBody] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
-  const [isSaving, setIsSaving] = useState(false);
-  const [errorMessage, setErrorMessage] = useState("");
+function App(): JSX.Element {
+  const [complaints, setComplaints] = useState<Complaint[]>([]);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string | null>(null);
+  const { theme, toggleTheme } = useTheme()
 
   // Fetch complaints from the API
-  const fetchComplains = async () => {
-    setIsLoading(true);
-    const response = await fetch(`${baseUrl}${listPath}`);
-    const data = await response.json();
-    setComplains(data);
-    setIsLoading(false);
-  };
-
-  // Save a new complaint
-  const handleSubmit = async () => {
+  const fetchComplaints = async (): Promise<void> => {
     try {
-      setIsSaving(true);
-      const response = await fetch(savePath, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          Title: "Test Title",
-          Body: "Test Body",
-        }),
-      });
+      setIsLoading(true);
+      setError(null);
+
+      const response = await fetch(
+        `${baseUrl}${listPath}`
+      );
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
       const data = await response.json();
-      if (!data.Success) throw new Error("Failed to save complaint.");
-      // Missing: Update complaints list after successful submission
-    } catch (e) {
-      // Error state not being set
+      setComplaints(data);
+    } catch (err) {
+      setError(
+        err instanceof Error ? err.message : "An unknown error occurred"
+      );
     } finally {
-      setIsSaving(false);
+      setIsLoading(false);
     }
   };
 
   useEffect(() => {
-    fetchComplains();
-  }, []); // Missing dependency array cleanup
+    fetchComplaints();
+  }, []);
 
   return (
-    <div className="wrapper">
-      <h2>Submit a Complaint</h2>
-
-      <div className="complain-form">
-        <input
-          type="text"
-          placeholder="Title"
-          value={title}
-          onChange={(e) => setTitle(e.target.value)}
-        />
-        <textarea
-          placeholder="Enter your complaint"
-          value={body}
-          onChange={(e) => setBody(e.target.value)}
-        />
-
-        <button onClick={handleSubmit}>
-          {isSaving ? 'Submitting...' : 'Submit Complaint'}
-        </button>
-
-        {/* Place text loader when saving */}
-        {/* Error message not displayed even though state exists */}
+    <div className="app-wrapper">
+      <div className='app-header'>
+        <h2 className='app-title'>Add and view <span> complaints</span></h2>
+        {/* theme toggler */}
+        <DarkModeSwitch onChange={toggleTheme} checked={theme === 'light'} moonColor='#94A3B8' sunColor='#FDB813' />
       </div>
+      {/* all cards */}
+      <div className='form-and-complaints-container'>
+        {/* complaints form */}
+        <ComplaintsForm refetchComplaints={fetchComplaints} />
 
-      <h2>Complaints List</h2>
-
-      {isLoading ? (
-        <div>Loading...</div>
-      ) : complains.length ? (
-        complains.map((complain) => (
-          <div key={complain.Id} className="complain-item">
-            <h3>{complain.Title}</h3>
-            <p>{complain.Body}</p>
+        {/* Error state */}
+        {error && (
+          <div className="card card-error">
+            <TriangleAlert size={50} />
+            <p>
+              Error: {error}
+            </p>
           </div>
-        ))
-      ) : (
-        <p>No complaints available.</p>
-      )}
+        )}
+
+        {/* Loading state */}
+        {isLoading && <CardSkeleton count={23} />}
+
+        {/* Success state */}
+        {!isLoading && !error && (
+          <>
+            {complaints.length > 0 ? (
+              complaints.map((complaint) => (
+                <ComplaintCard
+                  key={complaint.Id}
+                  complaint={complaint}
+                />
+              ))
+            ) : (
+              <div className="card card-no-data">
+                <ClipboardX size={50} />
+                <p>
+                  No complaints found.
+                </p>
+              </div>
+            )}
+          </>
+        )}
+      </div>
     </div>
   );
 }
