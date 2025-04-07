@@ -26,7 +26,7 @@ function App() {
       const data: Complain[] = await response.json();
       setComplains(data);
     } catch (error) {
-      setToastMessage("Failed to load complaints.");
+      showToast("Failed to load complaints.", "error");
     } finally {
       setIsLoading(false);
     }
@@ -49,7 +49,6 @@ function App() {
 
     try {
       setIsSaving(true);
-      setToastMessage("");
 
       const response = await fetch(savePath, {
         method: "POST",
@@ -116,12 +115,14 @@ function App() {
       {isLoading ? (
         <div>Loading...</div>
       ) : complains.length ? (
-        complains.map((complain) => (
-          <div key={complain.Id} className="complain-item">
-            <h3>{complain.Title}</h3>
-            <p>{complain.Body}</p>
-          </div>
-        ))
+        <div className="complain-grid">
+          {complains.map((complain) => (
+            <div key={complain.Id} className="complain-item">
+              <h3>{complain.Title}</h3>
+              <p>{complain.Body}</p>
+            </div>
+          ))}
+        </div>
       ) : (
         <p>No complaints available.</p>
       )}

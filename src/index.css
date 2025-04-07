@@ -2,8 +2,7 @@ body {
   margin: 0;
   padding: 0;
   font-family: Arial, sans-serif;
-  /* background: linear-gradient(135deg, #007991, #78ffd6); */
-  background-image: linear-gradient(to right top,#051937,#004d7a,#008793,#00bf72,#a8eb12);
+  background-image: linear-gradient(to right top, #051937, #004d7a, #008793, #00bf72, #a8eb12);
   color: #fff;
   min-height: 100vh;
 }
@@ -41,9 +40,8 @@ body {
   }
 }
 
-
 .wrapper {
-  max-width: 600px;
+  max-width: 900px;
   margin: auto;
   padding: 20px;
 }
@@ -96,10 +94,16 @@ button:hover {
   opacity: 0.9;
 }
 
+.complain-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 16px;
+  margin-top: 1rem;
+}
+
 .complain-item {
   background: rgba(255, 255, 255, 0.15);
   padding: 15px 20px;
-  margin-bottom: 15px;
   border-radius: 20px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
