@@ -1,93 +1,97 @@
-import { useState, useEffect } from 'react';
-
-const baseUrl = "https://sugarytestapi.azurewebsites.net/";
-const listPath = "TestApi/GetComplains";
-const savePath = "TestApi/SaveComplain";
+import { useState } from "react";
+// import './App.css';
+import "./index.css";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { handleError } from "./utils/errorHandler";
+import { useAppContext } from "./context/Context";
+import Header from "./comonent/Header";
+import ComplaintsList from "./comonent/ComplaintsList";
+import Pagination from "./comonent/Pagination";
+import useFetchComplaints from "./hooks/useFetchComplaints";
+import ComplainForm from "./comonent/ComplainForm";
+export const baseUrl = "https://sugarytestapi.azurewebsites.net/";
+export const listPath = "TestApi/GetComplains";
+export const savePath = "TestApi/SaveComplain";
 
 function App() {
-  const [complains, setComplains] = useState([]);
   const [title, setTitle] = useState("");
   const [body, setBody] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
-  const [isSaving, setIsSaving] = useState(false);
-  const [errorMessage, setErrorMessage] = useState("");
+  const [currentPage, setCurrentPage] = useState(1);
+  const complaintsPerPage = 8;
+  const {
+    complains,
+    isLoading,
+    isSaving,
+    setIsSaving,
+    errorMessage,
+    setErrorMessage,
+    refetchComplains,
+    setRefetchComplains,
+  } = useAppContext();
 
-  // Fetch complaints from the API
-  const fetchComplains = async () => {
-    setIsLoading(true);
-    const response = await fetch(`${baseUrl}${listPath}`);
-    const data = await response.json();
-    setComplains(data);
-    setIsLoading(false);
-  };
-
-  // Save a new complaint
   const handleSubmit = async () => {
+    if (!title.trim()) {
+      toast.error("Title is required!");
+      return;
+    }
+    if (!body.trim()) {
+      toast.error("Body is required!");
+      return;
+    }
     try {
       setIsSaving(true);
-      const response = await fetch(savePath, {
+      const response = await fetch(`${baseUrl}${savePath}`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          Title: "Test Title",
-          Body: "Test Body",
+          Title: title,
+          Body: body,
         }),
       });
       const data = await response.json();
       if (!data.Success) throw new Error("Failed to save complaint.");
-      // Missing: Update complaints list after successful submission
+      setTitle("");
+      setBody("");
+      setErrorMessage("");
+      toast.success("Complaint submitted successfully!");
+      setRefetchComplains(!refetchComplains);
     } catch (e) {
-      // Error state not being set
+      setErrorMessage(handleError(e));
     } finally {
       setIsSaving(false);
     }
   };
 
-  useEffect(() => {
-    fetchComplains();
-  }, []); // Missing dependency array cleanup
+  useFetchComplaints();
 
+  const indexOfLastComplaint = currentPage * complaintsPerPage;
+  const indexOfFirstComplaint = indexOfLastComplaint - complaintsPerPage;
+  const currentComplaints = complains.slice(
+    indexOfFirstComplaint,
+    indexOfLastComplaint
+  );
   return (
-    <div className="wrapper">
-      <h2>Submit a Complaint</h2>
-
-      <div className="complain-form">
-        <input
-          type="text"
-          placeholder="Title"
-          value={title}
-          onChange={(e) => setTitle(e.target.value)}
-        />
-        <textarea
-          placeholder="Enter your complaint"
-          value={body}
-          onChange={(e) => setBody(e.target.value)}
-        />
-
-        <button onClick={handleSubmit}>
-          {isSaving ? 'Submitting...' : 'Submit Complaint'}
-        </button>
-
-        {/* Place text loader when saving */}
-        {/* Error message not displayed even though state exists */}
-      </div>
-
-      <h2>Complaints List</h2>
-
-      {isLoading ? (
-        <div>Loading...</div>
-      ) : complains.length ? (
-        complains.map((complain) => (
-          <div key={complain.Id} className="complain-item">
-            <h3>{complain.Title}</h3>
-            <p>{complain.Body}</p>
-          </div>
-        ))
-      ) : (
-        <p>No complaints available.</p>
-      )}
+    <div className="complaint-page">
+      <Header />
+      <ComplainForm
+        title={title}
+        setTitle={setTitle}
+        body={body}
+        setBody={setBody}
+        handleSubmit={handleSubmit}
+        isSaving={isSaving}
+        errorMessage={errorMessage}
+      />
+      <ComplaintsList isLoading={isLoading} complains={currentComplaints} />
+      <Pagination
+        currentPage={currentPage}
+        totalPages={Math.ceil(complains.length / complaintsPerPage)}
+        onPageChange={setCurrentPage}
+      />
+      <ToastContainer />
     </div>
   );
 }
