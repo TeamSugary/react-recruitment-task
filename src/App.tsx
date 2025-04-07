@@ -1,45 +1,72 @@
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect, ChangeEvent } from 'react';
+
+interface Complain {
+  Id: number;
+  Title: string;
+  Body: string;
+}
 
 const baseUrl = "https://sugarytestapi.azurewebsites.net/";
 const listPath = "TestApi/GetComplains";
-const savePath = "TestApi/SaveComplain";
+const savePath = "https://sugarytestapi.azurewebsites.net/TestApi/SaveComplain";
 
 function App() {
-  const [complains, setComplains] = useState([]);
-  const [title, setTitle] = useState("");
-  const [body, setBody] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
-  const [isSaving, setIsSaving] = useState(false);
-  const [errorMessage, setErrorMessage] = useState("");
+  const [complains, setComplains] = useState<Complain[]>([]);
+  const [title, setTitle] = useState<string>("");
+  const [body, setBody] = useState<string>("");
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [isSaving, setIsSaving] = useState<boolean>(false);
+  const [toastMessage, setToastMessage] = useState<string | null>(null);
+  const [toastType, setToastType] = useState<"success" | "error" | null>(null);
 
-  // Fetch complaints from the API
-  const fetchComplains = async () => {
-    setIsLoading(true);
-    const response = await fetch(`${baseUrl}${listPath}`);
-    const data = await response.json();
-    setComplains(data);
-    setIsLoading(false);
+  const fetchComplains = async (): Promise<void> => {
+    try {
+      setIsLoading(true);
+      const response = await fetch(`${baseUrl}${listPath}`);
+      const data: Complain[] = await response.json();
+      setComplains(data);
+    } catch (error) {
+      showToast("Failed to load complaints.", "error");
+    } finally {
+      setIsLoading(false);
+    }
   };
 
-  // Save a new complaint
-  const handleSubmit = async () => {
+  const showToast = (message: string, type: "success" | "error") => {
+    setToastMessage(message);
+    setToastType(type);
+    setTimeout(() => {
+      setToastMessage(null);
+      setToastType(null);
+    }, 3000);
+  };
+
+  const handleSubmit = async (): Promise<void> => {
+    if (!title || !body) {
+      showToast("Title and complaint body are required.", "error");
+      return;
+    }
+
     try {
       setIsSaving(true);
+
       const response = await fetch(savePath, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({
-          Title: "Test Title",
-          Body: "Test Body",
-        }),
+        body: JSON.stringify({ Title: title, Body: body }),
       });
+
       const data = await response.json();
       if (!data.Success) throw new Error("Failed to save complaint.");
-      // Missing: Update complaints list after successful submission
+
+      setTitle("");
+      setBody("");
+      fetchComplains();
+      showToast("Complaint submitted successfully!", "success");
     } catch (e) {
-      // Error state not being set
+      showToast("Error submitting complaint.", "error");
     } finally {
       setIsSaving(false);
     }
@@ -47,44 +74,55 @@ function App() {
 
   useEffect(() => {
     fetchComplains();
-  }, []); // Missing dependency array cleanup
+  }, []);
 
   return (
     <div className="wrapper">
-      <h2>Submit a Complaint</h2>
+      {toastMessage && (
+        <div className={`toast ${toastType}`}>
+          {toastMessage}
+        </div>
+      )}
 
-      <div className="complain-form">
+      <h2 className="section-title">Submit a Complaint</h2>
+
+      <form
+        className="complain-form"
+        onSubmit={(e) => {
+          e.preventDefault();
+          handleSubmit();
+        }}
+      >
         <input
           type="text"
           placeholder="Title"
           value={title}
-          onChange={(e) => setTitle(e.target.value)}
+          onChange={(e: ChangeEvent<HTMLInputElement>) => setTitle(e.target.value)}
         />
         <textarea
           placeholder="Enter your complaint"
           value={body}
-          onChange={(e) => setBody(e.target.value)}
+          onChange={(e: ChangeEvent<HTMLTextAreaElement>) => setBody(e.target.value)}
         />
 
-        <button onClick={handleSubmit}>
+        <button className="submit-btn" type="submit" disabled={isSaving}>
           {isSaving ? 'Submitting...' : 'Submit Complaint'}
         </button>
+      </form>
 
-        {/* Place text loader when saving */}
-        {/* Error message not displayed even though state exists */}
-      </div>
-
-      <h2>Complaints List</h2>
+      <h2 className="section-title">Complaints List</h2>
 
       {isLoading ? (
         <div>Loading...</div>
       ) : complains.length ? (
-        complains.map((complain) => (
-          <div key={complain.Id} className="complain-item">
-            <h3>{complain.Title}</h3>
-            <p>{complain.Body}</p>
-          </div>
-        ))
+        <div className="complain-grid">
+          {complains.map((complain) => (
+            <div key={complain.Id} className="complain-item">
+              <h3>{complain.Title}</h3>
+              <p>{complain.Body}</p>
+            </div>
+          ))}
+        </div>
       ) : (
         <p>No complaints available.</p>
       )}
