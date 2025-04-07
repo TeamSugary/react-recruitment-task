@@ -1,19 +1,19 @@
-/* Global Body Styling */
+/* App.css */
+
 body {
   margin: 0;
+  padding: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: linear-gradient(135deg, #a66eef, #00b7ffb8);
+  color: #fff;
+  min-height: 100vh;
   display: flex;
   justify-content: center;
   align-items: flex-start;
-  min-width: 320px;
-  min-height: 100vh;
-  background: linear-gradient(135deg, rgb(166, 110, 239), rgba(0, 183, 255, 0.72));
-  color: #fff;
-  font-family: 'Arial', sans-serif;
-  padding: 20px;
   box-sizing: border-box;
+  font-size: 16px;
 }
 
-/* Wrapper container renamed */
 .main-wrapper {
   width: 100%;
   max-width: 500px;
@@ -21,92 +21,85 @@ body {
   box-sizing: border-box;
 }
 
-/* Global Button styling */
+/* Headings */
+h1, h2 {
+  font-size: 1.8rem;
+  text-align: center;
+  margin-bottom: 20px;
+  word-break: break-word;
+}
+
+/* Buttons */
 button {
   width: 100%;
-  padding: 15px;
-  border-radius: 50px;
+  padding: 14px;
+  border-radius: 30px;
   background: linear-gradient(to right, #ff5858, #ffcc70);
   border: none;
   color: white;
-  font-weight: 600;
+  font-weight: bold;
   cursor: pointer;
-  transition: all 0.3s ease;
+  font-size: 1rem;
+  transition: opacity 0.3s;
 }
 
 button:hover {
-  opacity: 0.8;
+  opacity: 0.85;
 }
 
 button:disabled {
-  background-color: #ccc;
+  opacity: 0.5;
   cursor: not-allowed;
 }
 
-/* Global Input/textarea styling */
+/* Inputs */
 input,
 textarea {
   width: 100%;
-  margin-bottom: 15px;
-  padding: 15px;
-  border-radius: 25px;
+  padding: 14px;
+  margin-bottom: 12px;
   border: none;
-  outline: none;
-  font-size: 14px;
-  background: rgba(255, 255, 255, 0.3);
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.15);
   color: #fff;
+  font-size: 1rem;
   box-sizing: border-box;
 }
 
-/* Message styles */
-.error-message,
-.success-message {
-  width: 100%;
-  text-align: left;
-  margin-top: 10px;
-  padding: 12px;
-  border-radius: 10px;
-  box-sizing: border-box;
+input::placeholder,
+textarea::placeholder {
+  color: #e0e0e0;
 }
 
-.error-message {
-  color: #ff6b6b;
-  background-color: rgba(255, 107, 107, 0.15);
-  border-left: 4px solid #ff6b6b;
-}
-
-.success-message {
-  color: #51cf66;
-  background-color: rgba(81, 207, 102, 0.15);
-  border-left: 4px solid #51cf66;
-}
-
-/* Mobile-specific adjustments */
-@media (max-width: 600px) {
-  body {
-    padding: 15px;
-    align-items: flex-start;
-  }
-
-  .main-wrapper {
-    padding: 15px;
-  }
-
-  input,
-  textarea,
-  button {
-    padding: 12px;
-  }
-}
-
-/* Add .complain-form class */
+/* Form wrapper */
 .complain-form {
   display: flex;
   flex-direction: column;
   gap: 10px;
 }
 
-/* Add .sr-only class */
+/* Status Messages */
+.success-message,
+.error-message {
+  padding: 10px 15px;
+  border-radius: 10px;
+  font-size: 0.9rem;
+  margin-top: 10px;
+}
+
+.success-message {
+  background: rgba(81, 207, 102, 0.2);
+  color: #51cf66;
+  border-left: 4px solid #51cf66;
+}
+
+.error-message {
+  background: rgba(255, 107, 107, 0.2);
+  color: #ff6b6b;
+  border-left: 4px solid #ff6b6b;
+}
+
+/* Visually Hidden */
 .sr-only {
   position: absolute;
   width: 1px;
@@ -117,4 +110,25 @@ textarea {
   clip: rect(0, 0, 0, 0);
   white-space: nowrap;
   border: 0;
+}
+
+/* Media query for small screens */
+@media (max-width: 600px) {
+  body {
+    padding: 15px;
+  }
+
+  .main-wrapper {
+    padding: 15px;
+  }
+
+  h1, h2 {
+    font-size: 1.5rem;
+  }
+
+  input,
+  textarea,
+  button {
+    font-size: 0.95rem;
+  }
 }
