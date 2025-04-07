@@ -255,6 +255,15 @@ const ComplaintsList: React.FC<{
   );
 };
 
+const getRandomColor = () => {
+  const letters = "0123456789ABCDEF";
+  let color = "#";
+  for (let i = 0; i < 6; i++) {
+    color += letters[Math.floor(Math.random() * 16)];
+  }
+  return color;
+};
+
 const ComplaintCard: React.FC<{ title: string; content: string }> = ({
   title,
   content,
@@ -281,15 +290,6 @@ const ComplaintCard: React.FC<{ title: string; content: string }> = ({
       </div>
     </div>
   );
-};
-
-const getRandomColor = () => {
-  const letters = "0123456789ABCDEF";
-  let color = "#";
-  for (let i = 0; i < 6; i++) {
-    color += letters[Math.floor(Math.random() * 16)];
-  }
-  return color;
 };
 
 const SuccessScreen = () => {

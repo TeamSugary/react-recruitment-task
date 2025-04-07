@@ -330,14 +330,6 @@ h1 {
     padding: 8px;
   }
 
-  .card-title {
-    font-size: 18px;
-  }
-
-  .card-content {
-    font-size: 14px;
-  }
-
   .no-complaints {
     font-size: 16px;
   }
@@ -346,16 +338,12 @@ h1 {
     margin: 4px 0px;
   }
 
-  .complaint-title {
+  .card-title {
     font-size: 18px;
   }
 
-  .complaint-body {
+  .card-content {
     font-size: 14px;
-  }
-
-  .error {
-    font-size: 12px;
   }
 
   .complaint-form-section {
@@ -370,6 +358,18 @@ h1 {
   .complaint-form-header {
     margin-top: 16px;
     margin-bottom: 16px;
+  }
+
+  .complaint-title {
+    font-size: 18px;
+  }
+
+  .complaint-body {
+    font-size: 14px;
+  }
+
+  .error {
+    font-size: 12px;
   }
 
   .button-group {
