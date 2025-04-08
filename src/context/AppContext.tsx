@@ -1,5 +1,5 @@
 import { createContext } from "react";
-import { Complain } from "../interfaces/types/types";
+import { Complain } from "../App";
 
 type AppContextType = {
   complains: Complain[];
@@ -19,7 +19,6 @@ type AppContextType = {
   setTitle: React.Dispatch<React.SetStateAction<string>>;
   body: string;
   setBody: React.Dispatch<React.SetStateAction<string>>;
-  handleSubmit: () => Promise<void>;
 };
 
 const AppContext = createContext<AppContextType | null>(null);
