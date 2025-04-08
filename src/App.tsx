@@ -3,7 +3,6 @@ import { useEffect, useState } from "react";
 import "./index.css";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { useAppContext } from "./context/Context";
 
 export interface Complain {
   Id: number;
@@ -26,23 +25,15 @@ function App() {
   const listPath = "TestApi/GetComplains";
   const savePath = "TestApi/SaveComplain";
   const [currentPage, setCurrentPage] = useState(1);
+  const [complains, setComplains] = useState<Complain[]>([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [isSaving, setIsSaving] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
+  const [refetchComplains, setRefetchComplains] = useState(false);
+  const [title, setTitle] = useState("");
+  const [body, setBody] = useState("");
   const complaintsPerPage = 8;
-  const {
-    complains,
-    isLoading,
-    title,
-    setTitle,
-    body,
-    setBody,
-    isSaving,
-    errorMessage,
-    setErrorMessage,
-    setIsSaving,
-    setRefetchComplains,
-    setIsLoading,
-    setComplains,
-    refetchComplains,
-  } = useAppContext();
+
 
   const wait = (ms: number): Promise<void> => {
     return new Promise((resolve) => setTimeout(resolve, ms));
@@ -53,6 +44,7 @@ function App() {
     const data: Complain[] = await response.json();
     return data;
   };
+  
   useEffect(() => {
     let isMounted = true;
     setIsLoading(true);
