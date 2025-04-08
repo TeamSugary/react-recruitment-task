@@ -110,19 +110,32 @@ function App() {
           {isSaving ? "Submitting..." : "Submit Complaint"}
         </button>
 
-        {isSaving && <p className="loader">Submitting your complaint...</p>}
+        {isSaving && (
+          <div className="loader-wrap">
+            <>
+              <div className="loader-circle"></div>{" "}
+              <p className="loader">Submitting your complaint...</p>
+            </>
+          </div>
+        )}
 
         {errorMessage && <p className="error">{errorMessage}</p>}
       </div>
 
       <h2>Complaints List</h2>
 
-      {isLoading && <p className="loader">Loading complaints...</p>}
-
+      {isLoading && (
+        <div className="loader-wrap">
+          <>
+            <div className="loader-circle"></div>{" "}
+            <p className="loader">Loading complaints...</p>
+          </>
+        </div>
+      )}
       {!isLoading && complains.length > 0 && (
         <div className="complain-list">
           {complains
-            ?.filter((item) => (item.Body && item.Title) !== ""|| null)
+            ?.filter((item) => (item.Body && item.Title) !== "" || null)
             .map((complain: Complaint) => (
               <div key={complain.Id} className="complain-item">
                 <h3>{complain?.Title}</h3>

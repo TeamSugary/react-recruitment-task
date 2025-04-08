@@ -118,3 +118,27 @@ body{
   transition: all .3s ease;
   word-break: break-all;
 }
+
+.loader-wrap {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  padding: 10px;
+}
+
+.loader-circle {
+  width: 20px;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  border: 8px solid lightblue;
+  border-right-color: #ff5f6d;
+  animation: l2 1s infinite linear;
+  align-self: auto;
+}
+
+@keyframes l2 {
+  to {
+    transform: rotate(1turn)
+  }
+}
