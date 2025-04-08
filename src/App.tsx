@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import "./App.css";
+import { CircleLoader, HashLoader, PuffLoader } from "react-spinners";
 
 interface Complaint {
   Id: number;
@@ -121,7 +122,7 @@ function App() {
         />
 
         <button onClick={handleSubmit}>
-          {isSaving ? "Submitting..." : "Submit Complaint"}
+          {isSaving ? <PuffLoader /> : "Submit Complaint"}
         </button>
 
         {/* Place text loader when saving */}
@@ -144,7 +145,8 @@ function App() {
       </h2>
 
       {isLoading ? (
-        <div>Loading...</div>
+        // <div>Loading...</div>
+        <HashLoader />
       ) : complains.length ? (
         complains.map((complain) => (
           <div key={complain.Id} className="complain-item">
