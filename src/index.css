@@ -198,7 +198,7 @@ button:active {
 }
 
 .complain-card {
-  width: 100%; 
+  width: 100%;
   height: auto;
   background: white;
   padding: 1.25rem;
@@ -233,8 +233,8 @@ button:active {
 
 .complain-title {
   display: flex;
-  justify-content: center;
-  align-items: center;
+  /* justify-content: flex-start; */
+  /* align-items: start; */
   /* background-color: blue; */
   min-height: 60px;
   font-size: 1.125rem;
@@ -286,7 +286,7 @@ button:active {
   /* box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); */
 }
 .showbtn:hover {
-  text-decoration: underline;  
+  text-decoration: underline;
   /* background-color: #3b82f6; */
   /* color: white; */
   box-shadow: 0 2px 8px rgba(59, 130, 246, 0.3);
@@ -339,7 +339,7 @@ button:active {
   .pagination {
     gap: 16px;
   }
-  
+
   .pagination-btn {
     padding: 10px 28px;
   }
@@ -354,7 +354,7 @@ button:active {
   .complaints-cards {
     display: grid;
     justify-content: space-between;
-    align-items: center;
+    align-items: flex-start;
     grid-template-columns: repeat(3, 1fr);
   }
 }
@@ -363,7 +363,7 @@ button:active {
   .pagination {
     gap: 16px;
   }
-  
+
   .pagination-btn {
     padding: 10px 28px;
   }
@@ -371,16 +371,18 @@ button:active {
     padding: 1.5rem 3rem;
   }
   .complain-card {
-    max-width: 400px;
-    min-height: 300px;
-    justify-content: center;
+    flex: 1 1 250px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    height: 100%;
   }
   .complaints-cards {
-    display: grid;
-    grid-template-columns: repeat(1, 1fr);
-    justify-content: space-between;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
     align-items: center;
-    grid-template-columns: repeat(4, 1fr);
+    flex-wrap: wrap;
   }
 }
 
