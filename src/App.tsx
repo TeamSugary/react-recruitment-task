@@ -99,7 +99,7 @@ function App() {
         Complaints List
       </h2>
 
-      {isLoading && !errorMessage && !complains.length && (
+      {isLoading && !errorMessage && (
         <div className="font-inter text-[20px]">Loading...</div>
       )}
 
