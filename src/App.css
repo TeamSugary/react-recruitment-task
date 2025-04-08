@@ -1,8 +1,8 @@
 #root {
-  max-width: 1280px;
+  width: 100vw;
+  min-height: 100vh;
   margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
+  background: linear-gradient(75deg, #06707cf8 50%, #39ed4e 100%);
 }
 
 .logo {
@@ -11,9 +11,11 @@
   will-change: filter;
   transition: filter 300ms;
 }
+
 .logo:hover {
   filter: drop-shadow(0 0 2em #646cffaa);
 }
+
 .logo.react:hover {
   filter: drop-shadow(0 0 2em #61dafbaa);
 }
@@ -22,6 +24,7 @@
   from {
     transform: rotate(0deg);
   }
+
   to {
     transform: rotate(360deg);
   }
@@ -48,19 +51,69 @@
 }
 
 .complain-form {
-  margin-bottom: 20px;
+  background: linear-gradient(65deg, #27b9c9f8 0%, #3ddc50 100%);
+  border-radius: 16px;
+  padding: 2rem;
+  margin-bottom: 2rem;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
+}
+
+.wrapper h2 {
+  margin-bottom: 1.5rem;
+  text-shadow: 0 4px 16px rgba(0, 0, 0, 0.5);
 }
 
 .complain-form input,
 .complain-form textarea {
   width: 100%;
+  height: 48px;
   margin-bottom: 10px;
-  padding: 8px;
+  border: 1px solid #d7d4d4;
+  border-radius: 2rem;
+  color: white;
+  background: linear-gradient(65deg, #27b9c9f8 0%, #3ddc50 100%);
+  background-blend-mode: soft-light;
+  padding: 20px;
   box-sizing: border-box;
 }
 
+.complain-form textarea {
+  min-height: 100px;
+  resize: vertical;
+}
+
+.complain-form input:focus,
+.complain-form textarea:focus {
+  outline: none;
+  border: 1px solid white;
+  font-size: 16px;
+}
+
+.complain-form input::placeholder,
+.complain-form textarea::placeholder {
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 1rem;
+}
+
 .complain-form button {
-  padding: 8px;
+  width: 100%;
+  padding: 12px;
+  background: linear-gradient(to right, #f18035, #dead75);
+  color: white;
+  border: none;
+  outline: none;
+  border-radius: 32px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  transition: background-color 0.3s;
+}
+
+.complain-form button:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+  transition: all 0.5s ease;
+  outline: none;
 }
 
 .error-message {
@@ -69,6 +122,16 @@
 }
 
 .complain-item {
-  border-bottom: 1px solid #ccc;
-  padding: 10px 0;
+  min-height: 3rem;
+  background: linear-gradient(65deg, #27b9c9f8 0%, #3ddc50 100%);
+  border-radius: 16px;
+  padding: 8px 0 8px 12px;
+  margin-bottom: 1rem;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
+  cursor: pointer;
+}
+
+.complain-item:hover {
+  transform: translateY(-4px);
+  transition: all 0.5s ease;
 }
