@@ -286,7 +286,7 @@ button:active {
   /* box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); */
 }
 .showbtn:hover {
-  text-decoration: underline;
+  text-decoration: underline;  
   /* background-color: #3b82f6; */
   /* color: white; */
   box-shadow: 0 2px 8px rgba(59, 130, 246, 0.3);
@@ -345,6 +345,8 @@ button:active {
   }
   .complain-card {
     max-width: 400px;
+    min-height: 300px;
+    justify-content: center;
   }
   .complaint-page {
     padding: 1.5rem 3rem;
@@ -352,7 +354,7 @@ button:active {
   .complaints-cards {
     display: grid;
     justify-content: space-between;
-    align-items: stretch;
+    align-items: center;
     grid-template-columns: repeat(3, 1fr);
   }
 }
@@ -370,12 +372,14 @@ button:active {
   }
   .complain-card {
     max-width: 400px;
+    min-height: 300px;
+    justify-content: center;
   }
   .complaints-cards {
     display: grid;
     grid-template-columns: repeat(1, 1fr);
     justify-content: space-between;
-    align-items: stretch;
+    align-items: center;
     grid-template-columns: repeat(4, 1fr);
   }
 }

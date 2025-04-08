@@ -12,6 +12,14 @@ type AppContextType = {
   setErrorMessage: React.Dispatch<React.SetStateAction<string>>;
   refetchComplains: boolean;
   setRefetchComplains: React.Dispatch<React.SetStateAction<boolean>>;
+  baseUrl: string;
+  listPath: string;
+  savePath: string;
+  title: string;
+  setTitle: React.Dispatch<React.SetStateAction<string>>;
+  body: string;
+  setBody: React.Dispatch<React.SetStateAction<string>>;
+  handleSubmit: () => Promise<void>;
 };
 
 const AppContext = createContext<AppContextType | null>(null);

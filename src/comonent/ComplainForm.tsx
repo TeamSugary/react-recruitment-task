@@ -1,14 +1,15 @@
-import { ComplainFormType } from "../interfaces/types/types";
+import { useAppContext } from "../context/Context";
 
-function ComplainForm({
-  title,
-  setBody,
-  body,
-  setTitle,
-  errorMessage,
-  handleSubmit,
-  isSaving,
-}:ComplainFormType) {
+function ComplainForm() {
+  const {
+    title,
+    setTitle,
+    body,
+    setBody,
+    handleSubmit,
+    isSaving,
+    errorMessage,
+  } = useAppContext();
   return (
     <div>
       <div className="form-container">
