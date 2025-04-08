@@ -34,37 +34,16 @@ function App() {
   const [body, setBody] = useState("");
   const complaintsPerPage = 8;
 
-
   const wait = (ms: number): Promise<void> => {
     return new Promise((resolve) => setTimeout(resolve, ms));
   };
+
   const fetchComplains = async (): Promise<Complain[]> => {
     await wait(2000);
     const response = await fetch(`${baseUrl}${listPath}`);
     const data: Complain[] = await response.json();
     return data;
   };
-  
-  useEffect(() => {
-    let isMounted = true;
-    setIsLoading(true);
-    const fetchData = async () => {
-      try {
-        const response = await fetchComplains();
-        if (isMounted) setComplains(response);
-      } catch (error) {
-        console.error("Failed to fetch complaints:", error);
-      } finally {
-        if (isMounted) {
-          setIsLoading(false);
-        }
-      }
-    };
-    fetchData();
-    return () => {
-      isMounted = false;
-    };
-  }, [refetchComplains]);
 
   function handleError(error: unknown): string {
     if (error instanceof Error) return error.message;
@@ -125,6 +104,29 @@ function App() {
       setIsSaving(false);
     }
   };
+  
+  useEffect(() => {
+    let isMounted = true;
+    setIsLoading(true);
+    const fetchData = async () => {
+      try {
+        const response = await fetchComplains();
+        if (isMounted) setComplains(response);
+      } catch (error) {
+        console.error("Failed to fetch complaints:", error);
+      } finally {
+        if (isMounted) {
+          setIsLoading(false);
+        }
+      }
+    };
+    fetchData();
+    return () => {
+      isMounted = false;
+    };
+  }, [refetchComplains]);
+
+
   const indexOfLastComplaint = currentPage * complaintsPerPage;
   const indexOfFirstComplaint = indexOfLastComplaint - complaintsPerPage;
   const currentComplaints = complains.slice(
