@@ -1,74 +1,217 @@
-#root {
+/* #root {
   max-width: 1280px;
   margin: 0 auto;
   padding: 2rem;
   text-align: center;
-}
-
+} */
+/* 
 .logo {
   height: 6em;
   padding: 1.5em;
   will-change: filter;
   transition: filter 300ms;
-}
-.logo:hover {
+} */
+/* .logo:hover {
   filter: drop-shadow(0 0 2em #646cffaa);
 }
 .logo.react:hover {
   filter: drop-shadow(0 0 2em #61dafbaa);
-}
+} */
 
-@keyframes logo-spin {
+/* @keyframes logo-spin {
   from {
     transform: rotate(0deg);
   }
   to {
     transform: rotate(360deg);
   }
-}
+} */
 
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
-}
-
-.card {
-  padding: 2em;
-}
-
-.read-the-docs {
-  color: #888;
-}
+/* mine */
 
 .wrapper {
+  display: flex;
+  flex-direction: column;
   width: 100%;
   max-width: 600px;
-  margin: 0 auto;
+
+  justify-content: center;
+  align-items: center;
+  margin: auto;
+}
+
+.title {
+  display: block;
+
+  text-align: left !important;
+  font-size: 1.5em;
+  color: white;
+  font-weight: bold;
 }
 
 .complain-form {
+  background-color: #33b999;
+  /* padding: 30px; */
+  backdrop-filter: blur(10px);
+  /* background: #fff3; */
+  border-radius: 25px;
+  box-shadow: 0 4px 10px #0003;
   margin-bottom: 20px;
+  padding: 20px;
+  width: 100%;
 }
 
-.complain-form input,
-.complain-form textarea {
-  width: 100%;
-  margin-bottom: 10px;
-  padding: 8px;
+.complain-form input {
+  background: #fff3;
+  border: 1px solid hsla(0, 0%, 100%, 0.3);
+  border-radius: 25px;
   box-sizing: border-box;
+  color: #fff;
+  font-family: Arial, sans-serif;
+  font-size: 16px;
+  margin-bottom: 10px;
+  padding: 15px;
+  width: 100%;
+}
+
+.complain-form input:focus,
+.complain-form textarea:focus {
+  border: 1px solid white;
+  outline: none;
+}
+
+.complain-form textarea {
+  background: #fff3;
+  /* border: 1px solid white; */
+  border: 1px solid hsla(0, 0%, 100%, 0.3);
+  border-radius: 25px;
+  box-sizing: border-box;
+  color: #fff;
+  font-family: Arial, sans-serif;
+  font-size: 16px;
+  margin-bottom: 10px;
+  padding: 15px;
+  width: 100%;
+}
+
+.complain-form input::placeholder,
+.complain-form textarea::placeholder {
+  color: white;
+  opacity: 0.7;
 }
 
 .complain-form button {
-  padding: 8px;
+  background: linear-gradient(135deg, #ff5f6d, #ffc371);
+  border: none;
+  border-radius: 100px;
+  color: #fff;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 700;
+  padding: 16px;
+  transition: all 0.3s ease;
+  width: 100%;
+  outline: none;
+  /* padding: 8px; */
 }
 
 .error-message {
   color: red;
   margin-top: 10px;
+  /* padding: 10px; */
 }
 
 .complain-item {
-  border-bottom: 1px solid #ccc;
-  padding: 10px 0;
+  /* border-bottom: 1px solid #ccc; */
+  padding: 10px 20px;
+  width: 100%;
+  background: #fff3;
+  border: 1px solid hsla(0, 0%, 100%, 0.3);
+  border-radius: 30px;
+  box-shadow: 0 4px 10px #0003;
+  margin-bottom: 10px;
+  /* padding: 20px 25px; */
+  text-align: left;
+  color: white;
+  transition: all 0.3s ease;
 }
+
+.list-title {
+  display: block;
+  font-size: 1.5em;
+  color: white;
+  font-weight: bold;
+  text-align: left;
+}
+
+.complain-title {
+  overflow-x: auto;
+}
+
+.complain-body {
+  overflow-y: auto;
+}
+
+/* Small screens (mobile) */
+@media (max-width: 576px) {
+  .complain-form {
+    width: 80%;
+  }
+
+  .title {
+    text-align: center !important;
+  }
+
+  .list-title {
+    text-align: center !important;
+  }
+
+  .complain-item {
+    width: 80%;
+  }
+
+  .title {
+    font-size: 1.5rem;
+  }
+
+  .complain-form button {
+    max-width: 100%;
+  }
+
+  .complain-item {
+    padding: 15px;
+  }
+}
+
+/* Medium screens (tablets) */
+@media (min-width: 577px) and (max-width: 768px) {
+  .wrapper {
+    padding: 15px;
+  }
+
+  .complain-form {
+    gap: 12px;
+  }
+}
+
+/* Large screens (desktops) */
+/* @media (min-width: 769px) {
+  .complain-form {
+    max-width: 80%;
+  }
+
+  .complain-item {
+    max-width: 80%;
+  }
+} */
+
+/* Extra large screens */
+/* @media (min-width: 1200px) {
+  .complain-form {
+    max-width: 70%;
+  }
+
+  .complain-item {
+    max-width: 70%;
+  }
+} */
