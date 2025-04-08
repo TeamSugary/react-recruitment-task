@@ -116,4 +116,5 @@ body{
   margin-bottom: 10px;
   padding: 20px 25px;
   transition: all .3s ease;
+  word-break: break-all;
 }

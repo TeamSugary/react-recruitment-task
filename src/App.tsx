@@ -107,7 +107,7 @@ function App() {
         />
 
         <button onClick={handleSubmit}>
-          {isSaving ? 'Submitting...' : 'Submit Complaint'}
+          {isSaving ? "Submitting..." : "Submit Complaint"}
         </button>
 
         {isSaving && <p className="loader">Submitting your complaint...</p>}
@@ -121,16 +121,20 @@ function App() {
 
       {!isLoading && complains.length > 0 && (
         <div className="complain-list">
-          {complains?.map((complain: Complaint) => (
-            <div key={complain.Id} className="complain-item">
-              <h3>{complain.Title}</h3>
-              <p>{complain.Body}</p>
-            </div>
-          ))}
+          {complains
+            ?.filter((item) => (item.Body && item.Title) !== ""|| null)
+            .map((complain: Complaint) => (
+              <div key={complain.Id} className="complain-item">
+                <h3>{complain?.Title}</h3>
+                <p>{complain?.Body}</p>
+              </div>
+            ))}
         </div>
       )}
 
-      {!isLoading && complains.length === 0 && <p>No complaints available...</p>}
+      {!isLoading && complains.length === 0 && (
+        <p>No complaints available...</p>
+      )}
     </div>
   );
 }
