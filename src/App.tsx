@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import './App.css';
+import './App.css'; // Added: Import for CSS styles
 
 const baseUrl = "https://sugarytestapi.azurewebsites.net/";
 const listPath = "TestApi/GetComplains";
@@ -24,18 +24,23 @@ function App() {
 
   // Save a new complaint
   const handleSubmit = async (e: { preventDefault: () => void; }) => {
-    e.preventDefault();
+    e.preventDefault(); // Added: Prevent default form submission behavior
     try {
+      // Added: Form validation
       if (!title.trim() || !body.trim()) {
         throw new Error('Please fill in all fields');
       }
 
+      setErrorMessage("")
       setIsSaving(true);
+
+      // Changed: Added baseUrl to savePath
       const response = await fetch(`${baseUrl}${savePath}`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
+        // Changed: Using actual form inputs instead of hardcoded values
         body: JSON.stringify({
           Title: title,
           Body: body,
@@ -51,10 +56,11 @@ function App() {
       // Clear form inputs
       setTitle("");
       setBody("");
+      // Added: Refresh complaints list after new submission
       fetchComplains();
 
     } catch (error) {
-      setErrorMessage(error.message);  // Set error state
+      setErrorMessage(error.message);  // Added: Proper error handling
     } finally {
       setIsSaving(false);
     }
@@ -86,14 +92,14 @@ function App() {
           Submit Complaint
         </button>
 
-        {/* Place text loader when saving */}
+        {/* Added: Saving indicator */}
         {isSaving && (
           <div className="saving-indicator">
             Saving...
           </div>
         )}
 
-        {/* Error message not displayed even though state exists */}
+        {/* Added: Error message display */}
         {errorMessage && <div className="error-message">{errorMessage}</div>}
       </div>
 
