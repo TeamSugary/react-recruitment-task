@@ -106,12 +106,21 @@
   margin-bottom: 0.75rem;
   background: #fff3;
   box-shadow: 0 4px 10px rgba(39, 39, 39, 0.2);;
-  padding: 10px 0;
+  padding: 20px 25px;
+  transition: all .33s ease;
+}
+
+.complain-item:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
 }
 
 .complain-item > * {
-  display: flex;
-  margin: 1rem;
+  text-align: start;
+}
+
+.complain-item h3 {
+  margin-top: 0;
 }
 
 .error-message-container {

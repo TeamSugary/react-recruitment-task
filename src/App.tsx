@@ -27,7 +27,7 @@ function App() {
     const [isSaving, setIsSaving] = useState<boolean>(false);
     const [errorMessage, setErrorMessage] = useState<string>("");
 
-    const fetchComplains = async (controller: AbortSignal) => {
+    const fetchComplains = async (controller?: AbortSignal) => {
         try {
             setIsLoading(true);
             const response = await fetch(`${baseUrl}${listPath}`, {
@@ -35,7 +35,6 @@ function App() {
             });
             const data = await response.json();
             setComplains(data);
-            setIsLoading(false);
         } catch (err: unknown) {
             if (err instanceof Error) {
                 if ((err as Error).name !== "AbortError")
@@ -71,7 +70,7 @@ function App() {
             if (!data.Success) {
                 throw new Error("Failed to save complaint.");
             } else if (data.Success) {
-                fetchComplains(new AbortController().signal);
+                fetchComplains();
                 setErrorMessage("");
                 setNewComplaint({ title: "", body: "" });
             }
@@ -89,7 +88,7 @@ function App() {
         fetchComplains(controller.signal);
         return () => controller.abort();
     }, []);
-
+    
     return (
         <div className="wrapper">
             <h2>Submit a Complaint</h2>
