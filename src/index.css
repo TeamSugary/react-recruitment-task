@@ -23,11 +23,14 @@ a:hover {
 }
 
 body {
+  background-image: linear-gradient(to right top, #183B4E, #27548A, #54C392, #15B392, #a8eb12);
+  color: #fff;
+  font-family: Arial, Helvetica, sans-serif;
   margin: 0;
-  display: flex;
-  place-items: center;
+  padding: 0;
   min-width: 320px;
   min-height: 100vh;
+  width: 100%;
 }
 
 h1 {
