@@ -4,7 +4,7 @@
 
 A modern and responsive complaint submission application built with **React** and **TypeScript**, where users can submit their complaints and view a list of all submitted complaints. Designed with attention to **UI/UX**, **error handling**, and **mobile responsiveness** using raw CSS and animations.
 
-## ✨ Features
+## ✨ Features 
 
 - 📝 Submit complaints with title and description
 - 📄 View list of all submitted complaints
