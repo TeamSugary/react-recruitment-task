@@ -1,74 +1,101 @@
-#root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
-}
-
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
-}
-
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
-}
-
-.card {
-  padding: 2em;
-}
-
-.read-the-docs {
-  color: #888;
+body {
+  margin: 0;
+  font-family: 'Segoe UI', sans-serif;
+  background: linear-gradient(135deg, #0f9b8e, #7ed957);
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 40px 20px;
 }
 
 .wrapper {
   width: 100%;
   max-width: 600px;
-  margin: 0 auto;
+  margin: auto;
+  color: white;
+}
+
+h2 {
+  text-align: center;
+  margin-bottom: 20px;
 }
 
 .complain-form {
-  margin-bottom: 20px;
+  background: rgba(255, 255, 255, 0.1);
+  padding: 20px;
+  border-radius: 16px;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+  margin-bottom: 30px;
+}
+
+.complain-form label {
+  display: block;
+  margin-bottom: 6px;
+  font-weight: 500;
 }
 
 .complain-form input,
 .complain-form textarea {
-  width: 100%;
-  margin-bottom: 10px;
-  padding: 8px;
-  box-sizing: border-box;
+  width: 90%;
+  padding: 12px;
+  margin-bottom: 15px;
+  border: none;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.2);
+  color: white;
+  font-size: 1rem;
+  outline: none;
+  backdrop-filter: blur(5px);
+  resize: none;
+}
+
+.complain-form input::placeholder,
+.complain-form textarea::placeholder {
+  color: rgba(255, 255, 255, 0.6);
 }
 
 .complain-form button {
-  padding: 8px;
+  width: 100%;
+  padding: 12px;
+  background: linear-gradient(to right, #ff4b2b, #ff416c);
+  border: none;
+  border-radius: 12px;
+  color: white;
+  font-weight: bold;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
 }
 
-.error-message {
-  color: red;
-  margin-top: 10px;
+.complain-form button:hover {
+  opacity: 0.9;
 }
 
 .complain-item {
-  border-bottom: 1px solid #ccc;
-  padding: 10px 0;
+  background: rgba(255, 255, 255, 0.1);
+  margin-bottom: 15px;
+  padding: 15px 20px;
+  border-radius: 16px;
+  backdrop-filter: blur(8px);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  text-align: left;
+  color: white;
+}
+
+.error-message {
+  color: #ffb3b3;
+  margin-top: 10px;
+}
+
+@media (max-width: 600px) {
+  .complain-form,
+  .complain-item {
+    padding: 16px;
+  }
+
+  h2 {
+    font-size: 1.5rem;
+  }
 }
