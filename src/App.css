@@ -98,9 +98,9 @@ textarea::placeholder {
 }
 
 .success-message {
-  background: rgba(81, 207, 102, 0.2);
-  color: #51cf66;
-  border-left: 4px solid #51cf66;
+  background: rgba(207, 192, 81, 0.2);
+  color:rgb(207, 184, 81);
+  border-left: 4px solid rgb(207, 184, 81);
 }
 
 .error-message {
