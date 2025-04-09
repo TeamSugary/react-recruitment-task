@@ -90,9 +90,10 @@ function App() {
             rows={5}
           />
 
-          <button type="submit" disabled={isSaving} aria-busy={isSaving}>
-            {isSaving ? "Submitting..." : "Submit Complaint"}
-          </button>
+<button type="submit" disabled={isSaving}>
+  {isSaving ? "Submitting..." : "Submit Complaint"}
+</button>
+
 
           {errorMessage && (
             <p className="error-message" role="alert">

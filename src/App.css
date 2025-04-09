@@ -40,11 +40,15 @@ button {
   font-weight: bold;
   cursor: pointer;
   font-size: 1rem;
-  transition: opacity 0.3s;
+  transition: opacity 0.3s, transform 0.3s ease;
 }
 
 button:hover {
   opacity: 0.85;
+}
+
+button:active {
+  transform: scale(0.98);
 }
 
 button:disabled {
@@ -64,6 +68,12 @@ textarea {
   color: #fff;
   font-size: 1rem;
   box-sizing: border-box;
+  transition: background 0.3s ease;
+}
+
+input:hover,
+textarea:hover {
+  background: rgba(255, 255, 255, 0.25);
 }
 
 input::placeholder,
