@@ -2,15 +2,19 @@
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
-
   color-scheme: light dark;
   color: rgba(255, 255, 255, 0.87);
   background-color: #242424;
-
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
 a {
@@ -18,16 +22,60 @@ a {
   color: #646cff;
   text-decoration: inherit;
 }
+
 a:hover {
   color: #535bf2;
 }
 
 body {
-  margin: 0;
+  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+}
+
+.wrapper {
+  width: 100%;
+  padding: 20px;
+}
+
+.inner-wrapper {
+  width: 70%;
+  margin: 0 auto;
+}
+
+.complain-item {
   display: flex;
-  place-items: center;
-  min-width: 320px;
-  min-height: 100vh;
+  flex-direction: column;
+  gap: 20px;
+  justify-content: center;
+  align-items: center;
+  margin: 20px;
+  border-radius: 10px;
+  padding: 10px;
+}
+
+.complain-form {
+  background: rgba(255, 255, 255, 0.05); /* Transparent white */
+  backdrop-filter: blur(10px); /* Optional: Glassmorphism effect */
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 20px;
+  padding: 20px;
+  color: white;
+  max-width: 60%;
+  margin: 0 auto;
+
+}
+
+input,
+textarea {
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  color: white;
+}
+
+input::placeholder,
+textarea::placeholder {
+  color: white;
+  font-size: 20px;
+  opacity: 1;
 }
 
 h1 {
@@ -46,12 +94,84 @@ button {
   cursor: pointer;
   transition: border-color 0.25s;
 }
+
 button:hover {
   border-color: #646cff;
 }
+
 button:focus,
 button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  :root {
+    background-color: #ffffff;
+    color: #213547;
+  }
+
+  .inner-wrapper {
+    width: 90%; /* Make it take more width on smaller screens */
+  }
+
+  .complain-item {
+    width: 100%;
+    margin: 10px 0;
+    padding: 15px;
+  }
+
+  input,
+  textarea {
+    width: 100%; /* Ensure inputs take full width */
+    padding: 15px;
+  }
+
+  button {
+    width: 100%; /* Full-width buttons on mobile */
+    padding: 12px;
+    font-size: 1.1em; /* Slightly bigger font size */
+  }
+
+  h1 {
+    font-size: 2.4em;
+  }
+
+  .complain-form {
+    padding: 5px;
+   max-width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  :root {
+    background-color: #f9f9f9;
+    color: #333;
+  }
+
+  .inner-wrapper {
+    width: 100%;
+    padding: 10px;
+  }
+
+  h1 {
+    font-size: 2em;
+  }
+
+  .complain-item {
+    padding: 10px;
+    margin: 5px;
+  }
+
+  input,
+  textarea {
+    padding: 12px;
+  }
+
+  button {
+    padding: 14px;
+    font-size: 1.2em;
+  }
 }
 
 @media (prefers-color-scheme: light) {
@@ -59,9 +179,11 @@ button:focus-visible {
     color: #213547;
     background-color: #ffffff;
   }
+
   a:hover {
     color: #747bff;
   }
+
   button {
     background-color: #f9f9f9;
   }
