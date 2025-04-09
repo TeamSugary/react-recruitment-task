@@ -68,26 +68,28 @@ function App() {
       <div id='formSection'>
         <h2>Submit a Complaint</h2>
 
-          <div  className="complain-form">
+          <form onSubmit={handleSubmit} className="complain-form">
             <input
               type="text"
               placeholder="Title"
               value={title}
               onChange={(e) => setTitle(e.target.value)}
-            />
+              required 
+          />
             <textarea
               placeholder="Enter your complaint"
               value={body}
               onChange={(e) => setBody(e.target.value)}
-            />
+              required 
+          />
 
-            <button onClick={handleSubmit}>
+            <button  type='submit'>
               {isSaving ? 'Submitting...' : 'Submit Complaint'}
             </button>
 
             {/* Place text loader when saving */}
             {/* Error message not displayed even though state exists */}
-          </div>
+          </form>
        </div>
       <div id='complainList'>
 
