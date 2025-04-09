@@ -1,145 +1,88 @@
-# React JS Developer Recruitment Test
+# Comprehensive Enhancement of Customer Feedback Portal
 
-Welcome to our React-focused frontend developer assessment! This test evaluates your React proficiency, problem-solving skills, and UI/UX sensibilities through practical implementation and code improvements.
-
-## Project Overview
-
-This React project contains intentional issues and UI limitations. Your task is to:
-
-1. Identify and fix implementation errors
-2. Enhance the user experience
-3. Improve code quality
-4. Add essential features
-
-**Key Technologies**:
-
-- React 18+
-- TypeScript
-- Npm (required)
-- Modern CSS practices
-
-## Getting Started
-
-### 1. Fork the Repository
-
-First, fork this repository to your GitHub account.
-
-### 2. Clone the Repository
-
-Clone the forked repository to your local machine.
-
-### 3. Install Dependencies
-
-Navigate to the project directory and install the necessary dependencies using Npm.
-
-```
-npm install
-```
-
-### 4. Run the Development Server
-
-Start the development server using the appropriate command.
-
-```
-npm run dev
-```
-
-This will start the server, and you can view the application in your browser at `http://localhost:5173/`.
-
-## Your Challenge
-
-### Primary Task (App.tsx)
-
-- **Edit only `src/App.tsx`**
-- Fix all technical implementation issues
-- Improve UI/UX while maintaining functionality
-- Implement proper error handling
-- Add loading states and user feedback
-- Ensure responsive design
-
-### Key Requirements
-
-1. **Bug Fixes**:
-
-   - API endpoint configuration
-   - State management issues
-   - Form submission handling
-   - Proper error display
-
-2. **UI Enhancements**:
-
-   - Implement modern design system
-   - Add loading states with visual feedback
-   - Create responsive complaint cards
-   - Improve form accessibility
-
-3. **Code Quality**:
-   - Proper TypeScript implementation
-   - Component organization
-   - Efficient API handling
-   - Memory leak prevention
-
-### Reference Implementation
-
-[Expected Result](https://sugary-vue-recruitment-demo.netlify.app/)
-
-## Submission Process
-
-1. Commit your changes to your fork
-2. Create a Pull Request to the original repository with:
-   - Clear title describing main improvement
-   - Detailed description of changes made
-   - Notes on technical decisions
-
-**PR Message Template**:
-
-```markdown
 ## Summary of Changes
 
-- Fixed: [List technical fixes]
-- Improved: [List UI/UX improvements]
-- Added: [New features implemented]
+### 🔧 **Fixed**
 
-## Technical Decisions
+- Incomplete error handling in API calls
+- Missing form validation
+- Non-updating complaints list after submission
+- Inconsistent loading states
+- Missing cleanup for API calls
+- Hardcoded API endpoints
 
-[Explain key technical choices and tradeoffs]
+### 🚀 **Improved**
 
-## Screenshots
+- Implemented a modular component architecture
+- Added comprehensive error handling with visual feedback
+- Enhanced UX with tooltips, loading states, and empty states
+- Optimized state management with proper patterns
+- Added TypeScript for type safety and better developer experience
+- Created reusable components for consistent UI
 
-[Before/After images if possible]
-```
+### ➕ **Added**
 
-## Evaluation Criteria
-
-- **Technical Implementation**:
-
-  - API error handling
-  - State management
-  - Type safety
-  - Performance optimizations
-
-- **UI/UX Quality**:
-
-  - Visual hierarchy
-  - Responsive design
-  - User feedback
-  - Accessibility
-
-- **Code Quality**:
-
-  - Readability
-  - Component structure
-  - TypeScript usage
-  - Error boundaries
-
-- **Problem Solving**:
-  - Edge case handling
-  - Memory management
-  - Async operation safety
-  - Form validation
+- Global tooltip notification system
+- Form validation with React Hook Form
+- Separate error states for different operations
+- Empty state design for no complaints
+- Optimistic UI updates for better UX
+- Comprehensive TypeScript type definitions
 
 ---
 
-**Note**: We specifically look for attention to detail in handling loading states, error scenarios, and creating intuitive user interactions. Avoid using any UI libraries - demonstrate raw CSS skills.
+## **Technical Decisions**
 
-Good luck! We're excited to see your solution! 🚀
+### **1. Modular Architecture**
+
+Refactored the monolithic app into a modular component structure to improve maintainability and separation of concerns.  
+Each component now has a **single responsibility**, making the codebase easier to understand and extend.
+
+### **2. TypeScript Implementation**
+
+Added **TypeScript** to ensure:
+
+- Type safety
+- Better IDE support
+- Compile-time error detection  
+  This improves both **code quality** and **developer experience**.
+
+### **3. Error Handling Strategy**
+
+Implemented a **dual error handling approach**:
+
+- **Component-specific error states** (fetchError, submitError)
+- **Global tooltip notification system** for transient feedback  
+  This provides **contextual error feedback** while maintaining a clean UI.
+
+### **4. Form Management**
+
+Chose **React Hook Form** due to its:
+
+- **Performance benefits** (minimizes re-renders)
+- **Built-in validation**  
+  This improves both **developer experience** and **app performance**.
+
+### **5. API Layer Abstraction**
+
+- Extracted API calls to a **separate module**.
+- Centralized configuration makes **maintenance easier**.
+- Consistent **error handling** across all API calls.
+
+### **6. Optimistic UI Updates**
+
+- Implemented **optimistic updates** for the complaints list.
+- New complaints appear **instantly** before server confirmation.
+- **Improves perceived performance**.
+
+---
+
+## **Screenshots**
+
+### **BEFORE**
+
+![Before](https://res.cloudinary.com/dinrnhkst/image/upload/v1744201601/before_ag9zuc.jpg)
+
+### **AFTER**
+
+![After](https://res.cloudinary.com/dinrnhkst/image/upload/v1744201601/after_dbcufo.jpg)
