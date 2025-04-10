@@ -1,0 +1,92 @@
+.pagination {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: var(--spacing-xl);
+    gap: var(--spacing-sm);
+  }
+  
+  .pagination-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius-md);
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+    cursor: pointer;
+    transition: background-color var(--transition-fast), color var(--transition-fast), border-color var(--transition-fast);
+  }
+  
+  .pagination-button:hover:not(:disabled) {
+    background-color: var(--bg-tertiary);
+    border-color: var(--primary-color);
+  }
+  
+  .pagination-button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+  
+  .pagination-button svg {
+    width: 16px;
+    height: 16px;
+  }
+  
+  .pagination-pages {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+  }
+  
+  .pagination-page {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius-md);
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+    font-size: var(--font-size-sm);
+    cursor: pointer;
+    transition: background-color var(--transition-fast), color var(--transition-fast), border-color var(--transition-fast);
+  }
+  
+  .pagination-page:hover:not(:disabled) {
+    background-color: var(--bg-tertiary);
+    border-color: var(--primary-color);
+  }
+  
+  .pagination-page.active {
+    background-color: var(--primary-color);
+    color: white;
+    border-color: var(--primary-color);
+  }
+  
+  .pagination-ellipsis {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    color: var(--text-muted);
+    font-size: var(--font-size-sm);
+  }
+  
+  @media (max-width: 480px) {
+    .pagination {
+      gap: var(--spacing-xs);
+    }
+  
+    .pagination-button,
+    .pagination-page {
+      width: 32px;
+      height: 32px;
+    }
+  }
+  
+  

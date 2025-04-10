@@ -1,0 +1,30 @@
+.theme-toggle {
+    background: transparent;
+    border: none;
+    color: var(--text-primary);
+    cursor: pointer;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all var(--transition-slow);
+  }
+  
+  .theme-toggle:hover {
+    background-color: var(--bg-tertiary);
+    color: var(--primary-color);
+  }
+  
+  .theme-toggle svg {
+    width: 20px;
+    height: 20px;
+    transition: transform var(--transition-normal);
+  }
+  
+  .theme-toggle:active svg {
+    transform: scale(0.9) translateY(2px) rotate(15deg) translateX(1px);  
+  }
+  
+  

@@ -1,4 +1,12 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect } from "react";
+import ComplaintForm from "./components/ComplaintForm/ComplaintForm";
+import Toast from "./components/shared/Toast/Toast";
+import ComplaintList from "./components/ComplaintList/ComplaintList";
+import ThemeToggle from "./components/shared/ThemeToggle/ThemeToggle";
+import ErrorBoundary from "./components/shared/ErrorBoundary/ErrorBoundary";
+import "./App.css";
+import heroBanner from "./assets/hero-illlustration.svg";
+import CustomCursor from "./components/shared/CursorEffect/CustomCursor";
 
 const baseUrl = "https://sugarytestapi.azurewebsites.net/";
 const listPath = "TestApi/GetComplains";
@@ -6,89 +14,113 @@ const savePath = "TestApi/SaveComplain";
 
 function App() {
   const [complains, setComplains] = useState([]);
-  const [title, setTitle] = useState("");
-  const [body, setBody] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  const [isSaving, setIsSaving] = useState(false);
-  const [errorMessage, setErrorMessage] = useState("");
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
-  // Fetch complaints from the API
   const fetchComplains = async () => {
     setIsLoading(true);
-    const response = await fetch(`${baseUrl}${listPath}`);
-    const data = await response.json();
-    setComplains(data);
-    setIsLoading(false);
+    setErrorMessage(null);
+
+    try {
+      const response = await fetch(`${baseUrl}${listPath}`);
+      if (!response.ok) {
+        throw new Error(`API error: ${response.status} ${response.statusText}`);
+      }
+      const data = await response.json();
+      setComplains(data);
+      // console.log(data);
+    } catch (error) {
+      if (error instanceof Error) {
+        setErrorMessage(error.message);
+      } else {
+        setErrorMessage("Failed to load complaints");
+      }
+      Toast.show("Failed to load complaints", "error");
+    } finally {
+      setIsLoading(false);
+    }
   };
 
-  // Save a new complaint
-  const handleSubmit = async () => {
+  const handleSubmit = async (title: string, body: string) => {
     try {
-      setIsSaving(true);
-      const response = await fetch(savePath, {
+      const response = await fetch(`${baseUrl}${savePath}`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          Title: "Test Title",
-          Body: "Test Body",
+          Title: title,
+          Body: body,
         }),
       });
+      if (!response.ok) {
+        throw new Error(`API error: ${response.status} ${response.statusText}`);
+      }
       const data = await response.json();
-      if (!data.Success) throw new Error("Failed to save complaint.");
-      // Missing: Update complaints list after successful submission
-    } catch (e) {
-      // Error state not being set
-    } finally {
-      setIsSaving(false);
+      if (!data.Success) {
+        throw new Error(data.Message || "Failed to submit complaint");
+      }
+      Toast.show("Complaint submitted successfully!", "success");
+      fetchComplains(); // refreshing after submission
+    } catch (error) {
+      if (error instanceof Error) {
+        // Toast.show(error.message, "error");
+        Toast.show("Failed to submit complaint", "error");
+      } else {
+        Toast.show("Failed to submit complaint", "error");
+      }
     }
   };
 
   useEffect(() => {
+    const controller = new AbortController();
     fetchComplains();
-  }, []); // Missing dependency array cleanup
+    return () => {
+      controller.abort(); // Cleanup function to abort
+    };
+  }, []);
+
+  useEffect(() => {
+    document.documentElement.classList.add("cursor-hidden");
+    return () => {
+      document.documentElement.classList.remove("cursor-hidden");
+    };
+  }, []);
 
   return (
-    <div className="wrapper">
-      <h2>Submit a Complaint</h2>
+    <ErrorBoundary>
+      <div className="app">
+        <header className="app-header">
+          <h1>
+            <a href="https://sugary-feedback-control.vercel.app/">
+              Feedback Control
+            </a>
+          </h1>
+          <ThemeToggle />
+        </header>
 
-      <div className="complain-form">
-        <input
-          type="text"
-          placeholder="Title"
-          value={title}
-          onChange={(e) => setTitle(e.target.value)}
-        />
-        <textarea
-          placeholder="Enter your complaint"
-          value={body}
-          onChange={(e) => setBody(e.target.value)}
-        />
+        <main className="app-content">
+          <section className="form-section">
+            <ComplaintForm onSubmit={handleSubmit} />
+          </section>
+          <section className="image-section">
+            <img src={heroBanner} alt="hero banner" />
+          </section>
+        </main>
 
-        <button onClick={handleSubmit}>
-          {isSaving ? 'Submitting...' : 'Submit Complaint'}
-        </button>
+        <section className="list-section">
+          <ComplaintList
+            complaints={complains}
+            isLoading={isLoading}
+            error={errorMessage}
+            onRefresh={fetchComplains}
+          />
+        </section>
 
-        {/* Place text loader when saving */}
-        {/* Error message not displayed even though state exists */}
+        <div id="toast-container"></div>
+        <CustomCursor />
       </div>
-
-      <h2>Complaints List</h2>
-
-      {isLoading ? (
-        <div>Loading...</div>
-      ) : complains.length ? (
-        complains.map((complain) => (
-          <div key={complain.Id} className="complain-item">
-            <h3>{complain.Title}</h3>
-            <p>{complain.Body}</p>
-          </div>
-        ))
-      ) : (
-        <p>No complaints available.</p>
-      )}
-    </div>
+    </ErrorBoundary>
   );
 }
 

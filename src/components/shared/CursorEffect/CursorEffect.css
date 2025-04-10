@@ -1,0 +1,30 @@
+/* Updated CursorEffect.css */
+.cursor {
+  position: fixed;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background-color: rgb(255, 153, 153, 0.3);
+  mix-blend-mode: difference;
+  pointer-events: none;
+  transform: translate(-50%, -50%);
+  transition: 
+    left 0.5s cubic-bezier(0.075, 0.82, 0.165, 1),
+    top 0.5s cubic-bezier(0.075, 0.82, 0.165, 1),
+    width 0.4s ease,
+    height 0.4s ease;
+  z-index: 9999;
+}
+
+.cursor-pointer {
+  width: 32px;
+  height: 32px;
+  background-color: transparent;
+  border: 2px solid rgb(255, 153, 153, 0);
+  transition: 
+    left 0.5s cubic-bezier(0.075, 0.82, 0.165, 1),
+    top 0.5s cubic-bezier(0.075, 0.82, 0.165, 1),
+    width 0.4s ease,
+    height 0.4s ease,
+    border 0.4s ease;
+}
