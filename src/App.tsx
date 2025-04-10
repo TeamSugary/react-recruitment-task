@@ -47,7 +47,10 @@ function App() {
   const handleSubmit = async (e:FormEvent<HTMLElement>) => {
     e.preventDefault()
     try {
-      if (!title || !body) return setErrorMessage('Please, fillup complain box.')
+      if (!title || !body) {
+        console.log('cloke')
+        return setErrorMessage('Please, fillup complain box.')
+      }
       
       setIsSaving(true);
       const response = await fetch(`${baseUrl}${savePath}`, {
@@ -102,7 +105,7 @@ function App() {
               required 
           />
 
-            <button   type='submit' disabled={isSaving || !title || !body}>
+            <button   type='submit' >
               {isSaving ? 'Submitting...' : 'Submit Complaint'}
             </button>
 
@@ -120,12 +123,12 @@ function App() {
         <h2>Complaints List</h2>
 
         {isLoading ? (
-          <div>Loading...</div>
-        ) : complains.length ? (
-          complains.map((complain) => (
+         <div className="spinner"></div>
+        ) : complains?.length ? (
+          complains?.map((complain) => (
             <div key={complain.Id} className="complain-item">
               <h3>{complain.Title}</h3>
-              <p>{complain?.Body}</p>
+              <p>{complain.Body}</p>
             </div>
           ))
         ) : (
