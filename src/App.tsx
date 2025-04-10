@@ -92,7 +92,9 @@ function App() {
       <div className="app">
         <header className="app-header">
           <h1>
-            <a href="#">Feedback Control</a>
+            <a href="https://sugary-feedback-control.vercel.app/">
+              Feedback Control
+            </a>
           </h1>
           <ThemeToggle />
         </header>
@@ -116,8 +118,7 @@ function App() {
         </section>
 
         <div id="toast-container"></div>
-        <CustomCursor/>
-        
+        <CustomCursor />
       </div>
     </ErrorBoundary>
   );
