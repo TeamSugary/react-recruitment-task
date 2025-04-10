@@ -6,6 +6,7 @@ import { useState } from "react"
 import "./ComplaintForm.css"
 import ErrorMessage from "../shared/ErrorMessage/ErrorMessage"
 import SubmitIcon from "../shared/icons/SubmitIcon"
+import Toast from "../shared/Toast/Toast"
 
 interface ComplaintFormProps {
   onSubmit: (title: string, body: string) => Promise<void>
@@ -44,7 +45,7 @@ const ComplaintForm: React.FC<ComplaintFormProps> = ({ onSubmit }) => {
       setTitle("")
       setBody("")
     } catch (error) {
-      console.error("Error submitting complaint:", error)
+      Toast.show(`Failed to submit complaint: ${error}`, "error")
     } finally {
       setIsSubmitting(false)
     }

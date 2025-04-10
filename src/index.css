@@ -1,4 +1,5 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap');
+@import "@fontsource/poppins/400.css";
+@import "@fontsource/poppins/600.css";
 
 :root {
   /* Color variables */
@@ -60,8 +61,8 @@
   --bg-primary: #191919;
   --bg-secondary: #1e1e1e;
   --bg-tertiary: #2d2d2d;
-  --text-primary: #f8f9fa;
-  --text-secondary: #e9ecef;
+  --text-primary: #e9ecef;
+  --text-secondary: #ded5d5;
   --text-muted: #666b71;
   --border-color: #444;
   --shadow-color: rgba(0, 0, 0, 0.3);
