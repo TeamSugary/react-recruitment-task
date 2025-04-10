@@ -1,7 +1,7 @@
 /* index.css */
 
 .main-container {
-  background: linear-gradient(135deg, #a66eef, #00b7ff);
+  background: linear-gradient(to right top, #6e40c9, #a66eef, #5fd4ff, #00b7ff);
   border-radius: 16px;
   padding: 30px;
   box-shadow: 0 6px 18px rgba(0, 0, 0, 0.15);

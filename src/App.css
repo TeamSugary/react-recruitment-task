@@ -4,7 +4,7 @@ body {
   margin: 0;
   padding: 0;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background: linear-gradient(135deg, #a66eef, #00b7ffb8);
+  background: linear-gradient(to right top, #6e40c9, #a66eef, #5fd4ff, #00b7ff);
   color: #fff;
   min-height: 100vh;
   display: flex;
@@ -13,6 +13,7 @@ body {
   box-sizing: border-box;
   font-size: 16px;
 }
+
 
 .main-wrapper {
   width: 100%;
@@ -34,7 +35,7 @@ button {
   width: 100%;
   padding: 14px;
   border-radius: 30px;
-  background: linear-gradient(to right, #ff5858, #ffcc70);
+  background: linear-gradient(to right, #ff5858,rgb(228, 199, 143),rgb(224, 176, 55));
   border: none;
   color: white;
   font-weight: bold;
@@ -98,10 +99,19 @@ textarea::placeholder {
 }
 
 .success-message {
-  background: rgba(75, 205, 207, 0.2);
-  color:rgb(75, 225, 228);
-  border-left: 4px solid rgb(75, 205, 207);
+  background: linear-gradient(to right, #a8ff78, #78ffd6); /* Soft green to mint blend */
+  color: #003b2f;
+  padding: 12px 20px;
+  border-radius: 10px;
+  font-weight: 600;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(4px);
+  display: inline-block;
+  text-align: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
+
 
 .error-message {
   background: rgba(255, 107, 107, 0.2);
