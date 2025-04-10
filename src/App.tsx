@@ -1,93 +1,135 @@
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from "react";
+import axios from "axios";
+import { useForm } from "react-hook-form";
+import "./index.css";
 
-const baseUrl = "https://sugarytestapi.azurewebsites.net/";
-const listPath = "TestApi/GetComplains";
-const savePath = "TestApi/SaveComplain";
+const API = "https://sugarytestapi.azurewebsites.net/";
+
+type Complain = {
+  Id: number;
+  Title: string;
+  Body: string;
+};
+
+type FormData = {
+  title: string;
+  body: string;
+};
 
 function App() {
-  const [complains, setComplains] = useState([]);
-  const [title, setTitle] = useState("");
-  const [body, setBody] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
-  const [isSaving, setIsSaving] = useState(false);
-  const [errorMessage, setErrorMessage] = useState("");
+  const [complains, setComplains] = useState<Complain[]>([]);
+  const [loading, setLoading] = useState(false);
+  const [saving, setSaving] = useState(false);
+  const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
 
-  // Fetch complaints from the API
+  const { register, handleSubmit, reset } = useForm<FormData>();
+
+  // Fetch complaints
   const fetchComplains = async () => {
-    setIsLoading(true);
-    const response = await fetch(`${baseUrl}${listPath}`);
-    const data = await response.json();
-    setComplains(data);
-    setIsLoading(false);
+    try {
+      setLoading(true);
+      const res = await axios.get(`${API}TestApi/GetComplains`);
+      setComplains(res.data);
+    } catch (err) {
+      console.error(err);
+      setError("Failed to load complaints");
+    } finally {
+      setLoading(false);
+    }
   };
 
-  // Save a new complaint
-  const handleSubmit = async () => {
+  // Handle form submission
+  const onSubmit = async (data: FormData) => {
     try {
-      setIsSaving(true);
-      const response = await fetch(savePath, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          Title: "Test Title",
-          Body: "Test Body",
-        }),
+      setSaving(true);
+      setError("");
+      setSuccess("");
+      const res = await axios.post(`${API}TestApi/SaveComplain`, {
+        Title: data.title,
+        Body: data.body,
       });
-      const data = await response.json();
-      if (!data.Success) throw new Error("Failed to save complaint.");
-      // Missing: Update complaints list after successful submission
-    } catch (e) {
-      // Error state not being set
+
+      if (!res.data.Success) throw new Error("Failed to save complaint");
+
+      setSuccess("Complaint submitted!");
+      setTimeout(() => {
+        setSuccess("");
+      }, 2000);
+      reset();
+      fetchComplains();
+    } catch (err) {
+      console.error(err);
+      setError("Something went wrong while saving");
     } finally {
-      setIsSaving(false);
+      setSaving(false);
     }
   };
 
   useEffect(() => {
     fetchComplains();
-  }, []); // Missing dependency array cleanup
+  }, []);
 
   return (
-    <div className="wrapper">
-      <h2>Submit a Complaint</h2>
+    <div className="complaint-wrapper">
+      <div className="complaint-container">
+        {/* Title & Logo */}
+        <div className="header">
+          <img src="Adobe Express - file.png" alt="logo" className="logo" />
+          <h2 className="title">Submit a Complaint</h2>
+        </div>
 
-      <div className="complain-form">
-        <input
-          type="text"
-          placeholder="Title"
-          value={title}
-          onChange={(e) => setTitle(e.target.value)}
-        />
-        <textarea
-          placeholder="Enter your complaint"
-          value={body}
-          onChange={(e) => setBody(e.target.value)}
-        />
-
-        <button onClick={handleSubmit}>
-          {isSaving ? 'Submitting...' : 'Submit Complaint'}
-        </button>
-
-        {/* Place text loader when saving */}
-        {/* Error message not displayed even though state exists */}
-      </div>
-
-      <h2>Complaints List</h2>
-
-      {isLoading ? (
-        <div>Loading...</div>
-      ) : complains.length ? (
-        complains.map((complain) => (
-          <div key={complain.Id} className="complain-item">
-            <h3>{complain.Title}</h3>
-            <p>{complain.Body}</p>
+        {/* Form */}
+        <form className="form" onSubmit={handleSubmit(onSubmit)}>
+          <div className="form-group">
+            <label htmlFor="title">Title</label>
+            <input
+              {...register("title")}
+              id="title"
+              placeholder="Enter your title"
+              required
+            />
           </div>
-        ))
-      ) : (
-        <p>No complaints available.</p>
-      )}
+
+          <div className="form-group">
+            <label htmlFor="body">Your Complaint</label>
+            <textarea
+              {...register("body")}
+              id="body"
+              placeholder="Describe your complaint..."
+              required
+            ></textarea>
+          </div>
+
+          <button type="submit" disabled={saving} className="submit-btn">
+            {saving ? "Submitting..." : "Submit"}
+          </button>
+        </form>
+
+        {/* Messages */}
+        {error && <p className="error-msg">{error}</p>}
+        {success && <p className="success-msg">{success}</p>}
+
+        {/* Complaints List */}
+        <h2 className="section-title">Complaints List</h2>
+
+        {loading ? (
+          <div className="loading">Loading...</div>
+        ) : complains.length ? (
+          <div className="complaints-list">
+            {complains.map((c) =>
+              c.Title && c.Body ? (
+                <div key={c.Id} className="complaint-card">
+                  <h3>{c.Title}</h3>
+                  <p>{c.Body}</p>
+                </div>
+              ) : null
+            )}
+          </div>
+        ) : (
+          <p className="no-complaints">No complaints yet.</p>
+        )}
+      </div>
     </div>
   );
 }
