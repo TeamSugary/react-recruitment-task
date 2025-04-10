@@ -1,8 +1,19 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect } from "react";
 
 const baseUrl = "https://sugarytestapi.azurewebsites.net/";
 const listPath = "TestApi/GetComplains";
 const savePath = "TestApi/SaveComplain";
+
+interface Complain {
+  Id: number;
+  Title: string;
+  Body: string;
+}
+
+interface SaveResponse {
+  Success: boolean;
+  Message: string;
+}
 
 function App() {
   const [complains, setComplains] = useState([]);
@@ -13,33 +24,51 @@ function App() {
   const [errorMessage, setErrorMessage] = useState("");
 
   // Fetch complaints from the API
-  const fetchComplains = async () => {
-    setIsLoading(true);
-    const response = await fetch(`${baseUrl}${listPath}`);
-    const data = await response.json();
-    setComplains(data);
-    setIsLoading(false);
+  const fetchComplains = async (): Promise<void> => {
+    try {
+      setIsLoading(true);
+      const response = await fetch(`${baseUrl}${listPath}`);
+      if (!response.ok) throw new Error("Failed to fetch complaints.");
+      const data = await response.json();
+      setComplains(data);
+    } catch (e) {
+      setErrorMessage(e.message);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   // Save a new complaint
-  const handleSubmit = async () => {
+  const handleSubmit = async (): Promise<void> => {
+    if (!title || !body) {
+      setErrorMessage("Title and Body are required.");
+      return;
+    }
     try {
+      setErrorMessage("");
       setIsSaving(true);
-      const response = await fetch(savePath, {
+      const response = await fetch(`${baseUrl}${savePath}`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          Title: "Test Title",
-          Body: "Test Body",
+          Title: title,
+          Body: body,
         }),
       });
-      const data = await response.json();
-      if (!data.Success) throw new Error("Failed to save complaint.");
-      // Missing: Update complaints list after successful submission
+
+      const data: SaveResponse = await response.json();
+      if (!response.ok || !data.Success) {
+        throw new Error(data.Message || "Failed to save complaint.");
+      }
+
+      // Clear inputs and refresh list
+      setTitle("");
+      setBody("");
+      fetchComplains();
     } catch (e) {
-      // Error state not being set
+      setErrorMessage(e.message);
     } finally {
       setIsSaving(false);
     }
@@ -47,7 +76,7 @@ function App() {
 
   useEffect(() => {
     fetchComplains();
-  }, []); // Missing dependency array cleanup
+  }, []);
 
   return (
     <div className="wrapper">
@@ -66,18 +95,27 @@ function App() {
           onChange={(e) => setBody(e.target.value)}
         />
 
-        <button onClick={handleSubmit}>
-          {isSaving ? 'Submitting...' : 'Submit Complaint'}
+        <button onClick={handleSubmit} disabled={isSaving}>
+          {isSaving ? (
+            <>
+              Submitting
+              <span className="spinner" />
+            </>
+          ) : (
+            "Submit Complaint"
+          )}
         </button>
 
-        {/* Place text loader when saving */}
-        {/* Error message not displayed even though state exists */}
+        {/* Fixed error message */}
+        {errorMessage && <p className="error">{errorMessage}</p>}
       </div>
 
       <h2>Complaints List</h2>
 
       {isLoading ? (
-        <div>Loading...</div>
+        <div className="loading">
+          Loading complaints <span className="spinner" />
+        </div>
       ) : complains.length ? (
         complains.map((complain) => (
           <div key={complain.Id} className="complain-item">
