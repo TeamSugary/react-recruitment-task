@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useTransition, useOptimistic } from 'react';
+import React from 'react';
 import './App.css';
 
 const baseUrl = "https://sugarytestapi.azurewebsites.net/";
@@ -18,15 +18,15 @@ const CircleLoader = () => (
 );
 
 function App() {
-  const [complains, setComplains] = useState<Complain[]>([]);
-  const [title, setTitle] = useState<string>("");
-  const [body, setBody] = useState<string>("");
-  const [errorMessage, setErrorMessage] = useState<string>("");
-  const [expandedIds, setExpandedIds] = useState<number[]>([]);
-  const [isPending, startTransition] = useTransition();
-  const [loading, setLoading] = useState<boolean>(false);
+  const [complains, setComplains] = React.useState<Complain[]>([]);
+  const [title, setTitle] = React.useState<string>("");
+  const [body, setBody] = React.useState<string>("");
+  const [errorMessage, setErrorMessage] = React.useState<string>("");
+  const [expandedIds, setExpandedIds] = React.useState<number[]>([]);
+  const [isPending, startTransition] = React.useTransition();
+  const [loading, setLoading] = React.useState<boolean>(false);
 
-  const [optimisticComplains] = useOptimistic<Complain[], Complain>(
+  const [optimisticComplains] = React.useOptimistic<Complain[], Complain>(
     complains,
     (prev, newItem) => [...prev, newItem]
   );
@@ -90,7 +90,7 @@ function App() {
     }
   };
 
-  useEffect(() => {
+  React.useEffect(() => {
     const controller = new AbortController();
     fetchComplains(controller);
     return () => controller.abort();
