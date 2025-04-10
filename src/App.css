@@ -99,7 +99,7 @@ textarea::placeholder {
 }
 
 .success-message {
-  background: linear-gradient(to right, #a8ff78, #78ffd6); /* Soft green to mint blend */
+  background: linear-gradient(to right, #a8ff78, #78ffd6,rgb(192, 240, 226)); /* Soft green to mint blend */
   color: #003b2f;
   padding: 12px 20px;
   border-radius: 10px;
