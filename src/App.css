@@ -111,3 +111,18 @@
   margin: auto;
 
 }}
+
+.errorMessage{
+  width: 40%;
+  margin:10px auto;
+  color: red;
+  font-weight: 600;
+  border: 3px solid rgba(255, 255, 255, 0.2);
+  border-radius: 20px;
+  background:rgba(255, 255, 255, 0.2)
+}
+
+.errorMessage > p{
+ 
+  padding:0 10px;
+}

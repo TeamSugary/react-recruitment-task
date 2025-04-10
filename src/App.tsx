@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, FormEvent } from 'react';
 import './App.css'
 
 
@@ -26,18 +26,29 @@ function App() {
   // Fetch complaints from the API
   useEffect(() => {
     fetchComplains()
-  },[isSaving])
+  }, [])
+  
   const fetchComplains = async () => {
     setIsLoading(true);
+    setErrorMessage('')
+   try {
     const response = await fetch(`${baseUrl}${listPath}`);
+    if (!response.ok) throw new Error("Failed to fetch complaints.");
     const data = await response.json();
     setComplains(data);
+  } catch (e) {
+    setErrorMessage((e as Error).message || "Something went wrong!");
+  } finally {
     setIsLoading(false);
+  }
   };
 
   // Save a new complaint
-  const handleSubmit = async () => {
+  const handleSubmit = async (e:FormEvent<HTMLElement>) => {
+    e.preventDefault()
     try {
+      if (!title || !body) return setErrorMessage('Please, fillup complain box.')
+      
       setIsSaving(true);
       const response = await fetch(`${baseUrl}${savePath}`, {
         method: "POST",
@@ -51,11 +62,17 @@ function App() {
       });
       const data = await response.json();
       if (!data.Success) throw new Error("Failed to save complaint.");
+      setTitle("")
+      setBody("")
+      fetchComplains()
       // Missing: Update complaints list after successful submission
     } catch (e) {
       // Error state not being set
+      setErrorMessage((e as Error).message || "Submission failed.");
+
     } finally {
       setIsSaving(false);
+
     }
   };
 
@@ -74,23 +91,30 @@ function App() {
               placeholder="Title"
               value={title}
               onChange={(e) => setTitle(e.target.value)}
+              disabled={isSaving}
               required 
           />
             <textarea
               placeholder="Enter your complaint"
               value={body}
               onChange={(e) => setBody(e.target.value)}
+              disabled={isSaving}
               required 
           />
 
-            <button  type='submit'>
+            <button   type='submit' disabled={isSaving || !title || !body}>
               {isSaving ? 'Submitting...' : 'Submit Complaint'}
             </button>
 
             {/* Place text loader when saving */}
             {/* Error message not displayed even though state exists */}
           </form>
-       </div>
+      </div>
+        {
+          errorMessage.length > 0 && <div className='errorMessage'>
+      <p>{ errorMessage}</p>
+      </div>
+        }
       <div id='complainList'>
 
         <h2>Complaints List</h2>
@@ -101,7 +125,7 @@ function App() {
           complains.map((complain) => (
             <div key={complain.Id} className="complain-item">
               <h3>{complain.Title}</h3>
-              <p>{complain?.Body.slice(0,100)}</p>
+              <p>{complain?.Body}</p>
             </div>
           ))
         ) : (
