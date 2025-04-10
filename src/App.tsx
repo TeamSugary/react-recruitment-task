@@ -1,9 +1,10 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { IoStatsChartOutline, IoCodeWorkingOutline } from "react-icons/io5";
 import { TiTickOutline } from "react-icons/ti";
 import { FaRegUser, FaRegCircleCheck } from "react-icons/fa6";
 import { MdDeleteOutline } from "react-icons/md";
 import { FcApproval } from "react-icons/fc";
+
 
 const baseUrl = "https://sugarytestapi.azurewebsites.net/";
 const listPath = "TestApi/GetComplains";
@@ -99,14 +100,13 @@ export default function App() {
 
 
   // Fetch complaints from the API
-  const fetchComplains = async () => {
+  const fetchComplains = useCallback(async () => {
     setIsLoading(true);
     const response = await fetch(`${baseUrl}${listPath}`);
     const data: Complain[] = await response.json();
-    console.log(data);
     setComplains(data);
     setIsLoading(false);
-  };
+  }, []);
 
   // Save a new complaint
   const handleSubmit = async () => {
@@ -155,7 +155,7 @@ export default function App() {
 
   useEffect(() => {
     fetchComplains();
-  }, []); // Missing dependency array cleanup
+  }, [fetchComplains]); // Missing dependency array cleanup
 
   return (
     <>
