@@ -1,74 +1,129 @@
-#root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
+h2{
+  font-family: 'Poppins', sans-serif;
+  font-weight: 600;
+  color: #E0E0E0;
+  font-size: 2rem;
+  margin-bottom: 1rem;
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
+h3, p, button{
+  font-family: 'Roboto', sans-serif;
+  font-weight: 400;
+  color: #E0E0E0;
 }
 
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
-}
-
-.card {
-  padding: 2em;
-}
-
-.read-the-docs {
-  color: #888;
+input, textarea {
+  background: rgba(255, 255, 255, 0.1);
+  font-family: 'Roboto', sans-serif;
+  font-size: 1rem;
+  color: #fff;
 }
 
 .wrapper {
-  width: 100%;
   max-width: 600px;
-  margin: 0 auto;
+  width: 100%;
+  padding: 1.25rem;
+  margin: auto;
 }
 
 .complain-form {
-  margin-bottom: 20px;
+  background: rgba(255, 255, 255, 0.07);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 2px solid rgba(255, 255, 255, 0.15);
+  border-radius: 0.75rem;
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+  transition: all 0.3s ease-in-out;
+  margin-bottom: 1.5rem;
 }
 
-.complain-form input,
-.complain-form textarea {
+.complain-form input, .complain-form textarea, .complain-form button{
   width: 100%;
-  margin-bottom: 10px;
-  padding: 8px;
-  box-sizing: border-box;
 }
 
-.complain-form button {
-  padding: 8px;
+.complain-item {
+  background: rgba(255, 255, 255, 0.07);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1.5px solid rgba(255, 255, 255, 0.15);
+  border-radius: 0.75rem;
+  padding: 1.25rem;
+  margin-bottom: 1.2rem;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.complain-item:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 4px 25px rgba(0, 123, 255, 0.3);
+  border-color: rgba(0, 123, 255, 0.4);
+}
+
+.complain-item h3{
+  font-size: 18px;
+  margin-bottom: 8px;
+  letter-spacing: 0.3px;
+  line-height: 1.4;
+  color: #007BFF;
+}
+
+.complain-item p{
+  font-size: 13px;
+  letter-spacing: 0.2px;
+  line-height: 1.6; 
+  color: #d1d1d1;
+}
+
+.complain-item {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+
+.complain-item.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.input-error {
+  border-color: red;
 }
 
 .error-message {
   color: red;
-  margin-top: 10px;
+  font-size: 12px;
+  margin-top: -10px;
+  margin-bottom: 1rem;
+  padding-left: 4px;
 }
 
-.complain-item {
-  border-bottom: 1px solid #ccc;
-  padding: 10px 0;
+.error-Message{
+  color: red;
+  font-size: 14px;
+  margin-top: 8px;
+  padding-left: 4px;
+}
+
+.success-message {
+  color: green;
+  font-size: 14px;
+  margin-top: 8px;
+  padding-left: 4px;
+}
+
+@media (max-width: 600px) {
+  h2 {
+    font-size: 1.5rem;
+  }
+  .complain-form {
+    padding: 1rem;
+  }
+  .complain-item{
+    padding: 1rem;
+  }
+  .wrapper {
+    padding: 1rem;
+  }
 }
