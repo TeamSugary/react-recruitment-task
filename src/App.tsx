@@ -89,14 +89,12 @@ export default function App() {
 
   // modal open and close
   const openModal = () => {
-    console.log("open clicked")
     setIsModalOpen(true);
   };
 
   const closeModal = () => {
     setIsModalOpen(false);
   };
-
 
 
   // Fetch complaints from the API
