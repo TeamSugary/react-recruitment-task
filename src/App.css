@@ -43,12 +43,21 @@
 
 .wrapper {
   width: 100%;
-  max-width: 600px;
+  
+  /*
+  comment the previous width
+  max-width: 600px;*/
+  max-width: 100%;
   margin: 0 auto;
+  background: linear-gradient(to right, #007cf0, #00df9a, #f6e05e); 
+  padding: 20px; 
+  border-radius: 10px; 
+  color: white; 
 }
 
 .complain-form {
   margin-bottom: 20px;
+  max-width: 400px;
 }
 
 .complain-form input,
@@ -71,4 +80,11 @@
 .complain-item {
   border-bottom: 1px solid #ccc;
   padding: 10px 0;
+}
+
+
+input::placeholder,
+textarea::placeholder {
+  color: white;
+  opacity: 1;
 }
