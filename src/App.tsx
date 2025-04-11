@@ -3,15 +3,26 @@ import { useState, useEffect } from 'react';
 
 const baseUrl = "https://sugarytestapi.azurewebsites.net/";
 const listPath = "TestApi/GetComplains";
-const savePath = "TestApi/SaveComplain";
+
+/// set proper api
+const savePath = "https://sugarytestapi.azurewebsites.net/TestApi/SaveComplain";
+
+
+// Define complaint type
+interface Complaint {
+  Id: number;
+  Title: string;
+  Body: string;
+}
+
 
 function App() {
-  const [complains, setComplains] = useState([]);
-  const [title, setTitle] = useState("");
-  const [body, setBody] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
-  const [isSaving, setIsSaving] = useState(false);
-  const [errorMessage, setErrorMessage] = useState("");
+  const [complains, setComplains] = useState<Complaint>([]);
+  const [title, setTitle] = useState<string>("");
+  const [body, setBody] = useState<string>("");
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [isSaving, setIsSaving] = useState<boolean>(false);
+  const [errorMessage, setErrorMessage] = useState<string>("");
 
   // Fetch complaints from the API
   const fetchComplains = async () => {

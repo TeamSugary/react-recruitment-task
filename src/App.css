@@ -43,7 +43,11 @@
 
 .wrapper {
   width: 100%;
-  max-width: 600px;
+  
+  /*
+  comment the previous width
+  max-width: 600px;*/
+  max-width: 100%;
   margin: 0 auto;
   background: linear-gradient(to right, #007cf0, #00df9a, #f6e05e); 
   padding: 20px; 
