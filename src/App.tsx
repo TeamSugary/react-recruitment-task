@@ -108,6 +108,7 @@ function App() {
           borderRadius: '16px',
           padding: '20px',
           boxShadow: '0 4px 30px rgba(0, 0, 0, 0.1)',
+          backdropFilter: 'blur(10px)',
           width: '100%',
           maxWidth: '500px',
           display: 'flex',
@@ -176,7 +177,7 @@ function App() {
         {/*  Saving is now showed */}
         {isSaving && <p style={{ color: '#fff' }}>Saving...</p>}
 
-        {/* Errormessage is now showed */}
+        {/* Errormessage is now sho */}
         <div style={{ color: 'yellow', fontWeight: 'bold' }}>{errorMessage}</div>
 
       </div>
