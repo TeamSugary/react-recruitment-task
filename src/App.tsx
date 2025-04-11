@@ -41,7 +41,7 @@ function App() {
   };
 
   // Save a new complaint
-  const handleSubmit = async ()  :  Promise<void>  => {
+  const handleSubmit = async (): Promise<void> => {
 
     // title and body must required
     if (!title.trim() || !body.trim()) {
@@ -101,10 +101,17 @@ function App() {
         <button onClick={handleSubmit}>
           {isSaving ? 'Submitting...' : 'Submit Complaint'}
         </button>
+        {/* Place text loader when saving*/}
+        {isSaving ? <><p>Saving...</p></> : ''}
 
-        {/* Place text loader when saving */}
+
         {/* Error message not displayed even though state exists */}
+        <div>
+          {errorMessage}
+        </div>
       </div>
+
+
 
       <h2>Complaints List</h2>
 
