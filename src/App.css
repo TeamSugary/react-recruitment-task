@@ -57,6 +57,7 @@
 
 .complain-form {
   margin-bottom: 20px;
+  max-width: 400px;
 }
 
 .complain-form input,
@@ -79,4 +80,11 @@
 .complain-item {
   border-bottom: 1px solid #ccc;
   padding: 10px 0;
+}
+
+
+input::placeholder,
+textarea::placeholder {
+  color: white;
+  opacity: 1;
 }
