@@ -25,33 +25,53 @@ function App() {
   const [errorMessage, setErrorMessage] = useState<string>("");
 
   // Fetch complaints from the API
-  const fetchComplains = async () => {
-    setIsLoading(true);
-    const response = await fetch(`${baseUrl}${listPath}`);
-    const data = await response.json();
-    setComplains(data);
-    setIsLoading(false);
+  const fetchComplains = async (): Promise<void> => {
+    try {
+      setIsLoading(true);
+      const response = await fetch(`${baseUrl}${listPath}`);
+      if (!response.ok) throw new Error("Failed to fetch data");
+      const data = await response.json();
+      setComplains(data);
+    } catch (error) {
+      console.error("Failed to fetch complaints:", error);
+      setErrorMessage("Failed to load complaints.");
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   // Save a new complaint
-  const handleSubmit = async () => {
+  const handleSubmit = async ()  :  Promise<void>  => {
+
+    // title and body must required
+    if (!title.trim() || !body.trim()) {
+      setErrorMessage("Title and body are required.");
+      return;
+    }
+
+
+
     try {
       setIsSaving(true);
+      // Set error is empty
+      setErrorMessage("");
       const response = await fetch(savePath, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({
-          Title: "Test Title",
-          Body: "Test Body",
-        }),
+        body: JSON.stringify({ Title: title, Body: body }),
       });
       const data = await response.json();
       if (!data.Success) throw new Error("Failed to save complaint.");
-      // Missing: Update complaints list after successful submission
+      // Missing is Fixed: Update complaints list after successful submission
+      await fetchComplains();
+      setTitle('');
+      setBody('');
     } catch (e) {
-      // Error state not being set
+      // set error in state
+      console.error("Error submitting complaint:", e);
+      setErrorMessage("Something went wrong while saving your complaint.");
     } finally {
       setIsSaving(false);
     }
